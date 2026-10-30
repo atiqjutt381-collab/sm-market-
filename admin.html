@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - SM Market</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}body{background:#f2f4f5;padding:12px}.header{background:#002f34;color:#fff;padding:14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center} .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat{background:#fff;padding:16px;border-radius:10px;border:1px solid #ddd;text-align:center}.stat b{font-size:22px;display:block}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:10px;align-items:center} .card img{width:70px;height:60px;object-fit:cover;border-radius:6px} button{padding:6px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;font-weight:700;cursor:pointer;font-size:11px}.del{background:#ff3b30;color:#fff;border:none} .top{background:#002f34;color:#fff;border:none} input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin:10px 0}</style></head><body>
+<div class="header"><b>SM MARKET - ADMIN PANEL</b><button onclick="location.href='index.html'" style="background:#fff;color:#000">← Back to Site</button></div>
+<div style="margin:12px 0"><input id="pass" type="password" placeholder="Admin Password likho (default: atiq123)"><button onclick="check()" style="width:100%;padding:12px;background:#002f34;color:#fff;border:none;border-radius:8px">Login as Admin</button></div>
+<div id="panel" style="display:none">
+<div class="stats"><div class="stat"><b id="u">0</b>Users</div><div class="stat"><b id="a">0</b>Ads</div><div class="stat"><b id="f">0</b>Favorites</div><div class="stat"><b id="c">0</b>Chats</div></div>
+<h3 style="margin:10px 0">All Ads - Delete / Feature</h3><div id="ads"></div>
+<h3 style="margin:14px 0">All Users</h3><div id="users"></div>
+</div>
+<script>
+let ADMIN="atiq123";
+function check(){if(pass.value==ADMIN){panel.style.display='block';load()}else alert('Wrong password! Default atiq123')}
+function load(){
+let users=JSON.parse(localStorage.getItem('sm_users')||'[]');
+let ads=JSON.parse(localStorage.getItem('sm_all_ads')||'[]');
+let favs=JSON.parse(localStorage.getItem('sm_fav')||'[]');
+let chats=JSON.parse(localStorage.getItem('sm_chats')||'[]');
+u.innerText=users.length;a.innerText=ads.length;f.innerText=favs.length;c.innerText=chats.length;
+let adDiv=document.getElementById('ads');adDiv.innerHTML='';ads.forEach((ad,i)=>{adDiv.innerHTML+=`<div class="card"><img src="${ad.img}"><div style="flex:1"><b style="font-size:12px">${ad.title}</b><div style="font-size:11px">Rs ${ad.price} • ${ad.city} • ${ad.user}</div></div><button class="del" onclick="delAd(${i})">Delete</button><button class="top" onclick="makeTop(${i})">Top</button></div>`});
+let uDiv=document.getElementById('users');uDiv.innerHTML='';users.forEach(us=>{uDiv.innerHTML+=`<div class="card"><div style="flex:1"><b>${us.email}</b><div style="font-size:11px">Pass: ${us.password}</div></div></div>`});
+}
+function delAd(i){if(!confirm('Delete this ad?'))return;let ads=JSON.parse(localStorage.getItem('sm_all_ads')||'[]');ads.splice(i,1);localStorage.setItem('sm_all_ads',JSON.stringify(ads));load();alert('Deleted')}
+function makeTop(i){let ads=JSON.parse(localStorage.getItem('sm_all_ads')||'[]');let ad=ads.splice(i,1)[0];ads.unshift(ad);localStorage.setItem('sm_all_ads',JSON.stringify(ads));load();alert('Ad Top par laga diya')}
+</script></body></html>
