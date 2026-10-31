@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://atiqjutt381-collab.github.io/sm-market-/sitemap.xml
