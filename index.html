@@ -8,122 +8,111 @@
 .chips{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:white;white-space:nowrap}.chip{padding:6px 12px;border-radius:20px;border:1px solid #d0d8d9;background:white;font-size:12px;font-weight:600;cursor:pointer}.chip.active{background:#0f2f33;color:white}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #e2eaea}.card-img{height:150px;background:#e9efef;position:relative}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:6px 8px}.price{font-weight:800;font-size:14px}.title{font-size:11px;font-weight:600;height:28px;overflow:hidden}.meta{font-size:10px;color:#6b7f80}.btns{display:flex;gap:4px;margin-top:4px}.btn-chat{flex:1;background:#0f2f33;color:white;border:none;padding:7px;border-radius:15px;font-size:10px;font-weight:700}.btn-call{flex:1;background:#25D366;color:white;border:none;padding:7px;border-radius:15px;font-size:10px;font-weight:700}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #d0d8d9;display:flex;justify-content:space-around;padding:5px 0;z-index:999}.b-item{display:flex;flex-direction:column;align-items:center;font-size:9px;color:#6b7f80;border:none;background:none;cursor:pointer}.b-item.active{color:#0f2f33;font-weight:700}.b-center{background:#0f2f33;color:white;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:-18px;border:3px solid white}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:2000;align-items:flex-end}.modal.active{display:flex}.box{background:white;width:100%;max-height:92vh;overflow:auto;border-radius:14px 14px 0 0;padding:14px}.box input,.box select,.box textarea{width:100%;padding:11px;border:1px solid #d0d8d9;border-radius:8px;margin-top:6px;font-size:14px}.btn-main{background:#0f2f33;color:white;border:none;width:100%;padding:12px;border-radius:8px;font-weight:800;margin-top:10px;cursor:pointer}.btn-wa{background:#25D366;color:white;border:none;width:100%;padding:12px;border-radius:8px;font-weight:800;margin-top:8px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:2000;align-items:flex-end}.modal.active{display:flex}.box{background:white;width:100%;max-height:92vh;overflow:auto;border-radius:14px 14px 0 0;padding:14px}.box input,.box select,.box textarea{width:100%;padding:11px;border:1px solid #d0d8d9;border-radius:8px;margin-top:6px;font-size:14px}.btn-main{background:#0f2f33;color:white;border:none;width:100%;padding:12px;border-radius:8px;font-weight:800;margin-top:10px;cursor:pointer}
 </style></head><body>
 <div class="header"><div class="left"><div class="logo"><img src="logopng.jpg" onerror="this.src='logo.png'"></div><div><h1>SM FAISALABAD <span>MARKET</span></h1><div style="font-size:10px;opacity:.8">Samundri • Gojra • Toba</div></div></div><button class="user-btn" id="loginBtn" onclick="openM('loginM')">👤 Login</button></div>
 <div class="search"><input id="q" placeholder="Search mobiles, bikes..." oninput="doFilter()"><button onclick="doFilter()">Search</button></div>
-<div class="chips" id="catChips"></div><div class="grid" id="grid"><div style="grid-column:1/3;text-align:center;padding:40px;color:#6b7f80">Loading live ads...</div></div>
+<div class="chips" id="catChips"></div><div class="grid" id="grid"></div>
 <div class="bottom"><button class="b-item active">🏠 HOME</button><button class="b-item" onclick="checkLogin('myM')"><span>📦</span>MY ADS</button><button class="b-item" onclick="checkLogin('postM')"><div class="b-center">+</div>SELL</button><button class="b-item" onclick="openM('favM')"><span>❤️</span>FAV</button><button class="b-item" onclick="openM('accM')"><span>👤</span>ACCOUNT</button></div>
 
-<!-- LOGIN MODAL -->
 <div class="modal" id="loginM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>👤 SM Market Login</h3><button onclick="closeM('loginM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div>
-<div id="step1"><p style="font-size:12px;color:#6b7f80;margin-top:8px">Apna naam aur WhatsApp number likho, account ban jayega!</p>
-<label>Full Name *</label><input id="uName" placeholder="Atiq ur Rehman"><label>WhatsApp Number *</label><input id="uPhone" placeholder="03430864009" value="03430864009" type="tel"><label>City *</label><select id="uCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><button class="btn-main" onclick="sendOTP()">OTP Bhejo (123456)</button><p style="font-size:10px;color:#6b7f80;margin-top:6px;text-align:center">OTP demo 123456 hai - foran login ho jayega!</p></div>
-<div id="step2" style="display:none"><p style="font-size:13px;margin-top:10px">OTP <b>03430864009</b> par bhej diya! (Demo code: <b>123456</b>)</p><label>6 Digit OTP *</label><input id="otpInput" placeholder="123456" type="number"><button class="btn-main" onclick="verifyOTP()">✅ Verify & Login</button><button onclick="document.getElementById('step1').style.display='block';document.getElementById('step2').style.display='none'" style="background:none;border:none;color:#0f2f33;font-size:12px;margin-top:8px;width:100%">Number change karo</button></div>
+<div id="step1"><p style="font-size:12px;color:#6b7f80;margin-top:8px">Apna naam aur WhatsApp number likho, account ban jayega!</p><label>Full Name *</label><input id="uName" placeholder="Atiq ur Rehman"><label>WhatsApp Number *</label><input id="uPhone" placeholder="03430864009" value="03430864009" type="tel"><label>City *</label><select id="uCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><button class="btn-main" onclick="sendOTP()">OTP Bhejo (123456)</button></div>
+<div id="step2" style="display:none"><p style="font-size:13px;margin-top:10px">Demo code: <b>123456</b></p><label>6 Digit OTP *</label><input id="otpInput" placeholder="123456" type="number"><button class="btn-main" onclick="verifyOTP()">✅ Verify & Login</button></div>
 </div></div>
 
-<!-- POST MODAL -->
 <div class="modal" id="postM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>Post Ad - <span id="postUser"></span></h3><button onclick="closeM('postM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div>
 <label>Category</label><select id="pCat"><option>Mobiles</option><option>Vehicles</option><option>Property</option><option>Bikes</option></select><label>City</label><select id="pCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><label>Title *</label><input id="pTitle" placeholder="Honda 125 2023"><label>Price Rs *</label><input id="pPrice" type="number" placeholder="185000"><label>Description *</label><textarea id="pDesc" placeholder="Condition..."></textarea><label>Image</label><input type="file" id="pImg" accept="image/*" onchange="loadImg(event)"><div id="prev" style="display:flex;gap:6px;margin-top:6px"></div><button class="btn-main" onclick="postAd()">✈️ Post Ad LIVE</button></div></div>
 
 <div class="modal" id="myM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>📦 Meri Ads - <span id="myPhone"></span></h3><button onclick="closeM('myM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div><div id="myList" style="margin-top:10px"></div></div></div>
-<div class="modal" id="favM"><div class="box"><h3>❤️ Favorites</h3><div id="favList" style="margin-top:10px"></div></div></div>
+<div class="modal" id="favM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>❤️ Favorites</h3><button onclick="closeM('favM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div><div id="favList" style="margin-top:10px"><p style="text-align:center;color:#6b7f80;padding:20px">Abhi koi favorite nahi<br>❤️ dabao to yahan ayega</p></div></div></div>
 <div class="modal" id="accM"><div class="box" style="text-align:center"><div class="logo" style="width:80px;height:80px;margin:0 auto"><img src="logopng.jpg"></div><h3 id="accName">Atiq ur Rehman</h3><p id="accPhone" style="font-size:12px;color:#6b7f80">Owner - SM Market<br>Easypaisa: 03430864009</p><div style="margin-top:12px"><button class="btn-main" onclick="logout()" id="logoutBtn" style="display:none;background:#ff3b3b">Logout</button><button class="btn-main" onclick="closeM('accM');openM('loginM')" id="loginBtn2">Login Karo</button></div></div></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = { apiKey: "AIzaSyDummyKeyForNow-ReplaceWithReal", authDomain: "sm-market-demo.firebaseapp.com", projectId: "sm-market-demo", storageBucket: "sm-market-demo.appspot.com", messagingSenderId: "123", appId: "1:123:web:abc" };
-let db=null, isOnline=false;
-try{ const app=initializeApp({apiKey:"AIzaSyB_fake_for_demo",authDomain:"demo.firebaseapp.com",projectId:"demo-project"}); db=getFirestore(app); }catch(e){}
+<script>
 let allAds=[]; let tempImg=""; let currentUser = JSON.parse(localStorage.getItem('sm_user')||'null');
-
-// DEMO ADS (Jab tak Firebase connect nahi, ye dikhenge)
 let demoAds=[{title:'iPhone 14 Pro Max 256GB PTA',price:285000,city:'Samundri',cat:'Mobiles',phone:'03430864009',userPhone:'03430864009',img:'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=500',desc:'PTA Approved'},{title:'Toyota Corolla 2019 XLI',price:3850000,city:'Gojra',cat:'Vehicles',phone:'03430864009',userPhone:'03430864009',img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=500',desc:'Total genuine'}];
-
-// Agar abhi Firebase config nahi hai to localStorage se kaam chalao (Aj ke liye 100% ok)
 function getStoredAds(){ return JSON.parse(localStorage.getItem('sm_online_ads')||'null')||demoAds; }
 function saveStoredAds(list){ localStorage.setItem('sm_online_ads', JSON.stringify(list)); }
-
 function updateLoginUI(){
   if(currentUser){
     document.getElementById('loginBtn').innerText='👤 '+currentUser.name.split(' ')[0];
     document.getElementById('accName').innerText=currentUser.name;
     document.getElementById('accPhone').innerHTML=currentUser.phone+'<br>'+currentUser.city+'<br><span style="color:green">● Verified</span>';
-    document.getElementById('logoutBtn').style.display='block';
-    document.getElementById('loginBtn2').style.display='none';
+    document.getElementById('logoutBtn').style.display='block'; document.getElementById('loginBtn2').style.display='none';
     document.getElementById('postUser').innerText=currentUser.name;
   }else{
-    document.getElementById('loginBtn').innerText='👤 Login';
-    document.getElementById('logoutBtn').style.display='none';
-    document.getElementById('loginBtn2').style.display='block';
+    document.getElementById('loginBtn').innerText='👤 Login'; document.getElementById('logoutBtn').style.display='none'; document.getElementById('loginBtn2').style.display='block';
   }
 }
 updateLoginUI();
-
 window.sendOTP=()=>{
-  let name=document.getElementById('uName').value.trim();
-  let phone=document.getElementById('uPhone').value.trim();
-  let city=document.getElementById('uCity').value;
+  let name=document.getElementById('uName').value.trim(); let phone=document.getElementById('uPhone').value.trim(); let city=document.getElementById('uCity').value;
   if(!name||phone.length<10){ alert('Naam aur sahi number likho!'); return; }
-  localStorage.setItem('temp_user', JSON.stringify({name,phone,city}));
-  document.getElementById('step1').style.display='none';
-  document.getElementById('step2').style.display='block';
-  alert('Demo OTP: 123456\nAsal me ye WhatsApp par jayega, abhi 123456 likh kar login karo!');
+  localStorage.setItem('temp_user', JSON.stringify({name,phone,city})); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block';
 }
 window.verifyOTP=()=>{
-  let otp=document.getElementById('otpInput').value.trim();
-  if(otp!='123456'){ alert('Galat OTP! Demo code 123456 hai'); return; }
-  let temp=JSON.parse(localStorage.getItem('temp_user'));
-  currentUser={...temp, id:temp.phone, verified:true, joined:Date.now()};
-  localStorage.setItem('sm_user', JSON.stringify(currentUser));
-  // Users collection me bhi save (offline demo)
-  let users=JSON.parse(localStorage.getItem('sm_users')||'[]'); if(!users.find(u=>u.phone==currentUser.phone)) { users.push(currentUser); localStorage.setItem('sm_users', JSON.stringify(users)); }
-  closeM('loginM'); updateLoginUI();
-  document.getElementById('step1').style.display='block'; document.getElementById('step2').style.display='none';
-  alert('✅ Welcome '+currentUser.name+'! Ab aap ads laga sakte ho!');
-  if(confirm('Abhi pehli ad lagani hai?')) openM('postM');
+  let otp=document.getElementById('otpInput').value.trim(); if(otp!='123456'){ alert('Demo code 123456 hai'); return; }
+  let temp=JSON.parse(localStorage.getItem('temp_user')); currentUser={...temp, id:temp.phone, verified:true, joined:Date.now()};
+  localStorage.setItem('sm_user', JSON.stringify(currentUser)); closeM('loginM'); updateLoginUI(); document.getElementById('step1').style.display='block'; document.getElementById('step2').style.display='none';
+  alert('✅ Welcome '+currentUser.name+'! Ab ads laga sakte ho!');
 }
 window.logout=()=>{ if(confirm('Logout karna hai?')){ localStorage.removeItem('sm_user'); currentUser=null; updateLoginUI(); closeM('accM'); location.reload(); } }
-window.checkLogin=(modalId)=>{ if(!currentUser){ alert('Pehle Login karo! Account banao taake aapki ads save rahen!'); openM('loginM'); return; } if(modalId=='myM'){ renderMyAds(); } openM(modalId); }
+window.checkLogin=(modalId)=>{ if(!currentUser){ alert('Pehle Login karo!'); openM('loginM'); return; } if(modalId=='myM'){ renderMyAds(); } openM(modalId); }
 window.loadImg=(e)=>{ let r=new FileReader(); r.onload=(ev)=>{ tempImg=ev.target.result; document.getElementById('prev').innerHTML=`<img src="${tempImg}" style="width:80px;height:80px;object-fit:cover;border-radius:8px">`; }; r.readAsDataURL(e.target.files[0]); }
-
 function render(list){
-  let g=document.getElementById('grid'); g.innerHTML='';
-  if(list.length==0){ g.innerHTML='<div style="grid-column:1/3;text-align:center;padding:30px">No ads in this category</div>'; return; }
-  list.forEach((ad, idx)=>{
-    let d=document.createElement('div'); d.className='card';
-    d.innerHTML=`<div class="card-img"><img src="${ad.img}"><div style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:white;font-size:9px;padding:2px 6px;border-radius:10px">👤 ${ad.userName||ad.phone}</div></div><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div><div class="meta">📍 ${ad.city} • ${ad.cat}</div><div class="btns"><button class="btn-chat" onclick="chatSeller('${ad.phone}','${ad.title.replace(/'/g,'')}')">💬 Chat</button><button class="btn-call" onclick="callSeller('${ad.phone}')">📞 Call</button></div></div>`;
-    g.appendChild(d);
-  });
+  let g=document.getElementById('grid'); g.innerHTML=''; if(list.length==0){ g.innerHTML='<div style="grid-column:1/3;text-align:center;padding:30px">No ads</div>'; return; }
+  list.forEach((ad)=>{ let d=document.createElement('div'); d.className='card'; d.innerHTML=`<div class="card-img"><img src="${ad.img}"><div style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:white;font-size:9px;padding:2px 6px;border-radius:10px">👤 ${ad.userName||ad.phone}</div></div><div style="padding:6px 8px"><div style="font-weight:800">Rs ${Number(ad.price).toLocaleString()}</div><div style="font-size:11px;height:28px;overflow:hidden">${ad.title}</div><div style="font-size:10px;color:#6b7f80">📍 ${ad.city} • ${ad.cat}</div><div style="display:flex;gap:4px;margin-top:4px"><button style="flex:1;background:#0f2f33;color:white;border:none;padding:7px;border-radius:15px;font-size:10px" onclick="chatSeller('${ad.phone}','${ad.title.replace(/'/g,'')}')">💬 Chat</button><button style="flex:1;background:#25D366;color:white;border:none;padding:7px;border-radius:15px;font-size:10px" onclick="callSeller('${ad.phone}')">📞 Call</button></div></div>`; g.appendChild(d); });
 }
 window.postAd=()=>{
-  if(!currentUser){ openM('loginM'); return; }
-  let title=document.getElementById('pTitle').value.trim();
-  let price=document.getElementById('pPrice').value;
-  let city=document.getElementById('pCity').value;
-  let cat=document.getElementById('pCat').value;
-  let desc=document.getElementById('pDesc').value.trim();
-  if(!title||!price){ alert('Title aur Price likho'); return; }
-  let ad={title,price:Number(price),city,cat,phone:currentUser.phone,userPhone:currentUser.phone,userName:currentUser.name,img:tempImg||'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=500',desc,createdAt:Date.now()};
-  let list=getStoredAds(); list.unshift(ad); saveStoredAds(list); allAds=list; render(allAds); closeM('postM'); tempImg=''; document.getElementById('pTitle').value=''; document.getElementById('pPrice').value=''; document.getElementById('prev').innerHTML='';
-  alert('✅ Ad LIVE! Ab sab ko dikhegi! MY ADS me ja kar dekho!');
+  if(!currentUser){ openM('loginM'); return; } let title=document.getElementById('pTitle').value.trim(); let price=document.getElementById('pPrice').value; let city=document.getElementById('pCity').value; let cat=document.getElementById('pCat').value; let desc=document.getElementById('pDesc').value.trim();
+  if(!title||!price){ alert('Title aur Price likho'); return; } let ad={title,price:Number(price),city,cat,phone:currentUser.phone,userPhone:currentUser.phone,userName:currentUser.name,img:tempImg||'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=500',desc,createdAt:Date.now()};
+  let list=getStoredAds(); list.unshift(ad); saveStoredAds(list); allAds=list; render(allAds); closeM('postM'); tempImg=''; document.getElementById('pTitle').value=''; document.getElementById('pPrice').value=''; document.getElementById('prev').innerHTML=''; alert('✅ Ad LIVE!');
 }
-function renderMyAds(){
-  if(!currentUser) return;
-  let list=getStoredAds().filter(a=>a.userPhone==currentUser.phone || a.phone==currentUser.phone);
-  let div=document.getElementById('myList'); div.innerHTML='';
-  document.getElementById('myPhone').innerText=currentUser.phone;
-  if(list.length==0){ div.innerHTML='<p style="text-align:center;color:#6b7f80;padding:20px">Aapne abhi koi ad nahi lagayi<br><button class="btn-main" onclick="closeM(\'myM\');openM(\'postM\')">+ Pehli Ad Lagao</button></p>'; return; }
-  list.forEach(ad=>{ let el=document.createElement('div'); el.style.cssText='display:flex;gap:10px;background:white;border:1px solid #e2eaea;border-radius:10px;padding:8px;margin-bottom:8px'; el.innerHTML=`<img src="${ad.img}" style="width:60px;height:60px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-weight:700;font-size:13px">${ad.title}</div><div style="font-size:12px">Rs ${Number(ad.price).toLocaleString()} • ${ad.city}</div><div style="font-size:10px;color:#6b7f80">${ad.cat}</div></div><button onclick="deleteMyAd('${ad.title.replace(/'/g,'')}')" style="background:#ff3b3b;color:white;border:none;padding:6px 10px;border-radius:6px;font-size:11px">Delete</button>`; div.appendChild(el); });
-}
-window.deleteMyAd=(title)=>{ if(!confirm('Delete karni hai?')) return; let list=getStoredAds(); list=list.filter(a=>a.title!=title); saveStoredAds(list); allAds=list; render(allAds); renderMyAds(); }
-
+function renderMyAds(){ if(!currentUser) return; let list=getStoredAds().filter(a=>a.userPhone==currentUser.phone); let div=document.getElementById('myList'); div.innerHTML=''; document.getElementById('myPhone').innerText=currentUser.phone; if(list.length==0){ div.innerHTML='<p style="text-align:center;color:#6b7f80;padding:20px">Koi ad nahi</p>'; return; } list.forEach(ad=>{ let el=document.createElement('div'); el.style.cssText='display:flex;gap:10px;background:white;border:1px solid #e2eaea;border-radius:10px;padding:8px;margin-bottom:8px'; el.innerHTML=`<img src="${ad.img}" style="width:60px;height:60px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-weight:700;font-size:13px">${ad.title}</div><div style="font-size:12px">Rs ${Number(ad.price).toLocaleString()}</div></div><button onclick="deleteMyAd('${ad.title.replace(/'/g,'')}')" style="background:#ff3b3b;color:white;border:none;padding:6px 10px;border-radius:6px;font-size:11px">Delete</button>`; div.appendChild(el); }); }
+window.deleteMyAd=(title)=>{ if(!confirm('Delete?')) return; let list=getStoredAds(); list=list.filter(a=>a.title!=title); saveStoredAds(list); allAds=list; render(allAds); renderMyAds(); }
 window.chatSeller=(phone,title)=>{ let c=phone.replace(/[^0-9]/g,''); if(c.startsWith('0')) c='92'+c.substring(1); window.open('https://wa.me/'+c+'?text=Salam, SM Market: '+encodeURIComponent(title),'_blank'); }
 window.callSeller=(phone)=>{ window.open('tel:'+phone,'_self'); }
-window.openM=(id)=>document.getElementById(id).classList.add('active'); window.closeM=(id)=>document.getElementById(id).classList.remove('active');
+
+// === BASIC OPEN/CLOSE (Pehle wale) ===
+window.openM=(id)=>document.getElementById(id).classList.add('active');
+window.closeM=(id)=>document.getElementById(id).classList.remove('active');
+
 let cats=['All','Mobiles','Vehicles','Property','Bikes']; let cDiv=document.getElementById('catChips'); cats.forEach((c,i)=>{ let b=document.createElement('div'); b.className='chip'+(i==0?' active':''); b.innerText=c; b.onclick=()=>{ document.querySelectorAll('#catChips .chip').forEach(x=>x.classList.remove('active')); b.classList.add('active'); doFilter(); }; cDiv.appendChild(b); });
 window.doFilter=()=>{ let q=document.getElementById('q').value.toLowerCase(); let cat=document.querySelector('#catChips .chip.active')?.innerText||'All'; let f=getStoredAds().filter(a=> a.title.toLowerCase().includes(q) && (cat=='All'||a.cat==cat)); render(f); }
 allAds=getStoredAds(); render(allAds);
+
+// FIX: Mobile Back Button se modal band ho, site nahi
+let modalHistory = [];
+const oldOpenM = window.openM;
+const oldCloseM = window.closeM;
+
+window.openM = (id) => {
+  document.getElementById(id).classList.add('active');
+  if(!modalHistory.includes(id)){
+    history.pushState({modal:id}, '');
+    modalHistory.push(id);
+  }
+}
+
+window.closeM = (id) => {
+  document.getElementById(id).classList.remove('active');
+  modalHistory = modalHistory.filter(m => m != id);
+  if(history.state && history.state.modal == id){
+    history.back();
+  }
+}
+
+// Jab mobile ka back button dabay
+window.addEventListener('popstate', (e) => {
+  if(modalHistory.length > 0){
+    let last = modalHistory.pop();
+    document.getElementById(last)?.classList.remove('active');
+  }
+});
+
+// Bahar click karne se bhi band
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if(e.target == m) window.closeM(m.id);
+  });
+});
 </script></body></html>
