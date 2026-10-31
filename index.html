@@ -1,4 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>SM FAISALABAD MARKET - Real Login</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f2f33">
+<link rel="apple-touch-icon" href="logopng.jpg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}body{background:#f1f5f5;padding-bottom:85px}
 .header{background:#0f2f33;color:white;padding:10px 12px;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}.left{display:flex;align-items:center;gap:10px}
@@ -6,7 +9,7 @@
 .header h1{font-size:15px;font-weight:800}.header h1 span{color:#3bb0ff}.user-btn{background:#1a4d52;border:1px solid #2a6a72;color:white;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700}
 .search{margin:10px 12px;display:flex;background:white;border-radius:8px;overflow:hidden;border:1px solid #d0d8d9}.search input{flex:1;padding:11px;border:none;outline:none}.search button{background:#0f2f33;color:white;border:none;padding:0 16px;font-weight:700}
 .chips{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:white;white-space:nowrap}.chip{padding:6px 12px;border-radius:20px;border:1px solid #d0d8d9;background:white;font-size:12px;font-weight:600;cursor:pointer}.chip.active{background:#0f2f33;color:white}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #e2eaea}.card-img{height:150px;background:#e9efef;position:relative}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:6px 8px}.price{font-weight:800;font-size:14px}.title{font-size:11px;font-weight:600;height:28px;overflow:hidden}.meta{font-size:10px;color:#6b7f80}.btns{display:flex;gap:4px;margin-top:4px}.btn-chat{flex:1;background:#0f2f33;color:white;border:none;padding:7px;border-radius:15px;font-size:10px;font-weight:700}.btn-call{flex:1;background:#25D366;color:white;border:none;padding:7px;border-radius:15px;font-size:10px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #e2eaea}.card-img{height:150px;background:#e9efef;position:relative}.card-img img{width:100%;height:100%;object-fit:cover}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #d0d8d9;display:flex;justify-content:space-around;padding:5px 0;z-index:999}.b-item{display:flex;flex-direction:column;align-items:center;font-size:9px;color:#6b7f80;border:none;background:none;cursor:pointer}.b-item.active{color:#0f2f33;font-weight:700}.b-center{background:#0f2f33;color:white;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:-18px;border:3px solid white}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:2000;align-items:flex-end}.modal.active{display:flex}.box{background:white;width:100%;max-height:92vh;overflow:auto;border-radius:14px 14px 0 0;padding:14px}.box input,.box select,.box textarea{width:100%;padding:11px;border:1px solid #d0d8d9;border-radius:8px;margin-top:6px;font-size:14px}.btn-main{background:#0f2f33;color:white;border:none;width:100%;padding:12px;border-radius:8px;font-weight:800;margin-top:10px;cursor:pointer}
 </style></head><body>
@@ -14,18 +17,17 @@
 <div class="search"><input id="q" placeholder="Search mobiles, bikes..." oninput="doFilter()"><button onclick="doFilter()">Search</button></div>
 <div class="chips" id="catChips"></div><div class="grid" id="grid"></div>
 <div class="bottom"><button class="b-item active">🏠 HOME</button><button class="b-item" onclick="checkLogin('myM')"><span>📦</span>MY ADS</button><button class="b-item" onclick="checkLogin('postM')"><div class="b-center">+</div>SELL</button><button class="b-item" onclick="openM('favM')"><span>❤️</span>FAV</button><button class="b-item" onclick="openM('accM')"><span>👤</span>ACCOUNT</button></div>
-
 <div class="modal" id="loginM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>👤 SM Market Login</h3><button onclick="closeM('loginM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div>
-<div id="step1"><p style="font-size:12px;color:#6b7f80;margin-top:8px">Apna naam aur WhatsApp number likho, account ban jayega!</p><label>Full Name *</label><input id="uName" placeholder="Atiq ur Rehman"><label>WhatsApp Number *</label><input id="uPhone" placeholder="03430864009" value="03430864009" type="tel"><label>City *</label><select id="uCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><button class="btn-main" onclick="sendOTP()">OTP Bhejo (123456)</button></div>
+<div id="step1"><p style="font-size:12px;color:#6b7f80;margin-top:8px">Apna naam aur WhatsApp number likho!</p><label>Full Name *</label><input id="uName" placeholder="Atiq ur Rehman"><label>WhatsApp Number *</label><input id="uPhone" placeholder="03430864009" value="03430864009" type="tel"><label>City *</label><select id="uCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><button class="btn-main" onclick="sendOTP()">OTP Bhejo (123456)</button></div>
 <div id="step2" style="display:none"><p style="font-size:13px;margin-top:10px">Demo code: <b>123456</b></p><label>6 Digit OTP *</label><input id="otpInput" placeholder="123456" type="number"><button class="btn-main" onclick="verifyOTP()">✅ Verify & Login</button></div>
 </div></div>
-
 <div class="modal" id="postM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>Post Ad - <span id="postUser"></span></h3><button onclick="closeM('postM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div>
 <label>Category</label><select id="pCat"><option>Mobiles</option><option>Vehicles</option><option>Property</option><option>Bikes</option></select><label>City</label><select id="pCity"><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option><option>Mureed Wala</option><option>Faisalabad</option></select><label>Title *</label><input id="pTitle" placeholder="Honda 125 2023"><label>Price Rs *</label><input id="pPrice" type="number" placeholder="185000"><label>Description *</label><textarea id="pDesc" placeholder="Condition..."></textarea><label>Image</label><input type="file" id="pImg" accept="image/*" onchange="loadImg(event)"><div id="prev" style="display:flex;gap:6px;margin-top:6px"></div><button class="btn-main" onclick="postAd()">✈️ Post Ad LIVE</button></div></div>
-
 <div class="modal" id="myM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>📦 Meri Ads - <span id="myPhone"></span></h3><button onclick="closeM('myM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div><div id="myList" style="margin-top:10px"></div></div></div>
-<div class="modal" id="favM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>❤️ Favorites</h3><button onclick="closeM('favM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div><div id="favList" style="margin-top:10px"><p style="text-align:center;color:#6b7f80;padding:20px">Abhi koi favorite nahi<br>❤️ dabao to yahan ayega</p></div></div></div>
+<div class="modal" id="favM"><div class="box"><div style="display:flex;justify-content:space-between"><h3>❤️ Favorites</h3><button onclick="closeM('favM')" style="border:none;background:#eef4f4;width:28px;height:28px;border-radius:50%">×</button></div><div id="favList" style="margin-top:10px"><p style="text-align:center;color:#6b7f80;padding:20px">Abhi koi favorite nahi</p></div></div></div>
 <div class="modal" id="accM"><div class="box" style="text-align:center"><div class="logo" style="width:80px;height:80px;margin:0 auto"><img src="logopng.jpg"></div><h3 id="accName">Atiq ur Rehman</h3><p id="accPhone" style="font-size:12px;color:#6b7f80">Owner - SM Market<br>Easypaisa: 03430864009</p><div style="margin-top:12px"><button class="btn-main" onclick="logout()" id="logoutBtn" style="display:none;background:#ff3b3b">Logout</button><button class="btn-main" onclick="closeM('accM');openM('loginM')" id="loginBtn2">Login Karo</button></div></div></div>
+
+<button id="installBtn" style="display:none;position:fixed;bottom:90px;left:12px;right:12px;background:#0f2f33;color:white;border:none;padding:14px;border-radius:10px;font-weight:800;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3)">📲 SM Market APP Install Karo</button>
 
 <script>
 let allAds=[]; let tempImg=""; let currentUser = JSON.parse(localStorage.getItem('sm_user')||'null');
@@ -53,7 +55,7 @@ window.verifyOTP=()=>{
   let otp=document.getElementById('otpInput').value.trim(); if(otp!='123456'){ alert('Demo code 123456 hai'); return; }
   let temp=JSON.parse(localStorage.getItem('temp_user')); currentUser={...temp, id:temp.phone, verified:true, joined:Date.now()};
   localStorage.setItem('sm_user', JSON.stringify(currentUser)); closeM('loginM'); updateLoginUI(); document.getElementById('step1').style.display='block'; document.getElementById('step2').style.display='none';
-  alert('✅ Welcome '+currentUser.name+'! Ab ads laga sakte ho!');
+  alert('✅ Welcome '+currentUser.name+'!');
 }
 window.logout=()=>{ if(confirm('Logout karna hai?')){ localStorage.removeItem('sm_user'); currentUser=null; updateLoginUI(); closeM('accM'); location.reload(); } }
 window.checkLogin=(modalId)=>{ if(!currentUser){ alert('Pehle Login karo!'); openM('loginM'); return; } if(modalId=='myM'){ renderMyAds(); } openM(modalId); }
@@ -71,48 +73,20 @@ function renderMyAds(){ if(!currentUser) return; let list=getStoredAds().filter(
 window.deleteMyAd=(title)=>{ if(!confirm('Delete?')) return; let list=getStoredAds(); list=list.filter(a=>a.title!=title); saveStoredAds(list); allAds=list; render(allAds); renderMyAds(); }
 window.chatSeller=(phone,title)=>{ let c=phone.replace(/[^0-9]/g,''); if(c.startsWith('0')) c='92'+c.substring(1); window.open('https://wa.me/'+c+'?text=Salam, SM Market: '+encodeURIComponent(title),'_blank'); }
 window.callSeller=(phone)=>{ window.open('tel:'+phone,'_self'); }
-
-// === BASIC OPEN/CLOSE (Pehle wale) ===
-window.openM=(id)=>document.getElementById(id).classList.add('active');
-window.closeM=(id)=>document.getElementById(id).classList.remove('active');
-
 let cats=['All','Mobiles','Vehicles','Property','Bikes']; let cDiv=document.getElementById('catChips'); cats.forEach((c,i)=>{ let b=document.createElement('div'); b.className='chip'+(i==0?' active':''); b.innerText=c; b.onclick=()=>{ document.querySelectorAll('#catChips .chip').forEach(x=>x.classList.remove('active')); b.classList.add('active'); doFilter(); }; cDiv.appendChild(b); });
 window.doFilter=()=>{ let q=document.getElementById('q').value.toLowerCase(); let cat=document.querySelector('#catChips .chip.active')?.innerText||'All'; let f=getStoredAds().filter(a=> a.title.toLowerCase().includes(q) && (cat=='All'||a.cat==cat)); render(f); }
 allAds=getStoredAds(); render(allAds);
 
-// FIX: Mobile Back Button se modal band ho, site nahi
-let modalHistory = [];
-const oldOpenM = window.openM;
-const oldCloseM = window.closeM;
+// === FIX BACK BUTTON ===
+let modalHistory = []; const _oldOpenM = (id)=>document.getElementById(id).classList.add('active'); const _oldCloseM = (id)=>document.getElementById(id).classList.remove('active');
+window.openM = (id) => { document.getElementById(id).classList.add('active'); if(!modalHistory.includes(id)){ history.pushState({modal:id}, ''); modalHistory.push(id); } }
+window.closeM = (id) => { document.getElementById(id).classList.remove('active'); modalHistory = modalHistory.filter(m => m != id); if(history.state && history.state.modal == id){ history.back(); } }
+window.addEventListener('popstate', () => { if(modalHistory.length > 0){ let last = modalHistory.pop(); document.getElementById(last)?.classList.remove('active'); } });
+document.querySelectorAll('.modal').forEach(m => { m.addEventListener('click', (e) => { if(e.target == m) window.closeM(m.id); }); });
 
-window.openM = (id) => {
-  document.getElementById(id).classList.add('active');
-  if(!modalHistory.includes(id)){
-    history.pushState({modal:id}, '');
-    modalHistory.push(id);
-  }
-}
-
-window.closeM = (id) => {
-  document.getElementById(id).classList.remove('active');
-  modalHistory = modalHistory.filter(m => m != id);
-  if(history.state && history.state.modal == id){
-    history.back();
-  }
-}
-
-// Jab mobile ka back button dabay
-window.addEventListener('popstate', (e) => {
-  if(modalHistory.length > 0){
-    let last = modalHistory.pop();
-    document.getElementById(last)?.classList.remove('active');
-  }
-});
-
-// Bahar click karne se bhi band
-document.querySelectorAll('.modal').forEach(m => {
-  m.addEventListener('click', (e) => {
-    if(e.target == m) window.closeM(m.id);
-  });
-});
+// === APP INSTALL ===
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').style.display='block'; });
+document.getElementById('installBtn')?.addEventListener('click', async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); let r = await deferredPrompt.userChoice; if(r.outcome=='accepted') document.getElementById('installBtn').style.display='none'; deferredPrompt = null; });
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script></body></html>
