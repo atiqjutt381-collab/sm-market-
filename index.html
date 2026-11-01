@@ -83,5 +83,60 @@ setTimeout(function(){
   }
 },800);
 </script>
-</div></body></html>
-
+<style>
+#adDetailPage, #adDetail{
+  background:#f5f5f5 !important;
+}
+#adDetailPage img, #adDetail img{
+  width:100% !important;
+  height:48vh !important;
+  object-fit:cover !important;
+  border-radius:0 !important;
+  display:block !important;
+}
+.olx-bottom-bar{
+  position:fixed !important;
+  bottom:0 !important;
+  left:0 !important;
+  right:0 !important;
+  background:white !important;
+  border-top:1px solid #ddd !important;
+  padding:10px 12px !important;
+  display:flex !important;
+  gap:10px !important;
+  z-index:99999 !important;
+}
+.olx-chat-btn{
+  flex:1 !important;
+  background:#002f34 !important;
+  color:white !important;
+  border:none !important;
+  padding:14px !important;
+  border-radius:6px !important;
+  font-weight:700 !important;
+}
+.olx-call-btn{
+  flex:1 !important;
+  background:white !important;
+  color:#002f34 !important;
+  border:2px solid #002f34 !important;
+  padding:14px !important;
+  border-radius:6px !important;
+  font-weight:700 !important;
+}
+</style>
+<script>
+setInterval(function(){
+  var d=document.querySelector('#adDetailPage, #adDetail');
+  if(!d || d.querySelector('.olx-bottom-bar')) return;
+  if(d.offsetHeight>100){
+    var b=document.createElement('div');
+    b.className='olx-bottom-bar';
+    b.innerHTML='<button class=olx-chat-btn>Chat</button><button class=olx-call-btn>Call</button>';
+    d.appendChild(b);
+    d.style.paddingBottom='80px';
+  }
+},1000);
+</script>
+</body></html>
+ 
