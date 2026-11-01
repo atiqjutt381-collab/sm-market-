@@ -1,21 +1,21 @@
 {
   "name": "SM FAISALABAD MARKET",
   "short_name": "SM Market",
-  "description": "Samundri Gojra Toba ka apna OLX - Buy & Sell",
+  "description": "Samundri Gojra Toba ka Market",
   "start_url": "/sm-market-/",
   "display": "standalone",
   "background_color": "#0f2f33",
   "theme_color": "#0f2f33",
   "icons": [
     {
-      "src": "logopng.jpg",
+      "src": "logo.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "logopng.jpg",
+      "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
