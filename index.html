@@ -59,40 +59,21 @@ renderCats();renderHome();upd();
 <div style="margin-top:20px"><button onclick="closeDetail()" style="width:100%;background:#f1f5f9;border:1px solid #e2e8f0;padding:12px;border-radius:12px;font-weight:700">← Back to Home</button></div>
 </div>
 <style>
-#adDetailPage, #adDetail, div[style*="position: fixed"]{
- height:100vh !important;
- overflow-y:auto !important;
- background:white !important;
-}
-#adDetailPage img, #adDetail img{
- width:100% !important;
- height:48vh !important;
- max-height:380px !important;
- object-fit:cover !important;
-}
-</style> 
-  <script>
-// Purana SM hatake naya logo lagao
-setTimeout(function(){
-  var all=document.querySelectorAll('div,span,b');
-  for(var i=0;i<all.length;i++){
-    if(all[i].innerText.trim()=='SM' && all[i].children.length==0 && all[i].offsetWidth<100){
-      all[i].outerHTML='<img src="logopng.jpg?v=99" style="width:52px;height:52px;border-radius:13px;background:white;object-fit:contain;padding:3px">';
-      break;
-    }
-  }
-},800);
-</script>
-<style>
 #adDetailPage, #adDetail{
-  background:#f5f5f5 !important;
+  background:white !important;
+  padding-top:0 !important;
+  height:100vh !important;
+  overflow-y:auto !important;
 }
 #adDetailPage img, #adDetail img{
   width:100% !important;
-  height:48vh !important;
+  height:44vh !important;
+  min-height:280px !important;
   object-fit:cover !important;
-  border-radius:0 !important;
   display:block !important;
+  border-radius:0 !important;
+  margin:0 !important;
+  background:#000 !important;
 }
 .olx-bottom-bar{
   position:fixed !important;
@@ -106,30 +87,23 @@ setTimeout(function(){
   gap:10px !important;
   z-index:99999 !important;
 }
-.olx-chat-btn{
-  flex:1 !important;
-  background:#002f34 !important;
-  color:white !important;
-  border:none !important;
-  padding:14px !important;
-  border-radius:6px !important;
-  font-weight:700 !important;
-}
-.olx-call-btn{
-  flex:1 !important;
-  background:white !important;
-  color:#002f34 !important;
-  border:2px solid #002f34 !important;
-  padding:14px !important;
-  border-radius:6px !important;
-  font-weight:700 !important;
-}
+.olx-chat-btn{flex:1 !important;background:#002f34 !important;color:white !important;border:none !important;padding:14px !important;border-radius:6px !important;font-weight:700 !important;}
+.olx-call-btn{flex:1 !important;background:white !important;color:#002f34 !important;border:2px solid #002f34 !important;padding:14px !important;border-radius:6px !important;font-weight:700 !important;}
 </style>
 <script>
+setTimeout(function(){
+  var all=document.querySelectorAll('div,span,b');
+  for(var i=0;i<all.length;i++){
+    if(all[i].innerText.trim()=='SM' && all[i].children.length==0 && all[i].offsetWidth<100){
+      all[i].outerHTML='<img src="logopng.jpg?v=99" style="width:52px;height:52px;border-radius:13px;background:white;object-fit:contain;padding:3px">';
+      break;
+    }
+  }
+},800);
 setInterval(function(){
   var d=document.querySelector('#adDetailPage, #adDetail');
   if(!d || d.querySelector('.olx-bottom-bar')) return;
-  if(d.offsetHeight>100){
+  if(d.offsetHeight>80){
     var b=document.createElement('div');
     b.className='olx-bottom-bar';
     b.innerHTML='<button class=olx-chat-btn>Chat</button><button class=olx-call-btn>Call</button>';
@@ -139,4 +113,3 @@ setInterval(function(){
 },1000);
 </script>
 </body></html>
- 
