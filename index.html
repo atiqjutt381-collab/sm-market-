@@ -1,122 +1,210 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SM Faisalabad Market - 46 Cities</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2563eb">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SM FAISALABAD MARKET - Buy & Sell in 46 Cities</title>
+<link rel="manifest" href="./manifest.json">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#f5f5f5;padding-bottom:85px}
-.header{background:#2563eb;color:white;padding:10px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
-.logo-circle{width:42px;height:42px;background:white;color:#2563eb;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
-.header-text{line-height:1.1}
-.header-text b{font-size:14px}
-.header-text span{background:white;color:#2563eb;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800;margin-left:6px}
-.red-dot{background:red;color:white;border-radius:50%;padding:2px 7px;font-size:12px;font-weight:900;margin-left:auto}
-.search-bar{padding:10px;background:white;display:flex;gap:8px;position:sticky;top:60px;z-index:90}
-.search-bar input{flex:1;padding:11px;border:1px solid #ddd;border-radius:12px}
-.chips{display:flex;gap:6px;overflow:auto;padding:8px;background:white}
-.chip{white-space:nowrap;padding:6px 12px;border-radius:20px;background:#eee;font-size:12px;cursor:pointer}
-.chip.active{background:#2563eb;color:white}
+:root{--dark:#002f34;--dark2:#01363b;--teal:#23e5db;--light:#f7f8f9;--border:#e0e0e0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif}
+body{background:var(--light);padding-bottom:80px;color:var(--dark)}
+.header{background:var(--dark);color:white;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-weight:900;font-size:18px;letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
+.logo img{width:36px;height:36px;border-radius:6px;background:white;object-fit:cover}
+.logo span{color:var(--teal)}
+.top-cities{font-size:11px;opacity:0.9;max-width:40%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-wrap{padding:12px;background:white;display:flex;gap:10px;position:sticky;top:50px;z-index:99;border-bottom:1px solid var(--border)}
+.search-wrap input{flex:1;padding:12px 14px;border-radius:6px;border:1.8px solid var(--dark);font-size:15px;outline:none}
+.search-wrap button{background:var(--dark);color:white;border:none;padding:0 22px;border-radius:6px;font-weight:700;font-size:16px;cursor:pointer}
+.chip-wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:white;white-space:nowrap;scrollbar-width:none}
+.chip-wrap::-webkit-scrollbar{display:none}
+.chip{padding:7px 14px;border-radius:20px;border:1.5px solid #c0c0c0;background:white;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.chip.active{background:var(--dark);color:white;border-color:var(--dark)}
+.page{display:none;padding:0}.page.active{display:block}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:white;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.card img{width:100%;height:150px;object-fit:cover}
-.card-body{padding:8px}
-.price{font-weight:900;color:#2563eb;font-size:14px}
-.title{font-size:13px;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
-.city{font-size:11px;color:gray}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ddd;z-index:100}
-.nav-item{text-align:center;font-size:11px;cursor:pointer;color:#666}
-.nav-item.active{color:#2563eb;font-weight:800}
-.nav-circle{width:34px;height:34px;background:#eee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;font-size:18px}
-.nav-item.active .nav-circle{background:#2563eb;color:white}
-.page{display:none;padding:12px}
-.page.active{display:block}
-.plan{border:2px solid #ddd;padding:12px;border-radius:12px;margin:8px 0;cursor:pointer;background:white}
-.plan.selected{border-color:#2563eb;background:#eef2ff}
+.card{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer}
+.card img{width:100%;height:165px;object-fit:cover;background:#eee}
+.card-body{padding:8px 10px}
+.price{font-weight:800;font-size:16px;color:var(--dark)}.title{font-size:14px;margin:3px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.city{font-size:12px;color:#666}
+.buybtn{margin-top:7px;background:var(--dark);color:white;width:100%;border:none;padding:8px;border-radius:6px;font-weight:700;font-size:13px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0;z-index:200}
+.b-item{display:flex;flex-direction:column;align-items:center;font-size:11px;color:#666;cursor:pointer;flex:1}
+.b-item.active{color:var(--dark);font-weight:700}
+.b-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:#f0f0f0}
+.b-item.active .b-icon{background:var(--dark);color:white}
+.b-plus{width:56px;height:56px;background:var(--dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:36px;margin-top:-18px;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.form{padding:16px;background:white;margin:10px;border-radius:10px}
+.form input,.form select,.form textarea{width:100%;padding:12px;margin:8px 0;border:1.5px solid #ccc;border-radius:8px;font-size:15px}
+.form textarea{min-height:80px}
+.plan{border:2px solid #ddd;padding:12px;border-radius:10px;margin:8px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.plan.selected{border-color:var(--dark);background:#e8f6f5}
+.easypaisa{background:#ffe8f0;border:2px dashed #e91e63;padding:12px;border-radius:10px;margin:10px 0;display:none}
+.easypaisa.show{display:block}
+.btn-main{background:var(--dark);color:white;border:none;padding:14px;width:100%;border-radius:8px;font-size:16px;font-weight:800;margin-top:10px;cursor:pointer}
+.admin-card{background:white;margin:10px;padding:12px;border-radius:10px;border:1px solid var(--border)}
+.admin-card img{width:100%;max-height:220px;object-fit:contain;margin:8px 0;border-radius:6px;background:#fafafa}
+.act-btn{padding:8px 14px;border:none;border-radius:6px;color:white;font-weight:700;margin:4px;cursor:pointer}
+.install{position:fixed;bottom:85px;right:14px;background:#002f34;color:white;padding:12px 18px;border-radius:30px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,0.2);cursor:pointer;z-index:190;display:none}
+.small{font-size:12px;color:#666}
+.badge-free{background:#d4edda;color:#155724;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.badge-paid{background:#fff3cd;color:#856404;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="logo-circle">SM</div>
-<div class="header-text"><b>SM FAISALABAD MARKET</b><br><span>46 Cities</span></div>
-<div class="red-dot" id="pendingCount" style="display:none">0</div>
-<div style="margin-left:8px;display:flex;gap:6px;align-items:center">
-<button id="loginBtn" onclick="openLogin()" style="background:white;color:#2563eb;border:none;padding:6px 12px;border-radius:20px;font-weight:900;font-size:11px">Login</button>
-<span id="userName" style="display:none;font-size:11px;font-weight:900"></span>
-<button id="logoutBtn" onclick="logout()" style="display:none;background:#ff3b30;color:white;border:none;padding:5px 8px;border-radius:20px;font-size:10px">Logout</button>
+<div class="logo"><img src="./logopng.jpg" onerror="this.style.display='none'">SM <span>FAISALABAD</span> MARKET</div>
+<div class="top-cities">Samundri | Gojra | Toba Tek Singh</div>
 </div>
+<div class="search-wrap"><input id="searchInput" placeholder="Find Cars, Mobiles, Property..."><button onclick="doSearch()">Search</button></div>
+<div class="chip-wrap" id="catChips"></div>
+<div class="chip-wrap" id="cityChips" style="padding-top:0"></div>
+<div id="page-home" class="page active"><div id="homeGrid" class="grid"></div></div>
+<div id="page-chats" class="page"><div class="form"><h2>Chats</h2><div id="chatList"><p class="small">Login to see your chats. Buyers chat about your ads.</p></div></div></div>
+<div id="page-sell" class="page"><div class="form">
+<h2>Sell Fast Now</h2>
+<p class="small">Add details and choose plan</p>
+<input id="adTitle" placeholder="Title e.g. iPhone 14">
+<input id="adPrice" type="number" placeholder="Price Rs">
+<select id="adCity"></select>
+<select id="adCategory"></select>
+<textarea id="adDesc" placeholder="Description"></textarea>
+<input id="adImage" placeholder="Image URL">
+<input type="file" id="adImageFile" accept="image/*">
+<div style="margin-top:12px"><b>Choose Plan</b></div>
+<div class="plan selected" onclick="selectPlan('free',this)"><div><b>FREE - Rs 0</b><div class="small">Lifetime Free Ad</div></div><span class="badge-free">FREE</span></div>
+<div class="plan" onclick="selectPlan('14days',this)"><div><b>14 Days - Rs 499</b><div class="small">Featured Top 14 Days</div></div><span class="badge-paid">PAID</span></div>
+<div class="plan" onclick="selectPlan('30days',this)"><div><b>30 Days - Rs 999</b><div class="small">Featured Top 30 Days + Urgent</div></div><span class="badge-paid">PAID</span></div>
+<div id="easypaisaBox" class="easypaisa">
+<h3 style="color:#e91e63">Easypaisa Payment Details</h3>
+<p style="margin:6px 0"><b>Name:</b> Atiq ur rehman</p>
+<p style="margin:6px 0"><b>Number:</b> 03430864009</p>
+<p class="small" style="color:#e91e63">Send payment and upload screenshot. Admin will approve after verification.</p>
+<input type="file" id="payScreenshot" accept="image/*">
+<input id="payScreenshotUrl" placeholder="Or paste screenshot URL">
 </div>
-<div class="search-bar"><input id="search" placeholder="Search..." oninput="renderHome()"></div>
-<div class="chips" id="catChips"></div>
-<div id="homePage" class="page active"><div id="homeGrid" class="grid"></div></div>
-<div id="myAdsPage" class="page">
-<h3>My Ads</h3>
-<input id="adTitle" placeholder="Title" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0">
-<input id="adPrice" placeholder="Price" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0">
-<select id="adCity" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"><option>Faisalabad</option><option>Samundri</option><option>Gojra</option><option>Toba Tek Singh</option></select>
-<select id="adCat" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"><option>Mobiles</option><option>Cars</option><option>Property</option><option>Bikes</option><option>Electronics</option></select>
-<textarea id="adDesc" placeholder="Description" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"></textarea>
-<input id="adPhone" placeholder="WhatsApp 03XXXXXXXXX" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0">
-<input id="adImg" placeholder="Image URL" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0">
-<div class="plan selected" onclick="selPlan(this,'FREE')"><b>FREE - Rs 0</b></div>
-<div class="plan" onclick="selPlan(this,'14D')"><b>14 Days - Rs 499</b></div>
-<div class="plan" onclick="selPlan(this,'30D')"><b>30 Days - Rs 999</b></div>
-<div id="payBox" style="display:none;background:#fff3e0;padding:12px;border-radius:10px;margin:8px 0"><b>Easypaisa: 03430864009 - Atiq</b><br><small>Screenshot lazmi</small><br><input id="payShot" type="file" accept="image/*"></div>
-<button onclick="postAd()" style="width:100%;background:#2563eb;color:white;padding:14px;border:none;border-radius:12px;font-weight:900;margin-top:10px">Post Ad</button>
-<div id="myAdsList" style="margin-top:15px"></div>
+<button class="btn-main" onclick="postAd()">Post Ad Now</button>
+<p id="postStatus" class="small"></p>
+</div></div>
+<div id="page-myads" class="page"><div id="myAdsList" class="form"><h2>My Ads</h2></div></div>
+<div id="page-account" class="page"><div class="form" id="accountBox"><h2>My Account</h2></div></div>
+<div id="page-admin" class="page"><div class="form"><h2>Admin Panel</h2><p class="small">Easypaisa: 03430864009 - Atiq ur rehman - Verify payment screenshot before approve.</p></div><div id="adminList"></div></div>
+<div id="installBtn" class="install" onclick="installApp()">App Install</div>
+<div class="bottom">
+<div class="b-item active" onclick="navTo('home')"><div class="b-icon">🏠</div>HOME</div>
+<div class="b-item" onclick="navTo('chats')"><div class="b-icon">💬</div>CHATS</div>
+<div class="b-item" onclick="navTo('sell')"><div class="b-plus">+</div>SELL</div>
+<div class="b-item" onclick="navTo('myads')"><div class="b-icon">📄</div>MY ADS</div>
+<div class="b-item" onclick="navTo('account')"><div class="b-icon">👤</div>ACCOUNT</div>
 </div>
-<div id="adminPage" class="page"><h3>Admin</h3><div id="adminList"></div></div>
-<div id="chatsPage" class="page"><h3>Chats</h3></div>
-<div class="bottom-nav">
-<div class="nav-item active" onclick="showPage('homePage',this)"><div class="nav-circle">🏠</div>Home</div>
-<div class="nav-item" onclick="showPage('myAdsPage',this)"><div class="nav-circle">➕</div>My Ads</div>
-<div class="nav-item" onclick="showPage('adminPage',this)"><div class="nav-circle">🛡️</div>Admin</div>
-<div class="nav-item" onclick="showPage('chatsPage',this)"><div class="nav-circle">💬</div>Chats</div>
-</div>
-<div id="adDetail" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;padding:15px;overflow:auto"><div style="background:white;border-radius:18px;max-width:420px;margin:20px auto;overflow:hidden"><img id="dImg" style="width:100%;height:320px;object-fit:cover"><div style="padding:15px"><div id="dPrice" style="font-weight:900;font-size:24px;color:#2563eb"></div><div id="dTitle" style="font-size:18px;margin:6px 0;font-weight:700"></div><div id="dCity" style="color:gray"></div><div id="dDesc" style="margin:12px 0;background:#f5f5f5;padding:12px;border-radius:10px"></div><a id="dChat" href="#" target="_blank" style="display:block;background:#25D366;color:white;text-align:center;padding:14px;border-radius:12px;font-weight:900;text-decoration:none">WhatsApp Chat</a><button onclick="document.getElementById('adDetail').style.display='none'" style="width:100%;margin-top:8px;padding:12px;border-radius:12px;border:1px solid #ddd">Close</button></div></div></div>
-<div id="loginBox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:10000;padding:15px"><div style="background:white;border-radius:18px;max-width:360px;margin:40px auto;padding:22px"><h3 style="text-align:center">Login</h3><div id="signupFields" style="display:none"><input id="sName" placeholder="Naam" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"><input id="sCity" placeholder="City" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"></div><input id="lEmail" placeholder="Mobile 03XXXXXXXXX" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"><input id="lPass" type="password" placeholder="Password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0"><button id="authBtn" onclick="handleAuth()" style="width:100%;background:#2563eb;color:white;padding:12px;border:none;border-radius:10px;font-weight:900">Login</button><div style="font-size:12px;text-align:center;margin-top:10px"><span id="toggleText">Account nahi hai?</span> <span style="color:#2563eb;font-weight:800;cursor:pointer" onclick="toggleMode()">Signup</span></div><button onclick="document.getElementById('loginBox').style.display='none'" style="width:100%;background:#eee;padding:10px;border:none;border-radius:10px;margin-top:10px">Close</button><div id="msg" style="color:red;font-size:12px;text-align:center;margin-top:8px"></div></div></div>
-<button id="installBtn" style="display:none;position:fixed;bottom:85px;right:15px;background:#25D366;color:white;border:none;padding:12px 18px;border-radius:25px;font-weight:900;z-index:9999">App Install</button>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
+  apiKey: "AIzaSyBs8zQmN5h3d2c7v1e9f4g6h8j0k1l2m3n",
   authDomain: "sm-market-f7283.firebaseapp.com",
   projectId: "sm-market-f7283",
   storageBucket: "sm-market-f7283.firebasestorage.app",
-  messagingSenderId: "467902826161",
-  appId: "1:467902826161:web:69a2a4f1c9ef47bf050490",
-  measurementId: "G-P0T153SZ4Q"
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcd1234ef5678"
 };
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-let ads=[];let curCat='All';let selPlanType='FREE';let isSignup=false;
-const cats=['All','Mobiles','Cars','Property','Bikes','Electronics'];
-function initChips(){const c=document.getElementById('catChips');c.innerHTML=cats.map(cat=>`<div class="chip ${cat===curCat?'active':''}" onclick="setCat('${cat}')">${cat}</div>`).join('');}
-window.setCat=(cat)=>{curCat=cat;initChips();renderHome();}
-onSnapshot(query(collection(db,"ads"),orderBy("time","desc")),(snap)=>{ads=[];snap.forEach(d=>{ads.push({id:d.id,...d.data()});});renderHome();renderMyAds();renderAdmin();const p=ads.filter(a=>a.status!=='APPROVED').length;const el=document.getElementById('pendingCount');el.innerText=p;el.style.display=p>0?'block':'none';});
-window.renderHome=()=>{const grid=document.getElementById('homeGrid');let list=ads.filter(a=>a.status==='APPROVED');if(curCat!=='All') list=list.filter(a=>a.cat===curCat);const s=(document.getElementById('search').value||'').toLowerCase();if(s) list=list.filter(a=>(a.title||'').toLowerCase().includes(s));if(list.length===0){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:gray;padding:30px">Koi Ad nahi</p>';return;}grid.innerHTML=list.map(a=>`<div class="card" onclick="openAd('${a.id}')"><img src="${a.img||'https://via.placeholder.com/300'}"><div class="card-body"><div class="price">Rs ${a.price}</div><div class="title">${a.title}</div><div class="city">${a.location||''} ${a.plan!=='FREE'?'⭐':''}</div></div></div>`).join('');}
-window.openAd=(id)=>{const a=ads.find(x=>x.id===id);if(!a) return;document.getElementById('dImg').src=a.img||'https://via.placeholder.com/300';document.getElementById('dPrice').innerText='Rs '+a.price;document.getElementById('dTitle').innerText=a.title;document.getElementById('dCity').innerText=(a.location||'')+' - '+(a.cat||'');document.getElementById('dDesc').innerText=a.desc||'';const phone=(a.phone||'923430864009').toString().replace(/[^0-9]/g,'');document.getElementById('dChat').href='https://wa.me/'+phone+'?text=Salam '+encodeURIComponent(a.title);document.getElementById('adDetail').style.display='block';}
-window.selPlan=(el,type)=>{document.querySelectorAll('.plan').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');selPlanType=type;document.getElementById('payBox').style.display=(type==='FREE')?'none':'block';}
-window.postAd=async()=>{const title=document.getElementById('adTitle').value.trim();const price=document.getElementById('adPrice').value.trim();const city=document.getElementById('adCity').value;const cat=document.getElementById('adCat').value;const desc=document.getElementById('adDesc').value.trim();const phone=document.getElementById('adPhone').value.trim();const img=document.getElementById('adImg').value.trim()||'https://via.placeholder.com/300';const shot=document.getElementById('payShot').files[0];if(!title||!price){alert('Title Price likho');return;}if(selPlanType!=='FREE'&&!shot){alert('Paid ke liye screenshot lazmi 03430864009');return;}const status=(selPlanType==='FREE')?'APPROVED':'PENDING_PAYMENT';await addDoc(collection(db,'ads'),{title,price,location:city,cat,desc,phone,img,status,plan:selPlanType,time:serverTimestamp(),uid:auth.currentUser?.uid||'guest',paymentShot:shot?shot.name:'none'});alert(selPlanType==='FREE'?'Ad Post Ho Gaya':'Pending - Admin check karega');}
-window.renderMyAds=()=>{const my=auth.currentUser?ads.filter(a=>a.uid===auth.currentUser.uid):[];document.getElementById('myAdsList').innerHTML=my.map(a=>`<div style="background:white;padding:10px;border-radius:10px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - ${a.plan}</span><span style="color:${a.status==='APPROVED'?'green':'orange'}">${a.status}</span></div>`).join('');}
-window.renderAdmin=()=>{const list=document.getElementById('adminList');list.innerHTML=ads.map(a=>`<div style="background:white;padding:12px;border-radius:10px;margin:8px 0"><b>${a.title}</b> - Rs ${a.price} - ${a.plan} - ${a.paymentShot||''}<br><span style="font-weight:900;color:${a.status==='APPROVED'?'green':'red'}">${a.status}</span><div style="margin-top:8px;display:flex;gap:6px"><button onclick="updateStatus('${a.id}','APPROVED')" style="background:green;color:white;border:none;padding:7px 12px;border-radius:6px">Approve</button><button onclick="updateStatus('${a.id}','REJECTED')" style="background:red;color:white;border:none;padding:7px 12px;border-radius:6px">Reject</button><button onclick="deleteAd('${a.id}')" style="background:#333;color:white;border:none;padding:7px 12px;border-radius:6px">Delete</button></div></div>`).join('');}
-window.updateStatus=async(id,status)=>{await updateDoc(doc(db,'ads',id),{status});}
-window.deleteAd=async(id)=>{if(confirm('Delete?')) await deleteDoc(doc(db,'ads',id));}
-window.openLogin=()=>{document.getElementById('loginBox').style.display='block';}
-window.toggleMode=()=>{isSignup=!isSignup;document.getElementById('signupFields').style.display=isSignup?'block':'none';document.getElementById('authBtn').innerText=isSignup?'Signup':'Login';}
-window.handleAuth=async()=>{const phone=document.getElementById('lEmail').value.trim();const pass=document.getElementById('lPass').value.trim();const msg=document.getElementById('msg');if(phone.length<10||pass.length<4){msg.innerText='Phone Password sahi likho';return;}const email=phone.replace(/[^0-9]/g,'')+'@smfaisalabad.com';msg.innerText='Wait...';try{if(isSignup){const name=document.getElementById('sName').value.trim()||'User';const city=document.getElementById('sCity').value.trim()||'Faisalabad';const cred=await createUserWithEmailAndPassword(auth,email,pass);await setDoc(doc(db,'users',cred.user.uid),{name,phone,city,created:new Date().toISOString()});}else{await signInWithEmailAndPassword(auth,email,pass);}document.getElementById('loginBox').style.display='none';msg.innerText='';}catch(e){msg.innerText=e.message;}}
-onAuthStateChanged(auth,async(user)=>{const lb=document.getElementById('loginBtn');const un=document.getElementById('userName');const lo=document.getElementById('logoutBtn');if(user){const snap=await getDoc(doc(db,'users',user.uid));const data=snap.exists()?snap.data():{name:user.email.split('@')[0]};lb.style.display='none';un.style.display='block';un.innerText=data.name;lo.style.display='block';renderMyAds();}else{lb.style.display='block';un.style.display='none';lo.style.display='none';}});
-window.logout=async()=>{await signOut(auth);location.reload();}
-window.showPage=(id,el)=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(el) el.classList.add('active');}
-initChips();
-let deferredPrompt;window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
-document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferredPrompt){alert('Browser menu > Add to Home Screen');return;}deferredPrompt.prompt();const c=await deferredPrompt.userChoice;if(c.outcome==='accepted') alert('App Install Ho Raha Hai!');deferredPrompt=null;document.getElementById('installBtn').style.display='none';});
+
+let app; try{ app=initializeApp(firebaseConfig); }catch(e){ app=initializeApp(firebaseConfig,"second"); }
+const auth=getAuth(app); const db=getFirestore(app);
+
+const cities46=["Samundri","Gojra","Toba Tek Singh","Faisalabad","Jaranwala","Tandlianwala","Kamalia","Pir Mahal","Mamun Kanjan","Jhang","Chiniot","Lahore","Sargodha","Sahiwal","Okara","Multan","Bahawalpur","Kasur","Sheikhupura","Gujranwala","Gujrat","Sialkot","Rawalpindi","Islamabad","Peshawar","Quetta","Karachi","Hyderabad","Sukkur","Larkana","Rahim Yar Khan","Burewala","Vehari","Khanewal","Bhawana","Lalian","Shorkot","Jhumra","Chak Jhumra","Dijkot","Khurrianwala","Murree","Jhelum","Attock","Mianwali"];
+const categories=[{id:"all",name:"All",icon:"🌐"},{id:"mobiles",name:"Mobiles",icon:"📱"},{id:"vehicles",name:"Vehicles",icon:"🚗"},{id:"property",name:"Property",icon:"🏠"},{id:"bikes",name:"Bikes",icon:"🏍️"},{id:"fashion",name:"Fashion",icon:"👕"},{id:"electronics",name:"Electronics",icon:"💻"},{id:"jobs",name:"Jobs",icon:"💼"},{id:"services",name:"Services",icon:"🔧"},{id:"animals",name:"Animals",icon:"🐓"},{id:"furniture",name:"Furniture",icon:"🛋️"}];
+
+let selectedPlan="free"; let selectedCity="All Cities"; let selectedCat="all"; let currentUser=null; let deferredPrompt=null;
+
+window.selectPlan=(plan,el)=>{selectedPlan=plan;document.querySelectorAll('.plan').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');const box=document.getElementById('easypaisaBox');if(plan!=='free')box.classList.add('show');else box.classList.remove('show');};
+
+function renderChips(){
+ const catDiv=document.getElementById('catChips');
+ catDiv.innerHTML=categories.map(c=>`<div class="chip ${selectedCat===c.id?'active':''}" onclick="filterCat('${c.id}')">${c.icon} ${c.name}</div>`).join('');
+ const cityDiv=document.getElementById('cityChips');
+ cityDiv.innerHTML=`<div class="chip ${selectedCity==='All Cities'?'active':''}" onclick="filterCity('All Cities')">All Cities</div>`+cities46.slice(0,12).map(ct=>`<div class="chip ${selectedCity===ct?'active':''}" onclick="filterCity('${ct}')">${ct}</div>`).join('');
+ document.getElementById('adCity').innerHTML=cities46.map(c=>`<option value="${c}">${c}</option>`).join('');
+ document.getElementById('adCategory').innerHTML=categories.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+}
+window.filterCat=(id)=>{selectedCat=id;renderChips();loadAds();};
+window.filterCity=(city)=>{selectedCity=city;renderChips();loadAds();};
+window.doSearch=()=>{loadAds();};
+window.navTo=(p)=>{
+ document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+ document.getElementById('page-'+p).classList.add('active');
+ document.querySelectorAll('.b-item').forEach(b=>b.classList.remove('active'));
+ const map={home:0,chats:1,sell:2,myads:3,account:4}; const idx=map[p]||0;
+ document.querySelectorAll('.b-item')[idx]?.classList.add('active');
+ if(p==='home')loadAds(); if(p==='myads')loadMyAds(); if(p==='account')renderAccount(); if(p==='admin')loadAdmin();
+};
+function toBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});}
+window.postAd=async()=>{
+ const title=document.getElementById('adTitle').value.trim();
+ const price=document.getElementById('adPrice').value.trim();
+ const city=document.getElementById('adCity').value;
+ const category=document.getElementById('adCategory').value;
+ const desc=document.getElementById('adDesc').value.trim();
+ let image=document.getElementById('adImage').value.trim();
+ let payImg=document.getElementById('payScreenshotUrl').value.trim();
+ const statusEl=document.getElementById('postStatus');
+ if(!currentUser){statusEl.textContent="Please login first from Account page.";navTo('account');return;}
+ if(!title||!price){statusEl.textContent="Title and Price required";return;}
+ const imgFile=document.getElementById('adImageFile').files[0]; if(imgFile){image=await toBase64(imgFile);}
+ const payFile=document.getElementById('payScreenshot').files[0]; if(payFile){payImg=await toBase64(payFile);}
+ const adData={title,price:Number(price),city,category,description:desc,image:image||"https://via.placeholder.com/300x300?text=No+Image",paymentScreenshot:payImg||"",plan:selectedPlan,status:selectedPlan==='free'?'approved':'pending',userId:currentUser.uid,userEmail:currentUser.email,createdAt:Date.now()};
+ try{statusEl.textContent="Posting...";await addDoc(collection(db,"ads"),adData);statusEl.textContent="Ad posted! "+(selectedPlan==='free'?"Approved":"Waiting for admin approval");setTimeout(()=>{navTo('home');},1000);}catch(e){statusEl.textContent="Error: "+e.message;}
+};
+async function loadAds(){
+ const grid=document.getElementById('homeGrid'); const search=document.getElementById('searchInput').value.toLowerCase();
+ grid.innerHTML="<p class='small' style='padding:20px'>Loading...</p>";
+ try{
+  const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc")));
+  let ads=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;ads.push(data);});
+  ads=ads.filter(a=>a.status==='approved');
+  if(selectedCat!=='all')ads=ads.filter(a=>a.category===selectedCat);
+  if(selectedCity!=='All Cities')ads=ads.filter(a=>a.city===selectedCity);
+  if(search)ads=ads.filter(a=>(a.title||"").toLowerCase().includes(search)||(a.city||"").toLowerCase().includes(search));
+  if(ads.length===0){grid.innerHTML="<p style='padding:20px'>No ads found. Be first to post!</p>";return;}
+  grid.innerHTML=ads.map(ad=>`<div class="card" onclick="openChat('${ad.id}')"><img src="${ad.image}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()} ${ad.plan!=='free'?'<span class="badge-paid">⭐</span>':''}</div><div class="title">${ad.title}</div><div class="city">${ad.city} • ${ad.category}</div><button class="buybtn">Chat - Buy Now</button></div></div>`).join('');
+ }catch(e){grid.innerHTML="<p style='padding:20px'>Error: "+e.message+"</p>";}
+}
+async function loadMyAds(){
+ const box=document.getElementById('myAdsList'); if(!currentUser){box.innerHTML="<h2>My Ads</h2><p class='small'>Please login.</p>";return;}
+ box.innerHTML="<h2>My Ads</h2><p class='small'>Loading...</p>"; const snap=await getDocs(query(collection(db,"ads"),where("userId","==",currentUser.uid)));
+ let html="<h2>My Ads</h2>"; snap.forEach(d=>{const ad=d.data();html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - <span style="color:${ad.status==='approved'?'green':'orange'}">${ad.status.toUpperCase()}</span> - Plan: ${ad.plan}<br><img src="${ad.image}"></div>`;}); box.innerHTML=html||"<h2>My Ads</h2><p>No ads yet</p>";
+}
+async function loadAdmin(){
+ const list=document.getElementById('adminList'); list.innerHTML="<p class='small' style='padding:10px'>Loading...</p>";
+ const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); let html="";
+ snap.forEach(docSnap=>{
+  const ad=docSnap.data(); const id=docSnap.id;
+  html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - ${ad.category}<br><span>Plan: <b>${ad.plan}</b> | Status: <b style="color:${ad.status==='approved'?'green':ad.status==='pending'?'orange':'red'}">${ad.status.toUpperCase()}</b></span><br><span class="small">User: ${ad.userEmail||ad.userId}</span><img src="${ad.image}">${ad.paymentScreenshot?`<div><b>Payment Screenshot:</b><br><img src="${ad.paymentScreenshot}" style="border:2px solid #e91e63"></div>`:'<div class="small">No payment (FREE plan)</div>'}<div style="margin-top:8px"><button class="act-btn" style="background:green" onclick="adminAction('${id}','approved')">Approve</button><button class="act-btn" style="background:red" onclick="adminAction('${id}','rejected')">Reject</button><button class="act-btn" style="background:#333" onclick="adminDelete('${id}')">Delete</button></div></div>`;
+ });
+ list.innerHTML=html;
+}
+window.adminAction=async(id,status)=>{await updateDoc(doc(db,"ads",id),{status});loadAdmin();loadAds();};
+window.adminDelete=async(id)=>{if(confirm("Delete?")){await deleteDoc(doc(db,"ads",id));loadAdmin();loadAds();}};
+window.openChat=(id)=>{navTo('chats');document.getElementById('chatList').innerHTML=`<p>Chat for ad ${id} - Buyer can contact seller here.</p>`;};
+function renderAccount(){
+ const box=document.getElementById('accountBox');
+ if(currentUser){
+  const isAdmin=currentUser.email==='atiqjutt381@gmail.com'||currentUser.email.includes('atiq');
+  box.innerHTML=`<h2>My Account</h2><p><b>Email:</b> ${currentUser.email}</p><button class="btn-main" onclick="logout()">Logout</button>${isAdmin?'<button class="btn-main" style="background:#e91e63;margin-top:8px" onclick="navTo(\'admin\')">Go to Admin Panel</button>':''}<div style="margin-top:14px"><b>Easypaisa For Payments:</b><br>03430864009 - Atiq ur rehman<br><span class="small">Only for payment verification.</span></div>`;
+ }else{
+  box.innerHTML=`<h2>Login / Signup</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btn-main" onclick="login()">Login</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="signup()">Create Account</button><p id="authMsg" class="small"></p>`;
+ }
+}
+window.login=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await signInWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
+window.signup=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await createUserWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
+window.logout=async()=>{await signOut(auth);};
+onAuthStateChanged(auth,(user)=>{currentUser=user;renderAccount();loadAds();if(user){document.getElementById('chatList').innerHTML=`<p>Welcome ${user.email}! Chats will appear here.</p>`;}});
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='block';});
+window.installApp=async()=>{if(deferredPrompt){deferredPrompt.prompt();const {outcome}=await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').style.display='none';}};
+renderChips(); loadAds();
 </script>
 </body>
 </html>
