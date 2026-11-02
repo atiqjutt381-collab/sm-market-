@@ -1,18 +1,19 @@
 {
-  "name": "SM FAISALABAD MARKET - Buy & Sell",
+  "name": "SM FAISALABAD MARKET - OLX Style",
   "short_name": "SM Market",
-  "start_url": "./index.html",
+  "description": "Buy & Sell in 46 Cities - OLX Style Market",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#002f34",
   "theme_color": "#002f34",
   "icons": [
     {
-      "src": "logopng.jpg",
+      "src": "./logopng.jpg",
       "sizes": "192x192",
       "type": "image/jpeg"
     },
     {
-      "src": "logopng.jpg",
+      "src": "./logopng.jpg",
       "sizes": "512x512",
       "type": "image/jpeg"
     }
