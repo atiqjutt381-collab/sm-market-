@@ -102,15 +102,18 @@ body{background:var(--light);padding-bottom:80px;color:var(--dark)}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const firebaseConfig = {
-  apiKey: "AIzaSyBs8zQmN5h3d2c7v1e9f4g6h8j0k1l2m3n",
+  apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
   authDomain: "sm-market-f7283.firebaseapp.com",
   projectId: "sm-market-f7283",
   storageBucket: "sm-market-f7283.firebasestorage.app",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcd1234ef5678"
+  messagingSenderId: "467902826161",
+  appId: "1:467902826161:web:3a95a176f7b57d15050490",
+  measurementId: "G-V4P837LMVS"
 };
+
+  
+  
 
 let app; try{ app=initializeApp(firebaseConfig); }catch(e){ app=initializeApp(firebaseConfig,"second"); }
 const auth=getAuth(app); const db=getFirestore(app);
