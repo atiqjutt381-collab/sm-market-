@@ -1,21 +1,24 @@
 {
-  "name": "SM FAISALABAD MARKET - OLX Style",
+  "name": "SM FAISALABAD MARKET - 46 Cities OLX Style",
   "short_name": "SM Market",
-  "description": "Buy & Sell in 46 Cities - OLX Style Market",
-  "start_url": "./",
+  "description": "SM Market - Buy Sell in 46 Cities - Gojra, Samundri, Faisalabad - OLX Style App",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#002f34",
-  "theme_color": "#002f34",
+  "theme_color": "#2A9DF4",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "./logopng.jpg",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     },
     {
       "src": "./logopng.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     }
   ]
 }
