@@ -42,7 +42,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, onSnapshot, doc, deleteDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-const firebaseConfig = { apiKey: "AIzaSyDUMMY-REPLACE-WITH-REAL", authDomain: "sm-market.firebaseapp.com", projectId: "sm-market", storageBucket: "sm-market.appspot.com", messagingSenderId: "123456789", appId: "1:123456789:web:abcdef" };
+const firebaseConfig = { apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30", authDomain: "sm-market-f7283.firebaseapp.com", projectId: "sm-market-f7283", storageBucket: "sm-market-f7283.firebasestorage.app", messagingSenderId: "467902826161", appId: "1:467902826161:web:3a95a176f7b57d15050490", measurementId: "G-V4P837LMVS" };
 let app,auth,provider,db;
 try{
 app=initializeApp(firebaseConfig);auth=getAuth(app);provider=new GoogleAuthProvider();db=getFirestore(app);
