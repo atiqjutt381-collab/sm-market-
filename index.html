@@ -4,57 +4,71 @@
 <div class="chips" id="catChips"></div>
 <div class="cityRow" id="cityChips"></div>
 <div id="homeList" class="grid"></div>
-<div id="sellPage" class="page" style="background:#fff;padding:12px"><h3>➕ Post Your Ad</h3>
-<div class="f"><label>Category *</label><select id="sCat"></select></div>
-<div class="f"><label>City *</label><select id="sCity"></select></div>
-<div class="f"><label>Current Location *</label><button type="button" onclick="getCurrentLocation()" style="width:100%;background:#e0f2fe;border:1px solid #2A9DF4;color:#0A2E3E;padding:10px;border-radius:10px;font-weight:700;margin-bottom:8px;cursor:pointer">📍 Current Location Lagao</button><div id="locStatus" style="font-size:11px;color:green"></div><input id="sLoc" placeholder="Faisalabad - D Ground"></div>
-<div class="f"><label>Ad Title *</label><input id="sTitle" placeholder="e.g. iPhone 14 Pro Max PTA"></div>
-<div class="f"><label>Price Rs *</label><input id="sPrice" type="number" placeholder="285000"></div>
-<div class="f"><label>Description *</label><textarea id="sDesc" rows="4"></textarea></div>
-<div class="f"><label>Phone *</label><input id="sPhone" placeholder="03430864009"></div>
-<div class="f"><label>Images</label><input type="file" id="sImg" accept="image/*" onchange="previewImg(event)"><div id="imgPrev"></div></div>
-<h4 style="margin:14px 0 8px">Select Plan</h4>
-<div class="plan on" id="planFree" onclick="selectPlan('free')"><b>🏷️ FREE - 7 Days</b></div>
-<div class="plan" id="plan499" onclick="selectPlan('499')"><b>⭐ FEATURED 14 Days - Rs 499</b></div>
-<div class="plan" id="plan999" onclick="selectPlan('999')"><b>🚀 PREMIUM 30 Days - Rs 999</b></div>
-<div id="easyBox" style="display:none;background:#fffbe6;border:1px solid #f59e0b;border-radius:12px;padding:12px;margin-top:10px"><div style="font-weight:900;color:#dc2626;text-align:center">⚠️ Easypaisa Payment LAZMI</div><div style="background:#fef3c7;padding:10px;border-radius:10px;text-align:center;font-weight:900;margin:8px 0">Easypaisa: 03430864009<br>Atiq Ur Rehman</div><div class="f"><label>Screenshot *</label><input type="file" id="payShot" accept="image/*" onchange="previewPay(event)"><div id="payPrev"></div></div></div>
-<button class="bt" onclick="postAd()">✈️ Post Ad Now - Free 7 Days</button>
-</div>
+<div class="page" id="chatsPage" style="padding:10px"><div style="background:#fff;padding:14px;border-radius:12px;border:1px solid #e5e7eb"><b>💬 Chats</b><div id="chatThreads" style="margin-top:10px"></div><div id="chatBox" style="display:none"><div style="display:flex;align-items:center;gap:10px;border-bottom:1px solid #eee;padding-bottom:8px"><button onclick="closeChat()" style="border:none;background:#f3f4f6;width:30px;height:30px;border-radius:50%">←</button><b id="chatSeller">Seller</b></div><div id="chatMsgs" style="height:320px;overflow:auto;margin:10px 0;background:#f9fafb;padding:10px;border-radius:10px"></div><div style="display:flex;gap:6px"><input id="chatInput" placeholder="Type message..." style="flex:1;padding:12px;border-radius:20px;border:1px solid #ddd"><button onclick="sendMsg()" style="background:#0A2E3E;color:#fff;border:none;padding:12px 18px;border-radius:20px;font-weight:700">Send</button></div></div></div></div>
 
-<div id="myAdsPage" class="page" style="background:#fff;padding:12px"><h3>My Ads & Favourites</h3>
-<div style="display:flex;gap:8px;margin:10px 0"><button onclick="showMyTab('ads')" id="tabAds" style="flex:1;padding:8px;border-radius:20px;border:1px solid #0A2E3E;background:#0A2E3E;color:#fff;font-weight:700">My Ads</button><button onclick="showMyTab('fav')" id="tabFav" style="flex:1;padding:8px;border-radius:20px;border:1px solid #d1d5db;background:#fff;font-weight:700">❤️ Favourites</button></div>
+<div class="page" id="sellPage" style="padding:10px">
+<div style="background:#fff;border-radius:16px;padding:16px;border:1px solid #e5e7eb">
+<div style="text-align:center;margin-bottom:12px"><b style="font-size:18px">📸 Sell Your Item</b><p style="font-size:11px;color:#666;margin-top:4px">Samundri Gojra Toba Market</p></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Category *</label><select id="sCat" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></select></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">City *</label><select id="sCity" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></select></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Current Location 📍 <span id="locStatus" style="color:#2A9DF4;font-size:10px"></span></label><div style="display:flex;gap:6px;margin-top:4px"><input id="sLoc" placeholder="Auto location ya type karo" style="flex:1;padding:12px;border-radius:10px;border:1px solid #d1d5db"><button onclick="getCurrentLocation()" style="background:#2A9DF4;color:#fff;border:none;padding:0 14px;border-radius:10px;font-weight:700">📍</button></div></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Ad Title *</label><input id="sTitle" placeholder="iPhone 14 Pro Max" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Price Rs *</label><input id="sPrice" type="number" placeholder="285000" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Description *</label><textarea id="sDesc" rows="3" placeholder="PTA Approved, Battery, Condition..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></textarea></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Phone *</label><input id="sPhone" value="03430864009" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:4px"></div>
+<div style="margin-bottom:10px"><label style="font-size:12px;font-weight:700">Photo *</label><input type="file" id="sImg" accept="image/*" onchange="previewImg(event)" style="width:100%;padding:10px;border-radius:10px;border:1px dashed #2A9DF4;margin-top:4px"><div id="imgPrev"></div></div>
+<div style="margin:14px 0"><b style="font-size:13px">Select Plan:</b>
+<div class="plan" id="planFree" onclick="selectPlan('free')" style="border:2px solid #10b981;border-radius:12px;padding:12px;margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#f0fdf4"><div><b>🆓 FREE</b><br><small>Free - Normal List</small></div><div style="font-weight:800;color:#10b981">✓</div></div>
+<div class="plan" id="plan499" onclick="selectPlan('499')" style="border:2px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center"><div><b>⭐ 499 - 14 Days</b><br><small>Featured Top</small></div><b style="color:#f59e0b">Rs 499</b></div>
+<div class="plan" id="plan999" onclick="selectPlan('999')" style="border:2px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center"><div><b>🔥 999 - 30 Days</b><br><small>Super Featured</small></div><b style="color:#ef4444">Rs 999</b></div>
+</div>
+<div id="easyBox" style="display:none;background:#fef3c7;border:1px dashed #f59e0b;border-radius:12px;padding:12px;margin-top:10px">
+<b style="font-size:12px">💳 Easypaisa: 03430864009 - Atiq Jutt</b><br><small style="font-size:11px">Payment ka screenshot upload karo</small>
+<input type="file" id="payImg" accept="image/*" onchange="previewPay(event)" style="width:100%;margin-top:8px"><div id="payPrev"></div>
+</div>
+<button onclick="postAd()" style="width:100%;background:#0A2E3E;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:15px;margin-top:14px;cursor:pointer">✅ POST AD NOW</button>
+</div></div>
+
+<div class="page" id="myAdsPage" style="padding:10px">
+<div style="display:flex;gap:8px;margin-bottom:10px"><button id="tabAds" onclick="showMyTab('ads')" style="flex:1;padding:10px;border-radius:20px;border:1px solid #e5e7eb;background:#0A2E3E;color:#fff;font-weight:700">My Ads</button><button id="tabFav" onclick="showMyTab('fav')" style="flex:1;padding:10px;border-radius:20px;border:1px solid #e5e7eb;background:#fff;font-weight:700">❤️ Favourites</button></div>
 <div id="myAdsList"></div><div id="favList" style="display:none"></div>
 </div>
 
-<div id="accountPage" class="page" style="background:#f5f7f9;padding:12px">
-<div id="profileBox" style="background:#fff;border-radius:14px;padding:14px;border:1px solid #e5e7eb;margin-bottom:12px"></div>
-<div id="loginStatus" style="font-size:11px;color:green;margin-bottom:8px"></div>
-
-<div id="editProfileBox" style="background:#fff;border-radius:14px;padding:14px;border:1px solid #e5e7eb;margin-bottom:12px;display:none">
-<h4>✏️ Edit Profile</h4>
-<div class="f"><label>Full Name</label><input id="editName" placeholder="Your Name"></div>
-<div class="f"><label>Phone</label><input id="editPhone" placeholder="0343..."></div>
-<div class="f"><label>City</label><select id="editCity"></select></div>
-<button class="bt" onclick="saveProfile()">💾 Save Profile</button>
+<div class="page" id="accountPage" style="padding:10px">
+<div style="background:#fff;border-radius:16px;padding:16px;border:1px solid #e5e7eb">
+<div id="profileBox"></div>
+<div id="editProfileBox" style="display:none;margin-top:12px;border-top:1px solid #eee;padding-top:10px">
+<b style="font-size:13px">✏️ Edit Profile - Apna naam edit karo</b>
+<input id="editName" placeholder="Your Name" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:8px">
+<input id="editPhone" placeholder="Phone 0343..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:8px">
+<select id="editCity" style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;margin-top:8px"></select>
+<button onclick="saveProfile()" style="width:100%;margin-top:10px;background:#0A2E3E;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800">💾 Save Profile</button>
 </div>
-
-<div id="installBox" style="background:#0A2E3E;border-radius:14px;padding:14px;color:#fff;margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center"><div><b>📲 SM Market App Install Karo</b><br><small style="opacity:.8">Fast, Offline</small></div><button id="installBtn" onclick="installApp()" style="background:#2A9DF4;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer">Install</button></div><small id="installStatus" style="display:block;margin-top:8px;font-size:11px;opacity:.8"></small></div>
-<div style="background:#fff;border-radius:14px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:12px"><div style="padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #f0f0f0" onclick="showPage('myAdsPage')"><span>📦 My Ads</span><span>›</span></div><div style="padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #f0f0f0" onclick="showPage('myAdsPage');showMyTab('fav')"><span>❤️ Favourites</span><span>›</span></div><div style="padding:14px;display:flex;justify-content:space-between" onclick="openHelp()"><span>🎧 Help@Support</span><span style="color:#2A9DF4;font-weight:700">Chat ›</span></div><div style="padding:14px;border-top:1px solid #f0f0f0"><b>💳 Payments - Easypaisa 03430864009</b></div></div>
+<div style="margin-top:14px;padding-top:12px;border-top:1px solid #eee">
+<div style="font-size:12px"><b>📦 App Info</b><br><small id="loginStatus" style="color:#666"></small><br><small id="installStatus" style="color:#2A9DF4">Checking...</small></div>
+<button onclick="installApp()" style="width:100%;margin-top:10px;background:#fff;border:1px solid #0A2E3E;color:#0A2E3E;padding:10px;border-radius:10px;font-weight:700">📲 Install App</button>
 </div>
+</div></div>
 
-<div id="adminPage" class="page" style="background:#f5f7f9;padding:12px"><h3>🛡️ Admin Panel - Hidden</h3><p style="font-size:11px;color:#666">Only you - 13 clicks on logo - Password: 726609</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0"><div style="background:#fff;padding:12px;border-radius:12px;border:1px solid #e5e7eb;text-align:center"><b id="statAds">6</b><br><small>Total Ads</small></div><div style="background:#fff;padding:12px;border-radius:12px;text-align:center;border:1px solid #e5e7eb"><b>1240</b><br><small>Users</small></div><div style="background:#fff;padding:12px;border-radius:12px;text-align:center;border:1px solid #e5e7eb"><b>Rs 1,497</b><br><small>Revenue</small></div><div style="background:#fff;padding:12px;border-radius:12px;text-align:center;border:1px solid #e5e7eb"><b id="statPend">3</b><br><small>Pending</small></div></div><div id="adminLoginBox"><input id="adminPass" type="password" placeholder="Password 726609" style="width:100%;padding:10px;border-radius:10px;border:1px solid #d1d5db"><button class="bt" style="margin-top:8px" onclick="checkAdmin()">Login Admin</button></div><div style="margin-top:16px"><h4>🎧 Help@Support Messages</h4><div id="supportAdminList" style="margin-top:8px"></div></div><div id="adminList" style="margin-top:12px"></div><button onclick="showPage('homePage')" style="margin-top:12px;width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;background:#fff">← Hide Admin - Go Home</button></div>
-
-<button id="helpFloat" onclick="openHelp()">🎧 Help@Support</button>
-
-<div id="helpBox"><div style="background:#fff;border-radius:16px;width:100%;max-width:420px;overflow:hidden"><div style="background:#0A2E3E;color:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center"><b>🎧 Help@Support - Live Chat</b><span onclick="closeHelp()" style="cursor:pointer">✕</span></div><div id="helpMsgs" style="padding:12px;height:45vh;overflow:auto;background:#f5f7f9"></div><div style="padding:10px;display:flex;gap:6px;border-top:1px solid #eee;background:#fff"><input id="helpInput" placeholder="Apna masla likho..." style="flex:1;padding:10px;border-radius:20px;border:1px solid #d1d5db"><button onclick="sendHelp()" style="padding:10px 16px;border-radius:20px;background:#0A2E3E;color:#fff;border:none;font-weight:700">Send</button></div><small style="display:block;padding:6px 12px;color:#666;background:#fff">Admin 726609 se jawab dega</small></div></div>
+<div class="page" id="adminPage" style="padding:10px">
+<div style="background:#fff;border-radius:16px;padding:16px;border:1px solid #e5e7eb">
+<b>🔐 Admin Panel - 726609</b><div style="display:flex;gap:6px;margin-top:10px"><input id="adminPass" type="password" placeholder="Password 726609" style="flex:1;padding:12px;border-radius:10px;border:1px solid #d1d5db"><button onclick="checkAdmin()" style="background:#0A2E3E;color:#fff;border:none;padding:0 18px;border-radius:10px;font-weight:700">Open</button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div style="background:#f3f4f6;padding:10px;border-radius:10px;text-align:center"><b id="statAds">0</b><br><small>Total Ads</small></div><div style="background:#fef3c7;padding:10px;border-radius:10px;text-align:center"><b id="statPend">0</b><br><small>Pending</small></div></div>
+<div id="adminList" style="margin-top:12px"></div>
+<div style="margin-top:16px;border-top:1px solid #eee;padding-top:10px"><b style="font-size:13px">💬 Support Messages</b><div id="supportAdminList" style="margin-top:8px"></div></div>
+</div></div>
 
 <div class="bottom">
-<div class="b on" id="bHome" onclick="showPage('homePage')"><span class="ic">🏠</span>HOME</div>
-<div class="b" id="bChat" onclick="showPage('chatsPage')"><span class="ic">💬</span>CHATS</div>
-<div class="b" id="bSell" onclick="showPage('sellPage')"><span class="ic plus">+</span>SELL</div>
-<div class="b" id="bMy" onclick="showPage('myAdsPage')"><span class="ic">📦</span>MY ADS</div>
-<div class="b" id="bAcc" onclick="showPage('accountPage')"><span class="ic">👤</span>ACCOUNT</div>
+<div class="b on" id="bHome" onclick="showPage('homePage')"><span>🏠</span>HOME</div>
+<div class="b" id="bChat" onclick="showPage('chatsPage')"><span>💬</span>CHATS</div>
+<div class="b" onclick="showPage('sellPage')"><div class="sellBtn">+</div>SELL</div>
+<div class="b" id="bMy" onclick="showPage('myAdsPage')"><span>📦</span>MY ADS</div>
+<div class="b" id="bAcc" onclick="showPage('accountPage')"><span>👤</span>ACCOUNT</div>
 </div>
+
+<div class="helpBtn" onclick="openHelp()">💬</div>
+<div id="helpBox" style="position:fixed;bottom:0;right:0;left:0;top:0;background:rgba(0,0,0,.5);z-index:200;display:none"><div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:16px 16px 0 0;max-height:80vh;display:flex;flex-direction:column"><div style="padding:14px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center"><b>💬 Support - Atiq 03430864009</b><button onclick="closeHelp()" style="border:none;background:#f3f4f6;width:30px;height:30px;border-radius:50%">✕</button></div><div id="helpMsgs" style="flex:1;overflow:auto;padding:12px;height:320px;background:#f9fafb"></div><div style="padding:10px;display:flex;gap:6px;border-top:1px solid #eee"><input id="helpInput" placeholder="Koi masla? Likho..." style="flex:1;padding:12px;border-radius:20px;border:1px solid #ddd"><button onclick="sendHelp()" style="background:#0A2E3E;color:#fff;border:none;padding:12px 18px;border-radius:20px;font-weight:700">Send</button></div></div></div>
+<style>.plan.on{border-color:#0A2E3E!important;background:#e0f2fe!important}#helpBox.show{display:block!important}.page{display:none}.page.on{display:block}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;display:flex;justify-content:space-around;padding:6px 0;z-index:100}.b{flex:1;text-align:center;font-size:10px;color:#666;cursor:pointer}.b.on{color:#0A2E3E;font-weight:800}.b span{font-size:18px;display:block}.sellBtn{background:#0A2E3E;color:#fff;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;margin:-22px auto 2px;font-size:24px;box-shadow:0 4px 10px rgba(0,0,0,.3)}.helpBtn{position:fixed;bottom:80px;right:14px;background:#0A2E3E;color:#fff;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:22px;z-index:90;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3)}</style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
@@ -89,8 +103,6 @@ let deferredPrompt=null,logoClicks=0,logoLast=0;
 window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installStatus').innerHTML='✅ App install ready';});
 window.installApp=async function(){if(deferredPrompt){deferredPrompt.prompt();const {outcome}=await deferredPrompt.userChoice;document.getElementById('installStatus').innerHTML=outcome==='accepted'?'✅ Installing...':'❌ Cancel';deferredPrompt=null;}else{alert('Mobile: 3 dots > Add to Home Screen');}}
 function getCurrentLocation(){const s=document.getElementById('locStatus');const loc=document.getElementById('sLoc');const city=document.getElementById('sCity');if(!navigator.geolocation)return;s.innerHTML='📡...';navigator.geolocation.getCurrentPosition(async p=>{userLat=p.coords.latitude;userLng=p.coords.longitude;s.innerHTML=`✅ ${userLat.toFixed(4)}, ${userLng.toFixed(4)}`;loc.value=`Current ${userLat.toFixed(4)}, ${userLng.toFixed(4)} - Near ${city.value}`;try{const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userLat}&lon=${userLng}`);const d=await r.json();if(d.display_name)loc.value=d.display_name.substring(0,90);}catch(e){}},e=>{s.innerHTML='❌ Allow nahi kiya';});}
-function getCurrentLocationHome(){const s=document.getElementById('nearStatus');if(!navigator.geolocation)return;s.innerHTML='📡...';navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLng=p.coords.longitude;s.innerHTML=`📍 Current: ${userLat.toFixed(2)}, ${userLng.toFixed(2)}`;},e=>{s.innerHTML='❌ Allow karo';});}
-function getNearMeAds(){const s=document.getElementById('nearStatus');if(!navigator.geolocation)return;s.innerHTML='📡 Near Me...';navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLng=p.coords.longitude;s.innerHTML=`📍 Near Me ON`;render();});}
 function init(){const catChips=document.getElementById('catChips');catChips.innerHTML=CATS.map(c=>`<div class="chip ${c.id===selectedCat?'on':''}" onclick="filterCat('${c.id}')">${c.icon} ${c.name}</div>`).join('');const cityChips=document.getElementById('cityChips');cityChips.innerHTML=['All Cities',...CITIES].map(c=>`<div class="chipCity ${c===selectedCity?'on':''}" onclick="filterCity('${c}')">${c}</div>`).join('');CITIES.forEach(c=>{sCity.innerHTML+=`<option value="${c}">${c}</option>`;if(document.getElementById('editCity'))editCity.innerHTML+=`<option value="${c}">${c}</option>`;});CATS.filter(c=>c.id!=='All').forEach(c=>{sCat.innerHTML+=`<option value="${c.id}">${c.name}</option>`;});render();if(window.updateProfileUI)updateProfileUI();renderSupport();
  const logo=document.getElementById('logoBtn');
  logo.addEventListener('click',()=>{
@@ -156,12 +168,6 @@ function openDetail(id){
   <div style="padding:14px;background:#fff;margin-top:8px;border-top:1px solid #eef2f7;border-bottom:1px solid #eef2f7">
    <b style="font-size:14px">Description</b>
    <p style="margin-top:8px;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap">${a.desc||'No description'}</p>
-   <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px">
-    <div><small style="color:#666">Category</small><br><b>${a.cat}</b></div>
-    <div><small style="color:#666">Location</small><br><b>${a.city}</b></div>
-    <div><small style="color:#666">Condition</small><br><b>Used / New</b></div>
-    <div><small style="color:#666">Ad ID</small><br><b>${a.id.substring(0,8)}</b></div>
-   </div>
   </div>
   <div style="padding:10px;text-align:center">
    <button onclick="render();window.scrollTo(0,0)" style="background:#fff;border:1px solid #ccc;padding:10px 20px;border-radius:20px;font-weight:700;cursor:pointer">← Back to All Ads</button>
