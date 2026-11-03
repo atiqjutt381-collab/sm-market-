@@ -63,6 +63,14 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .thumbs img.active{border-color:var(--dark)}
 .actionRow{display:flex;gap:8px;margin-top:10px}
 .actionRow button{flex:1}
+ html,body{overflow-x:hidden !important;width:100% !important;max-width:100vw !important;position:relative}
+body{overscroll-behavior-x:none;touch-action:pan-y}
+img{max-width:100%}
+.grid,.search-wrap,.chip-wrap,.header,.bottom,.detailBox,.form{max-width:100vw !important;overflow-x:hidden;box-sizing:border-box}
+.chip-wrap{overflow-x:auto !important}
+#appInstallPopup{max-width:100vw;overflow:hidden}
+#appInstallPopup .installCard{max-width:95vw !important;box-sizing:border-box}
+#detailModal,#editModal,#sellerModal,#chatRoom{overflow-x:hidden}
  </style>
 </head>
 <body>
