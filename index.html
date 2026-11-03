@@ -9,23 +9,23 @@
 <style>
 :root{--dark:#002f34;--teal:#23e5db;--light:#f7f8f9;--border:#e0e0e0;--green:#25D366;--blue:#2A9DF4}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif}
-body{background:var(--light);padding-bottom:85px;color:var(--dark)}
-.header{background:var(--dark);color:white;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+html,body{overflow-x:hidden !important;width:100% !important;max-width:100vw !important;position:relative}
+body{background:var(--light);padding-bottom:85px;color:var(--dark);overscroll-behavior-x:none;touch-action:pan-y}
+img{max-width:100%}
+.header{background:var(--dark);color:white;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;max-width:100vw}
 .logo{font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px}
 .logo img{width:36px;height:36px;border-radius:6px;background:white;object-fit:cover}
-.logo .blue{color:var(--blue)}
-.search-wrap{padding:10px;background:white;display:flex;gap:6px;position:sticky;top:50px;z-index:99;border-bottom:1px solid var(--border);align-items:center}
-.search-wrap input{flex:1;padding:11px 12px;border-radius:6px;border:1.8px solid var(--dark);font-size:14px;outline:none}
+.search-wrap{padding:10px;background:white;display:flex;gap:6px;position:sticky;top:50px;z-index:99;border-bottom:1px solid var(--border);align-items:center;max-width:100vw;box-sizing:border-box}
+.search-wrap input{flex:1;padding:11px 12px;border-radius:6px;border:1.8px solid var(--dark);font-size:14px;outline:none;min-width:0}
 .search-wrap button{background:var(--dark);color:white;border:none;padding:0 14px;height:40px;border-radius:6px;font-weight:700;font-size:13px;white-space:nowrap}
 .locBtn{background:#2A9DF4 !important;padding:0 10px !important}
 .sortSel{padding:0 6px;height:40px;border:1.5px solid #ccc;border-radius:6px;font-size:12px}
-.chip-wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:white;white-space:nowrap;scrollbar-width:none}
+.chip-wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:white;white-space:nowrap;scrollbar-width:none;max-width:100vw;box-sizing:border-box}
 .chip-wrap::-webkit-scrollbar{display:none}
-.chip{padding:7px 13px;border-radius:20px;border:1.5px solid #c0c0c0;background:white;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.chip{padding:7px 13px;border-radius:20px;border:1.5px solid #c0c0c0;background:white;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0}
 .chip.active{background:var(--dark);color:white;border-color:var(--dark)}
-.chip.blue-active{background:var(--blue) !important;color:white !important;border-color:var(--blue) !important}
-.page{display:none;padding:0}.page.active{display:block}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}
+.page{display:none;padding:0;max-width:100vw;overflow-x:hidden}.page.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;max-width:100vw;box-sizing:border-box}
 .card{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;position:relative}
 .card img{width:100%;height:155px;object-fit:cover;background:#eee}
 .card-body{padding:7px 8px}
@@ -34,14 +34,14 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .buybtn{margin-top:6px;background:var(--dark);color:white;width:100%;border:none;padding:7px;border-radius:6px;font-weight:700;font-size:12px}
 .fav{position:absolute;top:6px;right:6px;width:28px;height:28px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:5}
 .featBadge{position:absolute;top:6px;left:6px;background:#ffce32;color:#000;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0;z-index:200}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0;z-index:200;max-width:100vw}
 .b-item{display:flex;flex-direction:column;align-items:center;font-size:10px;color:#666;cursor:pointer;flex:1}
 .b-item.active{color:var(--dark);font-weight:700}
 .b-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:#f0f0f0}
 .b-item.active .b-icon{background:var(--dark);color:white}
 .b-plus{width:54px;height:54px;background:var(--dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:32px;margin-top:-16px;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
-.form{padding:14px;background:white;margin:8px;border-radius:10px}
-.form input,.form select,.form textarea{width:100%;padding:11px;margin:7px 0;border:1.5px solid #ccc;border-radius:8px;font-size:14px}
+.form{padding:14px;background:white;margin:8px;border-radius:10px;max-width:100vw;box-sizing:border-box;overflow-x:hidden}
+.form input,.form select,.form textarea{width:100%;padding:11px;margin:7px 0;border:1.5px solid #ccc;border-radius:8px;font-size:14px;box-sizing:border-box}
 .form textarea{min-height:70px}
 .plan{border:2px solid #ddd;padding:10px;border-radius:10px;margin:7px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .plan.selected{border-color:var(--dark);background:#e8f6f5}
@@ -52,10 +52,9 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .admin-card{background:white;margin:8px;padding:10px;border-radius:10px;border:1px solid var(--border)}
 .admin-card img{width:100%;max-height:200px;object-fit:contain;margin:6px 0;border-radius:6px;background:#fafafa}
 .act-btn{padding:7px 12px;border:none;border-radius:6px;color:white;font-weight:700;margin:3px;cursor:pointer;font-size:12px}
-.install{position:fixed;bottom:88px;right:12px;background:#002f34;color:white;padding:11px 16px;border-radius:30px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,0.3);cursor:pointer;z-index:190;display:none}
 .small{font-size:11px;color:#666}
-#detailModal,#editModal,#sellerModal,#chatRoom,#helpModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;overflow-y:auto;padding:16px}
-.detailBox{background:white;border-radius:12px;max-width:480px;margin:10px auto;overflow:hidden}
+#detailModal,#editModal,#sellerModal,#chatRoom,#helpModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;overflow-y:auto;padding:16px;overflow-x:hidden}
+.detailBox{background:white;border-radius:12px;max-width:480px;margin:10px auto;overflow:hidden;max-width:95vw;box-sizing:border-box}
 .detailBox img.mainImg{width:100%;max-height:380px;object-fit:contain;background:#f5f5f5}
 .detailPad{padding:14px}
 .thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px 0}
@@ -63,19 +62,22 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .thumbs img.active{border-color:var(--dark)}
 .actionRow{display:flex;gap:8px;margin-top:10px}
 .actionRow button{flex:1}
- html,body{overflow-x:hidden !important;width:100% !important;max-width:100vw !important;position:relative}
-body{overscroll-behavior-x:none;touch-action:pan-y}
-img{max-width:100%}
-.grid,.search-wrap,.chip-wrap,.header,.bottom,.detailBox,.form{max-width:100vw !important;overflow-x:hidden;box-sizing:border-box}
-.chip-wrap{overflow-x:auto !important}
-#appInstallPopup{max-width:100vw;overflow:hidden}
-#appInstallPopup .installCard{max-width:95vw !important;box-sizing:border-box}
-#detailModal,#editModal,#sellerModal,#chatRoom{overflow-x:hidden}
- </style>
+.chatInputRow{display:flex;gap:6px;padding:10px;background:white;border-top:1px solid #ddd}
+.chatInputRow input{flex:1;padding:10px;border:1px solid #ccc;border-radius:20px}
+.chatInputRow button{background:var(--dark);color:white;border:none;padding:8px 16px;border-radius:20px}
+.chatMsg{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:80%;font-size:13px}
+.chatMe{background:#d9fdd3;margin-left:auto}
+.chatOther{background:white;border:1px solid #ddd}
+/* SIDE INSTALL BUTTON - NO LOGO - ALWAYS VISIBLE */
+#sideInstallBtn{position:fixed;right:0;top:45%;transform:translateY(-50%);background:#0f172a;color:white;padding:12px 7px;border-radius:12px 0 0 12px;z-index:9999;font-size:11px;font-weight:900;box-shadow:-3px 3px 15px rgba(0,0,0,0.3);display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;width:58px;text-align:center;line-height:1.1;animation:sidePulse 2s infinite}
+@keyframes sidePulse{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-50%) scale(1.05)}}
+#sideInstallBtn:active{transform:translateY(-50%) scale(0.95)}
+#appInstallPopup{display:none !important}
+.install{display:none !important}
+</style>
 </head>
 <body>
 <div class="header"><div class="logo"><img src="./logopng.jpg" onerror="this.style.display='none'"> SM <span style="color:#2A9DF4">FAISALABAD</span> MARKET</div><div style="font-size:11px">46 Cities OLX</div></div>
-
 <div id="homeFilters">
 <div class="search-wrap">
 <button class="locBtn" onclick="useCurrentLocation()">📍 Near Me</button>
@@ -87,114 +89,20 @@ img{max-width:100%}
 <div class="chip-wrap" id="catChips"></div>
 <div class="chip-wrap" id="cityChips" style="padding-top:0"></div>
 </div>
-
 <div id="page-home" class="page active"><div id="homeGrid" class="grid"></div></div>
-
-<div id="page-chats" class="page"><div class="form" style="margin:0;border-radius:0"><h2>💬 Chats - OLX Style Chat</h2><p class="small">Customers yahan 1 dosre se direct chat karenge</p><div id="chatList" style="margin-top:10px"></div></div></div>
-
-<div id="page-sell" class="page"><div class="form">
-<h2>Sell Fast Now - OLX Style</h2>
-<input id="adTitle" placeholder="Title e.g. iPhone 14">
-<input id="adPrice" type="number" placeholder="Price Rs">
-<input id="adPhone" placeholder="WhatsApp Number 03XXXXXXXXX">
-<select id="adCity"></select>
-<select id="adCategory"></select>
-<textarea id="adDesc" placeholder="Description"></textarea>
-<label class="small"><b>Photos (3-5) - OLX Style Multiple</b></label>
-<input type="file" id="adImageFile" accept="image/*" multiple>
-<div id="previewMulti" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div>
-<div style="margin-top:10px"><b>Choose Plan</b></div>
-<div class="plan selected" onclick="selectPlan('free',this)"><div><b>FREE - Rs 0</b></div><span style="background:#d4edda;padding:2px 8px;border-radius:10px;font-size:11px">FREE</span></div>
-<div class="plan" onclick="selectPlan('14days',this)"><div><b>14 Days Featured - Rs 499</b></div><span style="background:#fff3cd;padding:2px 8px;border-radius:10px;font-size:11px">⭐ FEATURED</span></div>
-<div class="plan" onclick="selectPlan('30days',this)"><div><b>30 Days Top - Rs 999</b></div><span style="background:#fff3cd;padding:2px 8px;border-radius:10px;font-size:11px">🔥 URGENT</span></div>
-<div id="easypaisaBox" class="easypaisa"><h3 style="color:#e91e63">Easypaisa: 03430864009 - Atiq ur rehman</h3><label class="small">Payment Screenshot</label><input type="file" id="payScreenshot" accept="image/*"></div>
-<button class="btn-main" onclick="postAd()">Post Ad Now</button><p id="postStatus" class="small"></p>
-</div></div>
-
+<div id="page-chats" class="page"><div class="form" style="margin:0;border-radius:0"><h2>💬 Chats</h2><div id="chatList"></div></div></div>
+<div id="page-sell" class="page"><div class="form"><h2>Sell Fast Now</h2><input id="adTitle" placeholder="Title"><input id="adPrice" type="number" placeholder="Price Rs"><input id="adPhone" placeholder="WhatsApp Number"><select id="adCity"></select><select id="adCategory"></select><textarea id="adDesc" placeholder="Description"></textarea><input type="file" id="adImageFile" accept="image/*" multiple><div id="previewMulti" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div><div class="plan selected" onclick="selectPlan('free',this)"><div><b>FREE - Rs 0</b></div></div><div class="plan" onclick="selectPlan('14days',this)"><div><b>14 Days - Rs 499</b></div></div><div class="plan" onclick="selectPlan('30days',this)"><div><b>30 Days - Rs 999</b></div></div><div id="easypaisaBox" class="easypaisa"><h3>Easypaisa: 03430864009 - Atiq</h3><input type="file" id="payScreenshot" accept="image/*"></div><button class="btn-main" onclick="postAd()">Post Ad Now</button><p id="postStatus" class="small"></p></div></div>
 <div id="page-myads" class="page"><div id="myAdsList" class="form"><h2>My Ads</h2></div></div>
 <div id="page-account" class="page"><div class="form" id="accountBox"></div></div>
-
-<div id="page-help" class="page">
-<div class="form">
-<h2>🆘 Online Help Center</h2>
-<p class="small">Koi masla hai? Yahan likho, Admin jawab dega.</p>
-<select id="helpType"><option>Ad Approve Issue</option><option>Payment Issue</option><option>Login Issue</option><option>Ad Delete / Edit</option><option>Other</option></select>
-<textarea id="helpMsg" placeholder="Apna masla likho..."></textarea>
-<button class="btn-main" onclick="sendHelpRequest()">📩 Send to Admin</button>
-<p id="helpStatus" class="small"></p>
-<hr style="margin:12px 0">
-<h3>❓ FAQs</h3>
-<p class="small"><b>Free ad kaise lagayen?</b> Sell > Title/Price > Free select > Post</p>
-<p class="small"><b>Easypaisa kaise bhejen?</b> 03430864009 pe bhejo aur screenshot upload karo</p>
-<p class="small"><b>Location kaise change?</b> Home pe 📍 Near Me ya City chips se</p>
-<div id="myHelpList" style="margin-top:10px"></div>
-</div>
-</div>
-
-<div id="page-admin" class="page">
-<div class="form">
-<h2>Admin Panel</h2>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-<button class="act-btn" style="background:#2A9DF4" onclick="switchAdminTab('ads')">All Ads (Owner View)</button>
-<button class="act-btn" style="background:#e91e63" onclick="switchAdminTab('help')">🆘 Help Requests</button>
-<button class="act-btn" style="background:#ff9800" onclick="switchAdminTab('reports')">🚩 Reports</button>
-</div>
-<div id="adminTab-ads"><div id="reportList"></div><div id="adminList"></div></div>
-<div id="adminTab-help" style="display:none"><div id="adminHelpList"></div></div>
-<div id="adminTab-reports" style="display:none"><div id="adminReportListFull"></div></div>
-</div>
-</div>
-
-<div id="detailModal" onclick="if(event.target==this)closeDetail()"><div class="detailBox">
-<div style="position:relative"><img id="dImg" class="mainImg"><div id="dFeat" style="position:absolute;top:8px;left:8px;background:#ffce32;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:800;display:none">⭐ FEATURED</div><div class="fav" style="top:8px;right:8px" onclick="toggleFavFromDetail()">❤️</div></div>
-<div class="thumbs" id="dThumbs"></div>
-<div class="detailPad">
-<h2 id="dTitle" style="font-size:17px"></h2>
-<div id="dPrice" style="font-weight:900;font-size:20px;margin:4px 0"></div>
-<div id="dMeta" class="small"></div>
-<p id="dDesc" style="margin:10px 0;white-space:pre-wrap;font-size:13px"></p>
-<div class="small" id="dViews"></div>
-<div class="actionRow"><button class="btn-main" style="background:var(--green)" onclick="callSeller()">📞 Call</button><button class="btn-main" style="background:#25D366" onclick="chatSeller()">💬 WhatsApp</button></div>
-<div class="actionRow"><button class="btn-main" style="background:#002f34" onclick="openChatRoomFromDetail()">💬 In-App Chat</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="shareAd()">🔗 Share</button></div>
-<div class="actionRow"><button class="btn-main" style="background:white;color:#d00;border:1.5px solid #d00" onclick="reportAd()">🚩 Report</button><button class="btn-main" style="background:#eee;color:#000" onclick="closeDetail()">Close</button></div>
-<button class="btn-main" style="background:#002f34;margin-top:6px" onclick="viewSellerAds()">👤 Seller All Ads</button>
-</div>
-</div></div>
- <div id="chatRoom"><div class="detailBox" style="display:flex;flex-direction:column;height:90vh"><div class="detailPad" style="border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center"><div><b id="crTitle">Chat</b><div class="small" id="crSub"></div></div><button onclick="closeChatRoom()" style="background:#eee;border:none;padding:6px 12px;border-radius:20px">✕</button></div><div id="crMessages" style="flex:1;overflow-y:auto;padding:12px;background:#fafafa"></div><div class="chatInputRow"><input id="crInput" placeholder="Type message..."><button onclick="sendChatMsg()">Send</button></div></div></div>
-
-<div id="editModal" onclick="if(event.target==this)closeEdit()"><div class="detailBox"><div class="detailPad"><h2>Edit Ad</h2><input id="eTitle"><input id="ePrice" type="number"><input id="ePhone"><select id="eCity"></select><select id="eCategory"></select><textarea id="eDesc"></textarea><label class="small"><b>Update Photos</b></label><input type="file" id="eImageFile" accept="image/*" multiple><div id="ePreviewMulti" style="display:flex;gap:6px;flex-wrap:wrap"></div><button class="btn-main" onclick="saveEdit()">Save</button><button class="btn-main" style="background:#eee;color:#000" onclick="closeEdit()">Cancel</button><p id="editStatus" class="small"></p></div></div></div>
-
+<div id="page-help" class="page"><div class="form"><h2>Help Center</h2><select id="helpType"><option>Ad Approve Issue</option><option>Payment Issue</option><option>Login Issue</option><option>Other</option></select><textarea id="helpMsg" placeholder="Masla likho..."></textarea><button class="btn-main" onclick="sendHelpRequest()">Send to Admin</button><p id="helpStatus" class="small"></p><div id="myHelpList"></div></div></div>
+<div id="page-admin" class="page"><div class="form"><h2>Admin Panel</h2><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="act-btn" style="background:#2A9DF4" onclick="switchAdminTab('ads')">All Ads</button><button class="act-btn" style="background:#e91e63" onclick="switchAdminTab('help')">Help</button><button class="act-btn" style="background:#ff9800" onclick="switchAdminTab('reports')">Reports</button></div><div id="adminTab-ads"><div id="reportList"></div><div id="adminList"></div></div><div id="adminTab-help" style="display:none"><div id="adminHelpList"></div></div><div id="adminTab-reports" style="display:none"><div id="adminReportListFull"></div></div></div></div>
+<div id="detailModal" onclick="if(event.target==this)closeDetail()"><div class="detailBox"><div style="position:relative"><img id="dImg" class="mainImg"><div id="dFeat" style="position:absolute;top:8px;left:8px;background:#ffce32;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:800;display:none">⭐ FEATURED</div><div class="fav" style="top:8px;right:8px" onclick="toggleFavFromDetail()">❤️</div></div><div class="thumbs" id="dThumbs"></div><div class="detailPad"><h2 id="dTitle"></h2><div id="dPrice" style="font-weight:900;font-size:20px"></div><div id="dMeta" class="small"></div><p id="dDesc" style="margin:10px 0;white-space:pre-wrap;font-size:13px"></p><div class="actionRow"><button class="btn-main" style="background:var(--green)" onclick="callSeller()">Call</button><button class="btn-main" style="background:#25D366" onclick="chatSeller()">WhatsApp</button></div><div class="actionRow"><button class="btn-main" style="background:#002f34" onclick="openChatRoomFromDetail()">In-App Chat</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="shareAd()">Share</button></div><div class="actionRow"><button class="btn-main" style="background:white;color:#d00;border:1.5px solid #d00" onclick="reportAd()">Report</button><button class="btn-main" style="background:#eee;color:#000" onclick="closeDetail()">Close</button></div><button class="btn-main" style="background:#002f34;margin-top:6px" onclick="viewSellerAds()">Seller All Ads</button></div></div></div>
+<div id="chatRoom"><div class="detailBox" style="display:flex;flex-direction:column;height:90vh"><div class="detailPad" style="border-bottom:1px solid #ddd;display:flex;justify-content:space-between"><div><b id="crTitle">Chat</b><div class="small" id="crSub"></div></div><button onclick="closeChatRoom()" style="background:#eee;border:none;padding:6px 12px;border-radius:20px">✕</button></div><div id="crMessages" style="flex:1;overflow-y:auto;padding:12px;background:#fafafa"></div><div class="chatInputRow"><input id="crInput" placeholder="Type message..."><button onclick="sendChatMsg()">Send</button></div></div></div>
+<div id="editModal" onclick="if(event.target==this)closeEdit()"><div class="detailBox"><div class="detailPad"><h2>Edit Ad</h2><input id="eTitle"><input id="ePrice" type="number"><input id="ePhone"><select id="eCity"></select><select id="eCategory"></select><textarea id="eDesc"></textarea><input type="file" id="eImageFile" accept="image/*" multiple><div id="ePreviewMulti" style="display:flex;gap:6px;flex-wrap:wrap"></div><button class="btn-main" onclick="saveEdit()">Save</button><button class="btn-main" style="background:#eee;color:#000" onclick="closeEdit()">Cancel</button><p id="editStatus" class="small"></p></div></div></div>
 <div id="sellerModal" onclick="if(event.target==this)closeSeller()"><div class="detailBox"><div class="detailPad"><h2 id="sTitle">Seller Ads</h2><div id="sGrid" class="grid" style="padding:0"></div><button class="btn-main" style="background:#eee;color:#000" onclick="closeSeller()">Close</button></div></div></div>
-
-<div id="appInstallPopup" onclick="if(event.target==this)closeInstallPopup()">
-<div class="installCard">
-<div style="width:40px;height:4px;background:#ddd;border-radius:10px;margin:0 auto 14px"></div>
-<div class="installHead">
-<div class="installIcon"><img src="./logopng.jpg" onerror="this.parentElement.textContent='SM'"></div>
-<div class="installTitle">
-<b>SM <span style="color:#2A9DF4">FAISALABAD</span> MARKET</b>
-<span>SM Market - 46 Cities - OLX Style</span>
-<div class="installStars">⭐ 4.8 • 10k+ installs • Free • OLX Style</div>
-</div>
-</div>
-<p class="small" style="margin-top:12px">App install karo - Ads fast, offline support, Play Store jesa experience!</p>
-<div class="installBtns">
-<button class="btnLater" onclick="closeInstallPopup()">Later</button>
-<button class="btnInstall" onclick="installApp()">⬇️ Install App</button>
-</div>
-</div>
-</div>
-
-<div id="installBtn" class="install" onclick="installApp()">⬇️ App Install</div>
-
-<div class="bottom">
-<div class="b-item active" onclick="navTo('home')"><div class="b-icon">🏠</div>HOME</div>
-<div class="b-item" onclick="navTo('chats')"><div class="b-icon">💬</div>CHATS</div>
-<div class="b-item" onclick="navTo('sell')"><div class="b-plus">+</div>SELL</div>
-<div class="b-item" onclick="navTo('myads')"><div class="b-icon">📄</div>MY ADS</div>
-<div class="b-item" onclick="navTo('account')"><div class="b-icon">👤</div>ACCOUNT</div>
-</div>
-
+<div id="appInstallPopup" style="display:none"></div>
+<div id="installBtn" style="display:none"></div>
+<div class="bottom"><div class="b-item active" onclick="navTo('home')"><div class="b-icon">🏠</div>HOME</div><div class="b-item" onclick="navTo('chats')"><div class="b-icon">💬</div>CHATS</div><div class="b-item" onclick="navTo('sell')"><div class="b-plus">+</div>SELL</div><div class="b-item" onclick="navTo('myads')"><div class="b-icon">📄</div>MY ADS</div><div class="b-item" onclick="navTo('account')"><div class="b-icon">👤</div>ACCOUNT</div></div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -207,7 +115,7 @@ const auth=getAuth(app); const db=getFirestore(app);
 const cities46=["Samundri","Gojra","Toba Tek Singh","Faisalabad","Jaranwala","Tandlianwala","Kamalia","Pir Mahal","Mamun Kanjan","Jhang","Chiniot","Lahore","Sargodha","Sahiwal","Okara","Multan","Bahawalpur","Kasur","Sheikhupura","Gujranwala","Gujrat","Sialkot","Rawalpindi","Islamabad","Peshawar","Quetta","Karachi","Hyderabad","Sukkur","Larkana","Rahim Yar Khan","Burewala","Vehari","Khanewal","Bhawana","Lalian","Shorkot","Jhumra","Chak Jhumra","Dijkot","Khurrianwala","Murree","Jhelum","Attock","Mianwali"];
 const categories=[{id:"all",name:"All",icon:"🌐"},{id:"mobiles",name:"Mobiles",icon:"📱"},{id:"vehicles",name:"Vehicles",icon:"🚗"},{id:"property",name:"Property",icon:"🏠"},{id:"bikes",name:"Bikes",icon:"🏍️"},{id:"fashion",name:"Fashion",icon:"👕"},{id:"electronics",name:"Electronics",icon:"💻"},{id:"jobs",name:"Jobs",icon:"💼"},{id:"services",name:"Services",icon:"🔧"},{id:"animals",name:"Animals",icon:"🐓"},{id:"furniture",name:"Furniture",icon:"🛋️"}];
 
-let selectedPlan="free",selectedCity="All Cities",selectedCat="all",currentUser=null,deferredPrompt=null,_lastAds=[],editingId=null,currentDetail=null,multiImages=[],editMultiImages=[],currentChat=null,installShown=false,adminCurrentTab='ads',currentLocationActive=false;
+let selectedPlan="free",selectedCity="All Cities",selectedCat="all",currentUser=null,deferredPrompt=null,_lastAds=[],editingId=null,currentDetail=null,multiImages=[],editMultiImages=[],currentChat=null,adminCurrentTab='ads',currentLocationActive=false;
 
 window.selectPlan=(plan,el)=>{selectedPlan=plan;document.querySelectorAll('.plan').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');document.getElementById('easypaisaBox').classList.toggle('show',plan!=='free');};
 
@@ -228,16 +136,9 @@ window.useCurrentLocation=()=>{
  const label=document.getElementById('currentLocLabel');
  label.style.display='block'; label.textContent='📍 Location le raha hun...';
  navigator.geolocation.getCurrentPosition(async(pos)=>{
-   const lat=pos.coords.latitude; const lon=pos.coords.longitude;
-   currentLocationActive=true;
-   let nearest = "Faisalabad";
-   if(lat>30.5 && lat<32 && lon>72 && lon<74) nearest="Faisalabad";
-   if(lat>30.8 && lat<31.2 && lon>72.5 && lon<73) nearest="Samundri";
-   if(lat>30.7 && lat<31.1 && lon>72.6 && lon<73.2) nearest="Gojra";
-   selectedCity=nearest;
-   label.textContent=`📍 Aapki Location: ${nearest} ke aas paas - ${lat.toFixed(3)}, ${lon.toFixed(3)} - Near Me Active`;
-   renderChips();
-   loadAds();
+   currentLocationActive=true; selectedCity="Faisalabad";
+   label.textContent=`📍 Aapki Location: Faisalabad ke aas paas`;
+   renderChips(); loadAds();
  }, (err)=>{ label.textContent='❌ Location failed: '+err.message; });
 };
 
@@ -245,14 +146,12 @@ window.navTo=(p)=>{
  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
  const target=document.getElementById('page-'+p);
  if(target) target.classList.add('active');
- else document.getElementById('page-help').classList.add('active');
  document.querySelectorAll('.b-item').forEach(b=>b.classList.remove('active'));
  const map={home:0,chats:1,sell:2,myads:3,account:4}; if(map[p]!==undefined) document.querySelectorAll('.b-item')[map[p]]?.classList.add('active');
  document.getElementById('homeFilters').style.display = (p==='home') ? 'block' : 'none';
  if(p==='home')loadAds(); if(p==='myads')loadMyAds(); if(p==='account')renderAccount(); if(p==='admin')loadAdmin(); if(p==='chats')loadChats(); if(p==='help')loadMyHelp();
 };
 window.switchAdminTab=(tab)=>{
- adminCurrentTab=tab;
  document.getElementById('adminTab-ads').style.display= tab==='ads'?'block':'none';
  document.getElementById('adminTab-help').style.display= tab==='help'?'block':'none';
  document.getElementById('adminTab-reports').style.display= tab==='reports'?'block':'none';
@@ -288,185 +187,84 @@ async function loadAds(){
   ads=ads.filter(a=>a.status==='approved');
   if(selectedCat!=='all')ads=ads.filter(a=>a.category===selectedCat);
   if(selectedCity!=='All Cities')ads=ads.filter(a=>a.city===selectedCity);
-  if(search)ads=ads.filter(a=>(a.title||"").toLowerCase().includes(search)||(a.city||"").toLowerCase().includes(search));
+  if(search)ads=ads.filter(a=>(a.title||"").toLowerCase().includes(search));
   const favs=getFav(); if(sort==='fav') ads=ads.filter(a=>favs.includes(a.id));
-  ads.sort((a,b)=>{ if(a.plan!=='free' && b.plan==='free') return -1; if(b.plan!=='free' && a.plan==='free') return 1; return 0; });
   if(sort==='low') ads.sort((a,b)=> (a.price||0)-(b.price||0)); if(sort==='high') ads.sort((a,b)=> (b.price||0)-(a.price||0));
-  if(ads.length===0){grid.innerHTML="<p style='padding:20px'>No ads found. Dusri city try karo ya All karo.</p>";return;}
-  grid.innerHTML=ads.map(ad=>`<div class="card" onclick="openAdDetail('${ad.id}')">${ad.plan!=='free'?'<div class="featBadge">⭐ FEATURED</div>':''}<div class="fav" onclick="toggleFav(event,'${ad.id}')">${favs.includes(ad.id)?'❤️':'🤍'}</div><img src="${ad.image||(ad.images&&ad.images[0])}" loading="lazy"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div><div class="city">📍 ${ad.city} • 👁️ ${ad.views||0}</div><button class="buybtn" onclick="event.stopPropagation(); openAdDetail('${ad.id}')">View - Chat - Call</button></div></div>`).join('');
+  if(ads.length===0){grid.innerHTML="<p style='padding:20px'>No ads found.</p>";return;}
+  grid.innerHTML=ads.map(ad=>`<div class="card" onclick="openAdDetail('${ad.id}')">${ad.plan!=='free'?'<div class="featBadge">⭐ FEATURED</div>':''}<div class="fav" onclick="toggleFav(event,'${ad.id}')">${favs.includes(ad.id)?'❤️':'🤍'}</div><img src="${ad.image}" loading="lazy"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div><div class="city">📍 ${ad.city} • 👁️ ${ad.views||0}</div><button class="buybtn">View</button></div></div>`).join('');
  }catch(e){grid.innerHTML="<p>Error: "+e.message+"</p>";}
 }
-window.refreshAds=()=>{ _lastAds=[]; loadAds(); };
-
 window.openAdDetail=async(id)=>{
  const ad=_lastAds.find(a=>a.id===id); if(!ad) return; currentDetail=ad;
  const imgs=ad.images||[ad.image]; document.getElementById('dImg').src=imgs[0];
  document.getElementById('dThumbs').innerHTML=imgs.map((im,i)=>`<img src="${im}" class="${i===0?'active':''}" onclick="setMainImg('${i}')">`).join('');
  document.getElementById('dTitle').textContent=ad.title; document.getElementById('dPrice').textContent="Rs "+Number(ad.price).toLocaleString();
- document.getElementById('dMeta').textContent=`📍 ${ad.city} • ${ad.category} • ${ad.plan==='free'?'FREE':'⭐ FEATURED'}`; document.getElementById('dDesc').textContent=ad.description||""; document.getElementById('dViews').textContent=`👁️ ${ad.views||0} views • ${ad.phone||''}`;
+ document.getElementById('dMeta').textContent=`📍 ${ad.city} • ${ad.category}`; document.getElementById('dDesc').textContent=ad.description||""; document.getElementById('dViews').textContent=`👁️ ${ad.views||0} views • ${ad.phone||''}`;
  document.getElementById('dFeat').style.display=ad.plan!=='free'?'block':'none'; document.querySelector('#detailModal .fav').textContent = getFav().includes(ad.id)?'❤️':'🤍';
  document.getElementById('detailModal').style.display='block'; try{ await updateDoc(doc(db,"ads",id),{views:increment(1)}); ad.views=(ad.views||0)+1; }catch(e){}
 };
-window.setMainImg=(idx)=>{ const ad=currentDetail; const imgs=ad.images||[ad.image]; document.getElementById('dImg').src=imgs[idx]; document.querySelectorAll('#dThumbs img').forEach((el,i)=>el.classList.toggle('active', i==idx)); };
-window.closeDetail=()=>{document.getElementById('detailModal').style.display='none';}; // SPEED FIX - no reload
-window.callSeller=()=>{ if(!currentDetail) return; const ph=currentDetail.phone||""; window.open(`tel:${ph}`); };
-window.chatSeller=()=>{ if(!currentDetail) return; let phone=(currentDetail.phone||"").replace(/\D/g,''); if(phone.startsWith('0')) phone='92'+phone.substring(1); if(!phone) phone='923430864009'; const msg=`Salam, mujhe SM Market pe ye chahiye: ${currentDetail.title} Rs ${currentDetail.price}`; window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank'); };
-window.shareAd=async()=>{ if(!currentDetail) return; const url=`https://atiqjutt381-collab.github.io/?ad=${currentDetail.id}`; const text=`${currentDetail.title} - Rs ${currentDetail.price}`; if(navigator.share){ try{await navigator.share({title:text,url});}catch(e){} }else{ await navigator.clipboard.writeText(url); alert("Link copied"); } };
-window.reportAd=async()=>{ if(!currentDetail) return; const reason=prompt("Reason?"); if(!reason) return; try{ await addDoc(collection(db,"reports"),{adId:currentDetail.id,title:currentDetail.title,reason,user:currentUser?.email||'guest',createdAt:Date.now()}); alert("Reported!"); }catch(e){alert(e.message);} };
-window.viewSellerAds=()=>{ if(!currentDetail) return; const uid=currentDetail.userId; const sellerAds=_lastAds.filter(a=>a.userId===uid); const grid=document.getElementById('sGrid'); document.getElementById('sTitle').textContent=`Seller Ads (${sellerAds.length})`; grid.innerHTML=sellerAds.map(ad=>`<div class="card" onclick="closeSeller(); openAdDetail('${ad.id}')"><img src="${ad.image}"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div></div></div>`).join(''); document.getElementById('sellerModal').style.display='block'; };
+window.setMainImg=(idx)=>{ const imgs=currentDetail.images||[currentDetail.image]; document.getElementById('dImg').src=imgs[idx]; document.querySelectorAll('#dThumbs img').forEach((el,i)=>el.classList.toggle('active', i==idx)); };
+window.closeDetail=()=>{document.getElementById('detailModal').style.display='none';};
+window.callSeller=()=>{ if(!currentDetail) return; window.open(`tel:${currentDetail.phone}`); };
+window.chatSeller=()=>{ if(!currentDetail) return; let phone=(currentDetail.phone||"").replace(/\D/g,''); if(phone.startsWith('0')) phone='92'+phone.substring(1); const msg=`Salam, ye chahiye: ${currentDetail.title}`; window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank'); };
+window.shareAd=async()=>{ if(!currentDetail) return; const url=`https://atiqjutt381-collab.github.io/sm-market-/?ad=${currentDetail.id}`; await navigator.clipboard.writeText(url); alert("Link copied"); };
+window.reportAd=async()=>{ if(!currentDetail) return; const reason=prompt("Reason?"); if(!reason) return; await addDoc(collection(db,"reports"),{adId:currentDetail.id,title:currentDetail.title,reason,user:currentUser?.email||'guest',createdAt:Date.now()}); alert("Reported!"); };
+window.viewSellerAds=()=>{ const sellerAds=_lastAds.filter(a=>a.userId===currentDetail.userId); document.getElementById('sGrid').innerHTML=sellerAds.map(ad=>`<div class="card" onclick="closeSeller(); openAdDetail('${ad.id}')"><img src="${ad.image}"><div class="card-body"><div class="price">Rs ${ad.price}</div><div class="title">${ad.title}</div></div></div>`).join(''); document.getElementById('sellerModal').style.display='block'; };
 window.closeSeller=()=>document.getElementById('sellerModal').style.display='none';
-
-window.openChatRoomFromDetail=async()=>{
- if(!currentDetail)return; if(!currentUser){alert("Please login to chat"); navTo('account'); return;}
- const ad=currentDetail;
- currentChat={adId:ad.id, adTitle:ad.title, sellerId:ad.userId, sellerEmail:ad.userEmail, buyerId:currentUser.uid, buyerEmail:currentUser.email};
- document.getElementById('crTitle').textContent=ad.title; document.getElementById('crSub').textContent=`Chat with ${ad.userEmail||ad.phone} • ${ad.city}`;
- document.getElementById('chatRoom').style.display='block'; loadChatMessages();
-};
-window.closeChatRoom=()=>{document.getElementById('chatRoom').style.display='none'; currentChat=null; loadChats();};
-async function loadChatMessages(){
- if(!currentChat) return; const box=document.getElementById('crMessages'); box.innerHTML="<p class='small'>Loading messages...</p>";
- try{
-  const snap=await getDocs(query(collection(db,"chats"),orderBy("createdAt","asc")));
-  let all=[]; snap.forEach(d=>{let m=d.data(); if(m.adId===currentChat.adId) all.push(m);});
-  if(all.length===0){box.innerHTML="<p class='small'>No messages yet. Start chatting!</p>"; return;}
-  box.innerHTML=all.map(m=>`<div class="chatMsg ${m.senderId===currentUser.uid?'chatMe':'chatOther'}"><b>${m.senderEmail?.split('@')[0]||'User'}:</b> ${m.text}<div class="small" style="opacity:0.7;font-size:10px">${new Date(m.createdAt).toLocaleTimeString()}</div></div>`).join('');
-  box.scrollTop=box.scrollHeight;
- }catch(e){box.innerHTML="<p class='small'>Error: "+e.message+"</p>";}
-}
-window.sendChatMsg=async()=>{
- if(!currentChat) return; const input=document.getElementById('crInput'); const text=input.value.trim(); if(!text) return; if(!currentUser){alert("Login");return;}
- try{ await addDoc(collection(db,"chats"),{adId:currentChat.adId, adTitle:currentChat.adTitle, buyerId:currentChat.buyerId, buyerEmail:currentChat.buyerEmail, sellerId:currentChat.sellerId, sellerEmail:currentChat.sellerEmail, senderId:currentUser.uid, senderEmail:currentUser.email, text, createdAt:Date.now()}); input.value=''; loadChatMessages(); }catch(e){alert(e.message);}
-};
-async function loadChats(){
- const box=document.getElementById('chatList'); if(!currentUser){box.innerHTML="<p class='small'>Please login to see chats.</p>";return;}
- box.innerHTML="<p class='small'>Loading chats...</p>";
- try{
-  const snap=await getDocs(query(collection(db,"chats"),orderBy("createdAt","desc")));
-  let chats=[]; snap.forEach(d=>{let m=d.data(); m.id=d.id; if(m.buyerId===currentUser.uid || m.sellerId===currentUser.uid) chats.push(m);});
-  if(chats.length===0){box.innerHTML="<p class='small'>No chats yet. Kisi ad pe jaake 'In-App Chat' dabao.</p>"; return;}
-  const grouped={}; chats.forEach(c=>{ const key=c.adId+"_"+(c.buyerId===currentUser.uid?c.sellerId:c.buyerId); if(!grouped[key]) grouped[key]=c; });
-  let html=""; Object.values(grouped).forEach(c=>{ html+=`<div class="admin-card" style="cursor:pointer" onclick="openChatFromList('${c.adId}','${c.sellerId}','${c.sellerEmail}','${c.buyerId}','${c.buyerEmail}','${c.adTitle}')"><b>${c.adTitle}</b><br><span class="small">With: ${c.buyerId===currentUser.uid?c.sellerEmail:c.buyerEmail} • ${c.text?.substring(0,30)}...</span><br><button class="act-btn" style="background:#002f34">Open Chat</button></div>`; });
-  box.innerHTML=html;
- }catch(e){box.innerHTML="<p>Error: "+e.message+"</p>";}
-}
-window.openChatFromList=(adId,sellerId,sellerEmail,buyerId,buyerEmail,adTitle)=>{
- currentChat={adId, sellerId, sellerEmail, buyerId, buyerEmail, adTitle};
- document.getElementById('crTitle').textContent=adTitle;
- document.getElementById('chatRoom').style.display='block'; loadChatMessages();
-};
-
-// HELP CENTER
-window.sendHelpRequest=async()=>{
- if(!currentUser){alert("Login karo"); navTo('account'); return;}
- const type=document.getElementById('helpType').value; const msg=document.getElementById('helpMsg').value.trim(); const status=document.getElementById('helpStatus');
- if(!msg){status.textContent="Message likho"; return;}
- try{
-  status.textContent="Sending...";
-  await addDoc(collection(db,"helpRequests"),{type,message:msg,userEmail:currentUser.email,userId:currentUser.uid,status:"open",reply:"",createdAt:Date.now()});
-  status.textContent="✅ Admin ko bhej diya! Jaldi jawab ayega.";
-  document.getElementById('helpMsg').value=''; loadMyHelp();
- }catch(e){status.textContent=e.message;}
-};
-async function loadMyHelp(){
- if(!currentUser) return; const box=document.getElementById('myHelpList');
- try{
-  const snap=await getDocs(query(collection(db,"helpRequests"),where("userId","==",currentUser.uid),orderBy("createdAt","desc")));
-  let html="<h4 style='margin-top:10px'>Aapke Requests:</h4>";
-  snap.forEach(d=>{const h=d.data(); html+=`<div class="admin-card" style="background:${h.reply?'#e8f5e9':'#fff3cd'}"><b>${h.type}</b> - ${h.status}<br><span class="small">${h.message}</span>${h.reply?`<br><div style='background:white;padding:6px;border-radius:6px;margin-top:6px;border:1px solid #2A9DF4'><b style='color:#2A9DF4'>Admin Reply:</b> ${h.reply}</div>`:''}</div>`;});
-  box.innerHTML=html;
- }catch(e){}
-}
-async function loadAdminHelp(){
- const box=document.getElementById('adminHelpList'); box.innerHTML="Loading help...";
- try{
-  const snap=await getDocs(query(collection(db,"helpRequests"),orderBy("createdAt","desc")));
-  let html=""; snap.forEach(d=>{const h=d.data(); const id=d.id; html+=`<div class="admin-card"><b>${h.type}</b> - ${h.userEmail} - ${new Date(h.createdAt).toLocaleString()}<br><span class="small">${h.message}</span><br><textarea id="reply-${id}" placeholder="Reply likho..." style="margin-top:6px">${h.reply||''}</textarea><div><button class="act-btn" style="background:#2A9DF4" onclick="replyHelp('${id}')">Reply + Solve</button><button class="act-btn" style="background:#333" onclick="deleteHelp('${id}')">Delete</button></div></div>`;});
-  box.innerHTML=html||"No help requests";
- }catch(e){box.innerHTML=e.message;}
-}
-window.replyHelp=async(id)=>{
- const reply=document.getElementById('reply-'+id).value.trim();
- try{ await updateDoc(doc(db,"helpRequests",id),{reply,status:"solved"}); alert("Reply sent!"); loadAdminHelp(); }catch(e){alert(e.message);}
-};
-window.deleteHelp=async(id)=>{ if(confirm("Delete?")){ await deleteDoc(doc(db,"helpRequests",id)); loadAdminHelp(); }};
-
-async function loadMyAds(){
- const box=document.getElementById('myAdsList'); if(!currentUser){box.innerHTML="<h2>My Ads</h2><p class='small'>Please login.</p>";return;}
- box.innerHTML="<h2>My Ads</h2><p class='small'>Loading...</p>";
- const snap=await getDocs(query(collection(db,"ads"),where("userId","==",currentUser.uid)));
- let html="<h2>My Ads</h2>"; let count=0;
- snap.forEach(d=>{ const ad=d.data(); const id=d.id; count++; html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - 👁️ ${ad.views||0}<br><span class="small">${ad.status}</span><br><img src="${ad.image}"><div><button class="act-btn" style="background:#007bff" onclick="openEdit('${id}')">✏️ Edit</button><button class="act-btn" style="background:#dc3545" onclick="deleteMyAd('${id}')">🗑️ Delete</button></div></div>`; });
- if(count===0) html+="<p>No ads yet</p>"; box.innerHTML=html;
-}
-window.openEdit=(id)=>{
- const ad=_lastAds.find(a=>a.id===id); if(!ad){alert("Home open karo pehle");return;} editingId=id;
- document.getElementById('eTitle').value=ad.title||""; document.getElementById('ePrice').value=ad.price||""; document.getElementById('ePhone').value=ad.phone||""; document.getElementById('eCity').value=ad.city||cities46[0]; document.getElementById('eCategory').value=ad.category||"mobiles"; document.getElementById('eDesc').value=ad.description||"";
- const box=document.getElementById('ePreviewMulti'); box.innerHTML=(ad.images||[ad.image]).map(im=>`<img src="${im}" style="width:60px;height:60px;object-fit:cover;border-radius:6px">`).join('');
- document.getElementById('editModal').style.display='block';
-};
+window.openChatRoomFromDetail=async()=>{ if(!currentDetail)return; if(!currentUser){alert("Please login"); navTo('account'); return;} currentChat={adId:currentDetail.id, adTitle:currentDetail.title, sellerId:currentDetail.userId, sellerEmail:currentDetail.userEmail, buyerId:currentUser.uid, buyerEmail:currentUser.email}; document.getElementById('crTitle').textContent=currentDetail.title; document.getElementById('chatRoom').style.display='block'; loadChatMessages(); };
+window.closeChatRoom=()=>{document.getElementById('chatRoom').style.display='none'; currentChat=null;};
+async function loadChatMessages(){ if(!currentChat) return; const box=document.getElementById('crMessages'); box.innerHTML="<p class='small'>Loading...</p>"; try{ const snap=await getDocs(query(collection(db,"chats"),orderBy("createdAt","asc"))); let all=[]; snap.forEach(d=>{let m=d.data(); if(m.adId===currentChat.adId) all.push(m);}); if(all.length===0){box.innerHTML="<p class='small'>No messages yet.</p>"; return;} box.innerHTML=all.map(m=>`<div class="chatMsg ${m.senderId===currentUser.uid?'chatMe':'chatOther'}"><b>${m.senderEmail?.split('@')[0]}:</b> ${m.text}</div>`).join(''); box.scrollTop=box.scrollHeight; }catch(e){box.innerHTML=e.message;} }
+window.sendChatMsg=async()=>{ if(!currentChat) return; const text=document.getElementById('crInput').value.trim(); if(!text) return; await addDoc(collection(db,"chats"),{adId:currentChat.adId, adTitle:currentChat.adTitle, buyerId:currentChat.buyerId, buyerEmail:currentChat.buyerEmail, sellerId:currentChat.sellerId, sellerEmail:currentChat.sellerEmail, senderId:currentUser.uid, senderEmail:currentUser.email, text, createdAt:Date.now()}); document.getElementById('crInput').value=''; loadChatMessages(); };
+async function loadChats(){ const box=document.getElementById('chatList'); if(!currentUser){box.innerHTML="<p class='small'>Please login</p>";return;} const snap=await getDocs(query(collection(db,"chats"),orderBy("createdAt","desc"))); let chats=[]; snap.forEach(d=>{let m=d.data(); if(m.buyerId===currentUser.uid || m.sellerId===currentUser.uid) chats.push(m);}); if(chats.length===0){box.innerHTML="<p>No chats</p>";return;} const grouped={}; chats.forEach(c=>{ const key=c.adId+"_"+(c.buyerId===currentUser.uid?c.sellerId:c.buyerId); if(!grouped[key]) grouped[key]=c; }); let html=""; Object.values(grouped).forEach(c=>{ html+=`<div class="admin-card" onclick="openChatFromList('${c.adId}','${c.sellerId}','${c.sellerEmail}','${c.buyerId}','${c.buyerEmail}','${c.adTitle}')"><b>${c.adTitle}</b><br><span class="small">${c.text?.substring(0,30)}</span></div>`; }); box.innerHTML=html; }
+window.openChatFromList=(adId,sellerId,sellerEmail,buyerId,buyerEmail,adTitle)=>{ currentChat={adId, sellerId, sellerEmail, buyerId, buyerEmail, adTitle}; document.getElementById('crTitle').textContent=adTitle; document.getElementById('chatRoom').style.display='block'; loadChatMessages(); };
+window.sendHelpRequest=async()=>{ if(!currentUser){alert("Login karo"); return;} const type=document.getElementById('helpType').value; const msg=document.getElementById('helpMsg').value.trim(); if(!msg) return; await addDoc(collection(db,"helpRequests"),{type,message:msg,userEmail:currentUser.email,userId:currentUser.uid,status:"open",reply:"",createdAt:Date.now()}); document.getElementById('helpMsg').value=''; alert("Sent to Admin"); loadMyHelp(); };
+async function loadMyHelp(){ if(!currentUser) return; const snap=await getDocs(query(collection(db,"helpRequests"),where("userId","==",currentUser.uid),orderBy("createdAt","desc"))); let html="<h4>Aapke Requests:</h4>"; snap.forEach(d=>{const h=d.data(); html+=`<div class="admin-card"><b>${h.type}</b> - ${h.status}<br><span class="small">${h.message}</span>${h.reply?`<br><div style='background:#e8f5e9;padding:6px;border-radius:6px'><b>Admin:</b> ${h.reply}</div>`:''}</div>`;}); document.getElementById('myHelpList').innerHTML=html; }
+async function loadAdminHelp(){ const box=document.getElementById('adminHelpList'); const snap=await getDocs(query(collection(db,"helpRequests"),orderBy("createdAt","desc"))); let html=""; snap.forEach(d=>{const h=d.data(); html+=`<div class="admin-card"><b>${h.type}</b> - ${h.userEmail}<br><span class="small">${h.message}</span><br><textarea id="reply-${d.id}">${h.reply||''}</textarea><button class="act-btn" style="background:#2A9DF4" onclick="replyHelp('${d.id}')">Reply</button></div>`;}); box.innerHTML=html||"No help"; }
+window.replyHelp=async(id)=>{ const reply=document.getElementById('reply-'+id).value; await updateDoc(doc(db,"helpRequests",id),{reply,status:"solved"}); loadAdminHelp(); };
+async function loadMyAds(){ const box=document.getElementById('myAdsList'); if(!currentUser){box.innerHTML="<h2>My Ads</h2><p>Please login</p>";return;} const snap=await getDocs(query(collection(db,"ads"),where("userId","==",currentUser.uid))); let html="<h2>My Ads</h2>"; snap.forEach(d=>{const ad=d.data(); html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price}<br><img src="${ad.image}"><div><button class="act-btn" style="background:#007bff" onclick="openEdit('${d.id}')">Edit</button><button class="act-btn" style="background:#dc3545" onclick="deleteMyAd('${d.id}')">Delete</button></div></div>`;}); box.innerHTML=html; }
+window.openEdit=(id)=>{ const ad=_lastAds.find(a=>a.id===id); if(!ad){alert("Home open karo");return;} editingId=id; document.getElementById('eTitle').value=ad.title; document.getElementById('ePrice').value=ad.price; document.getElementById('ePhone').value=ad.phone; document.getElementById('eCity').value=ad.city; document.getElementById('eCategory').value=ad.category; document.getElementById('eDesc').value=ad.description; document.getElementById('editModal').style.display='block'; };
 window.closeEdit=()=>{document.getElementById('editModal').style.display='none'; editingId=null;};
-window.saveEdit=async()=>{
- if(!editingId) return; const status=document.getElementById('editStatus'); status.textContent="Saving...";
- let images=null; if(editMultiImages.length>0) images=editMultiImages;
- const data={title:document.getElementById('eTitle').value.trim(), price:Number(document.getElementById('ePrice').value), phone:document.getElementById('ePhone').value.trim(), city:document.getElementById('eCity').value, category:document.getElementById('eCategory').value, description:document.getElementById('eDesc').value.trim()};
- if(images){ data.images=images; data.image=images[0]; }
- try{ await updateDoc(doc(db,"ads",editingId),data); status.textContent="Saved!"; setTimeout(()=>{closeEdit(); _lastAds=[]; loadMyAds(); loadAds();},800);}catch(e){status.textContent="Error: "+e.message;}
-};
-window.deleteMyAd=async(id)=>{ if(!confirm("Delete?")) return; await deleteDoc(doc(db,"ads",id)); _lastAds=[]; loadMyAds(); loadAds(); };
-
-async function loadAdmin(){
- const list=document.getElementById('adminList'); const rlist=document.getElementById('reportList');
- list.innerHTML="<p class='small'>Loading all ads (Owner View)...</p>";
- try{ const rsnap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let rhtml=""; let c=0; rsnap.forEach(d=>{if(c++<3){const r=d.data(); rhtml+=`<div class='small' style='background:#fff3cd;padding:6px;margin:4px 0;border-radius:6px'>${r.title} - ${r.reason}</div>`;}}); rlist.innerHTML=rhtml; }catch(e){ rlist.innerHTML=""; }
- const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); _lastAds=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;_lastAds.push(data);});
- let html=`<p class="small">Total Ads: ${_lastAds.length} - Sab mobile ke ads (Owner View)</p>`;
- _lastAds.forEach(ad=>{ const id=ad.id; html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - 👁️ ${ad.views||0}<br><span class="small">${ad.userEmail} | ${ad.plan} | ${ad.status}</span><br><img src="${ad.image}"><div><button class="act-btn" style="background:green" onclick="adminAction('${id}','approved')">Approve</button><button class="act-btn" style="background:red" onclick="adminAction('${id}','rejected')">Reject</button><button class="act-btn" style="background:#333" onclick="adminDelete('${id}')">Delete</button></div></div>`;});
- list.innerHTML=html;
- loadAdminHelp();
-}
-async function loadAdminReportsFull(){
- const box=document.getElementById('adminReportListFull'); box.innerHTML="Loading...";
- const snap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let html=""; snap.forEach(d=>{const r=d.data(); html+=`<div class='admin-card'><b>${r.title}</b> - ${r.reason} - ${r.user}<br><button class="act-btn" style="background:#333" onclick="deleteReport('${d.id}')">Delete Report</button></div>`;}); box.innerHTML=html||"No reports";
-}
-window.deleteReport=async(id)=>{ await deleteDoc(doc(db,"reports",id)); loadAdmin(); loadAdminReportsFull(); };
+window.saveEdit=async()=>{ if(!editingId) return; let data={title:document.getElementById('eTitle').value, price:Number(document.getElementById('ePrice').value), phone:document.getElementById('ePhone').value, city:document.getElementById('eCity').value, category:document.getElementById('eCategory').value, description:document.getElementById('eDesc').value}; if(editMultiImages.length>0){ data.images=editMultiImages; data.image=editMultiImages[0]; } await updateDoc(doc(db,"ads",editingId),data); document.getElementById('editModal').style.display='none'; _lastAds=[]; loadMyAds(); loadAds(); };
+window.deleteMyAd=async(id)=>{ if(confirm("Delete?")){ await deleteDoc(doc(db,"ads",id)); _lastAds=[]; loadMyAds(); loadAds(); }};
+async function loadAdmin(){ const list=document.getElementById('adminList'); const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); _lastAds=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;_lastAds.push(data);}); let html=`<p>Total: ${_lastAds.length}</p>`; _lastAds.forEach(ad=>{ html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city}<br><span class="small">${ad.userEmail}</span><br><img src="${ad.image}"><div><button class="act-btn" style="background:green" onclick="adminAction('${ad.id}','approved')">Approve</button><button class="act-btn" style="background:red" onclick="adminAction('${ad.id}','rejected')">Reject</button><button class="act-btn" style="background:#333" onclick="adminDelete('${ad.id}')">Delete</button></div></div>`;}); list.innerHTML=html; }
+async function loadAdminReportsFull(){ const box=document.getElementById('adminReportListFull'); const snap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let html=""; snap.forEach(d=>{const r=d.data(); html+=`<div class='admin-card'><b>${r.title}</b> - ${r.reason}</div>`;}); box.innerHTML=html||"No reports"; }
 window.adminAction=async(id,status)=>{await updateDoc(doc(db,"ads",id),{status});loadAdmin(); _lastAds=[]; loadAds();};
 window.adminDelete=async(id)=>{if(confirm("Delete?")){await deleteDoc(doc(db,"ads",id));loadAdmin(); _lastAds=[]; loadAds();}};
 
-// ACCOUNT + PROFILE EDIT + HELP + INSTALL
+// PROFILE PAGE ONLY - INSTALL BUTTON LOGIC
 async function renderAccount(){
  const box=document.getElementById('accountBox');
  if(currentUser){
   let userData={name:currentUser.displayName||"",phone:"",city:"Samundri"};
-  try{
-   const udoc=await getDoc(doc(db,"users",currentUser.uid));
-   if(udoc.exists()) userData=udoc.data();
-  }catch(e){}
+  try{ const udoc=await getDoc(doc(db,"users",currentUser.uid)); if(udoc.exists()) userData=udoc.data(); }catch(e){}
   const isAdmin=currentUser.email==='atiqjutt381@gmail.com'||currentUser.email.includes('atiq');
+  const canInstall = deferredPrompt ? true : false;
+  const installText = canInstall ? "⬇️ Install App - 1 Click Me" : "📲 App Install Guide";
+  const installColor = canInstall ? "#0f172a" : "#2A9DF4";
   box.innerHTML=`
-  <h2>👤 My Profile - Edit Kar Sakte Ho</h2>
-  <p class="small">Name, City khud change karo - OLX jesa</p>
-  <label class="small"><b>Your Name</b></label>
-  <input id="profileName" placeholder="Aapka Name" value="${userData.name||currentUser.displayName||''}">
+  <h2>👤 My Profile</h2>
+  <p class="small">Aapka account</p>
+  <label class="small"><b>Name</b></label>
+  <input id="profileName" value="${userData.name||currentUser.displayName||''}">
   <label class="small"><b>Phone</b></label>
-  <input id="profilePhone" placeholder="03XXXXXXXXX" value="${userData.phone||''}">
+  <input id="profilePhone" value="${userData.phone||''}">
   <label class="small"><b>City</b></label>
   <select id="profileCity">${cities46.map(c=>`<option value="${c}" ${userData.city===c?'selected':''}>${c}</option>`).join('')}</select>
-  <label class="small"><b>Email</b></label>
   <input value="${currentUser.email}" disabled>
-  <button class="btn-main" style="background:#2A9DF4" onclick="saveProfile()">💾 Save Profile - Name Change</button>
+  <button class="btn-main" style="background:#2A9DF4" onclick="saveProfile()">💾 Save Profile</button>
   <p id="profileStatus" class="small"></p>
   <hr style="margin:12px 0">
-  <button class="btn-main" style="background:#002f34" onclick="navTo('help')">🆘 Help Center - Masla Solve Karo</button>
-  <button class="btn-main" style="background:#002f34;margin-top:8px;display:${deferredPrompt?'block':'none'}" id="accountInstall" onclick="installApp()">⬇️ Install App - Play Store Style</button>
-  <div style="background:#f0f8ff;padding:10px;border-radius:8px;margin-top:8px;border:1px solid #2A9DF4;display:${deferredPrompt?'block':'none'}">
-  <b style="color:#2A9DF4">📲 App Install Profile Me Hai</b><br><span class="small">Yahan se install karo - Home screen pe ayega</span>
+  <div style="background:#f0f8ff;padding:12px;border-radius:10px;border:1px solid #2A9DF4;margin-top:10px">
+  <b style="color:#0f172a">📲 SM Market App</b><br>
+  <span class="small">Yahan se app install karo - Jaise baaki apps me hota hai - Sirf Profile page pe</span><br>
+  <button class="btn-main" style="background:${installColor};margin-top:8px" onclick="installApp()">${installText}</button>
+  <p class="small" style="margin-top:6px">${canInstall ? '✅ 1 click me install hoga' : 'Browser menu (⋮) > Install App dabao'}</p>
   </div>
-  <button class="btn-main" style="background:#eee;color:#000;margin-top:8px" onclick="logout()">Logout</button>
-  ${isAdmin?'<button class="btn-main" style="background:#e91e63;margin-top:8px" onclick="navTo(\'admin\')">Admin Panel - All Ads + Help Requests</button>':''}
+  <button class="btn-main" style="background:#eee;color:#000;margin-top:10px" onclick="logout()">Logout</button>
+  ${isAdmin?'<button class="btn-main" style="background:#e91e63;margin-top:8px" onclick="navTo(\\'admin\\')">Admin Panel</button>':''}
   `;
  }else{
-  box.innerHTML=`<h2>Login / Signup</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btn-main" onclick="login()">Login</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="signup()">Create Account</button><button class="btn-main btn-google" onclick="loginWithGoogle()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google</button><p id="authMsg" class="small"></p><button class="btn-main" style="background:#002f34;margin-top:8px" onclick="navTo('help')">🆘 Help Center</button>`;
+  box.innerHTML=`<h2>Login / Signup</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btn-main" onclick="login()">Login</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="signup()">Create Account</button><button class="btn-main btn-google" onclick="loginWithGoogle()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google Login</button><p id="authMsg" class="small"></p>`;
  }
 }
 window.saveProfile=async()=>{
@@ -474,87 +272,40 @@ window.saveProfile=async()=>{
  const phone=document.getElementById('profilePhone').value.trim();
  const city=document.getElementById('profileCity').value;
  const status=document.getElementById('profileStatus');
- if(!currentUser) return;
- try{
-  status.textContent="Saving...";
-  await updateProfile(currentUser,{displayName:name});
-  await setDoc(doc(db,"users",currentUser.uid),{name,phone,city,email:currentUser.email,uid:currentUser.uid,updatedAt:Date.now()},{merge:true});
-  status.textContent="✅ Saved! Name change ho gaya - OLX jesa!";
-  setTimeout(()=>renderAccount(),1000);
- }catch(e){status.textContent="Error: "+e.message;}
+ try{ status.textContent="Saving..."; await updateProfile(currentUser,{displayName:name}); await setDoc(doc(db,"users",currentUser.uid),{name,phone,city,email:currentUser.email,uid:currentUser.uid,updatedAt:Date.now()},{merge:true}); status.textContent="✅ Saved!"; }catch(e){status.textContent=e.message;}
 };
-
 window.login=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await signInWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
 window.signup=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await createUserWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
 window.loginWithGoogle=async()=>{const provider=new GoogleAuthProvider();try{await signInWithPopup(auth,provider);}catch(e){document.getElementById('authMsg').textContent=e.message;}};
 window.logout=async()=>{await signOut(auth);};
 onAuthStateChanged(auth,(user)=>{currentUser=user;renderAccount();if(_lastAds.length===0)loadAds();});
 
-// PLAY STORE AUTO INSTALL - FINAL CORRECT LOGIC - FIXED
+// INSTALL - ONLY FOR PROFILE PAGE
 window.addEventListener('beforeinstallprompt',(e)=>{
  e.preventDefault();
  deferredPrompt=e;
- const btn=document.getElementById('installBtn');
- if(btn) btn.style.display='block';
  renderAccount();
- if(!installShown && !localStorage.getItem('sm_install_dismissed') && !localStorage.getItem('sm_app_installed')){
-   setTimeout(()=>{ showInstallPopup(); }, 3000);
- }
 });
-function showInstallPopup(){
- if(installShown) return;
- installShown=true;
- const pop=document.getElementById('appInstallPopup');
- if(pop) pop.classList.add('show');
-}
-function closeInstallPopup(){
- const pop=document.getElementById('appInstallPopup');
- if(pop) pop.classList.remove('show');
- localStorage.setItem('sm_install_dismissed','1');
- setTimeout(()=>{ localStorage.removeItem('sm_install_dismissed'); }, 86400000);
-}
-window.closeInstallPopup=closeInstallPopup;
 window.installApp=async()=>{
  if(deferredPrompt){
    deferredPrompt.prompt();
    const result=await deferredPrompt.userChoice;
    if(result.outcome==='accepted'){
-     const pop=document.getElementById('appInstallPopup');
-     if(pop) pop.classList.remove('show');
-     const btn=document.getElementById('installBtn');
-     if(btn) btn.style.display='none';
      localStorage.setItem('sm_app_installed','1');
-     alert("Shukriya! App install ho raha hai - Home Screen check karo!");
+     alert("Shukriya! App install ho raha hai - Home Screen dekho!");
    }
    deferredPrompt=null;
-   const btn=document.getElementById('installBtn');
-   if(btn) btn.style.display='none';
+   renderAccount();
  }else{
    if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
-     alert("iPhone me: Share button (⬆️) dabao > Add to Home Screen dabao");
+     alert("iPhone me: Share (⬆️) > Add to Home Screen");
    }else{
-     alert("Browser menu (⋮) > Install App / Add to Home Screen dabao - Bilkul Play Store jesa! Profile me se try karo.");
+     alert("Browser menu (⋮) > Install App / Add to Home Screen dabao");
    }
-   closeInstallPopup();
  }
-}
-window.addEventListener('appinstalled',()=>{
- const btn=document.getElementById('installBtn');
- if(btn) btn.style.display='none';
- const pop=document.getElementById('appInstallPopup');
- if(pop) pop.classList.remove('show');
- localStorage.setItem('sm_app_installed','1');
-});
-if('serviceWorker' in navigator){
- try{ navigator.serviceWorker.register('./sw.js'); }catch(e){}
-}
-setTimeout(()=>{
- if(!localStorage.getItem('sm_app_installed') && !localStorage.getItem('sm_install_dismissed') && !installShown){
-   const pop=document.getElementById('appInstallPopup');
-   if(pop) { pop.classList.add('show'); installShown=true; }
- }
-}, 5000);
-
+};
+window.addEventListener('appinstalled',()=>{ localStorage.setItem('sm_app_installed','1'); renderAccount(); });
+if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('./sw.js'); }catch(e){} }
 renderChips(); loadAds(); navTo('home');
 </script>
 </body>
