@@ -7,21 +7,23 @@
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#002f34">
 <style>
-:root{--dark:#002f34;--teal:#23e5db;--light:#f7f8f9;--border:#e0e0e0;--green:#25D366}
+:root{--dark:#002f34;--teal:#23e5db;--light:#f7f8f9;--border:#e0e0e0;--green:#25D366;--blue:#2A9DF4}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial,sans-serif}
 body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .header{background:var(--dark);color:white;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
 .logo{font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px}
 .logo img{width:36px;height:36px;border-radius:6px;background:white;object-fit:cover}
-.logo span{color:var(--teal)}
-.search-wrap{padding:10px;background:white;display:flex;gap:8px;position:sticky;top:50px;z-index:99;border-bottom:1px solid var(--border);align-items:center}
+.logo .blue{color:var(--blue)}
+.search-wrap{padding:10px;background:white;display:flex;gap:6px;position:sticky;top:50px;z-index:99;border-bottom:1px solid var(--border);align-items:center}
 .search-wrap input{flex:1;padding:11px 12px;border-radius:6px;border:1.8px solid var(--dark);font-size:14px;outline:none}
-.search-wrap button{background:var(--dark);color:white;border:none;padding:0 18px;height:40px;border-radius:6px;font-weight:700;font-size:14px}
-.sortSel{padding:0 8px;height:40px;border:1.5px solid #ccc;border-radius:6px;font-size:13px}
+.search-wrap button{background:var(--dark);color:white;border:none;padding:0 14px;height:40px;border-radius:6px;font-weight:700;font-size:13px;white-space:nowrap}
+.locBtn{background:#2A9DF4 !important;padding:0 10px !important}
+.sortSel{padding:0 6px;height:40px;border:1.5px solid #ccc;border-radius:6px;font-size:12px}
 .chip-wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:white;white-space:nowrap;scrollbar-width:none}
 .chip-wrap::-webkit-scrollbar{display:none}
 .chip{padding:7px 13px;border-radius:20px;border:1.5px solid #c0c0c0;background:white;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px}
 .chip.active{background:var(--dark);color:white;border-color:var(--dark)}
+.chip.blue-active{background:var(--blue) !important;color:white !important;border-color:var(--blue) !important}
 .page{display:none;padding:0}.page.active{display:block}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}
 .card{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;position:relative}
@@ -52,7 +54,7 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .act-btn{padding:7px 12px;border:none;border-radius:6px;color:white;font-weight:700;margin:3px;cursor:pointer;font-size:12px}
 .install{position:fixed;bottom:88px;right:12px;background:#002f34;color:white;padding:11px 16px;border-radius:30px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,0.3);cursor:pointer;z-index:190;display:none}
 .small{font-size:11px;color:#666}
-#detailModal,#editModal,#sellerModal,#chatRoom{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;overflow-y:auto;padding:16px}
+#detailModal,#editModal,#sellerModal,#chatRoom,#helpModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;overflow-y:auto;padding:16px}
 .detailBox{background:white;border-radius:12px;max-width:480px;margin:10px auto;overflow:hidden}
 .detailBox img.mainImg{width:100%;max-height:380px;object-fit:contain;background:#f5f5f5}
 .detailPad{padding:14px}
@@ -61,40 +63,21 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 .thumbs img.active{border-color:var(--dark)}
 .actionRow{display:flex;gap:8px;margin-top:10px}
 .actionRow button{flex:1}
-.chatMsg{padding:8px 12px;border-radius:12px;margin:6px 0;max-width:80%;font-size:13px;line-height:1.4}
-.chatMe{background:var(--dark);color:white;margin-left:auto}
-.chatOther{background:#eee;color:#000}
-.chatInputRow{display:flex;gap:6px;padding:10px;background:white;border-top:1px solid #ddd;position:sticky;bottom:0}
-.chatInputRow input{flex:1;padding:12px;border:1.5px solid #ccc;border-radius:20px}
-.chatInputRow button{background:var(--dark);color:white;border:none;padding:0 18px;border-radius:20px;font-weight:700}
-#appInstallPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:end;justify-content:center;padding:0}
-#appInstallPopup.show{display:flex}
-.installCard{background:white;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:20px;animation:slideUp 0.3s}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.installHead{display:flex;gap:14px;align-items:center}
-.installIcon{width:60px;height:60px;border-radius:14px;background:#002f34;display:flex;align-items:center;justify-content:center;font-size:32px;color:white;overflow:hidden}
-.installIcon img{width:100%;height:100%;object-fit:cover}
-.installTitle{flex:1}
-.installTitle b{font-size:16px;display:block}
-.installTitle span{font-size:12px;color:#666}
-.installStars{color:#f9a825;font-size:12px;margin-top:2px}
-.installBtns{display:flex;gap:10px;margin-top:16px}
-.btnInstall{flex:1;background:#002f34;color:white;border:none;padding:13px;border-radius:10px;font-weight:800;font-size:15px}
-.btnLater{flex:1;background:#f1f1f1;color:#333;border:none;padding:13px;border-radius:10px;font-weight:700}
-</style>
-</head>
-<body>
-<div class="header"><div class="logo"><img src="./logopng.jpg" onerror="this.style.display='none'">SM <span>FAISALABAD</span> MARKET</div><div style="font-size:10px">OLX STYLE</div></div>
-
-<div id="homeFilters">
-<div class="search-wrap"><input id="searchInput" placeholder="Find Cars, Mobiles, Property..."><select id="sortSel" class="sortSel" onchange="loadAds()"><option value="new">Newest</option><option value="low">Low-High</option><option value="high">High-Low</option><option value="fav">❤️ Fav Only</option></select><button onclick="doSearch()">Search</button></div>
+ <div id="homeFilters">
+<div class="search-wrap">
+<button class="locBtn" onclick="useCurrentLocation()">📍 Near Me</button>
+<input id="searchInput" placeholder="Find Cars, Mobiles...">
+<select id="sortSel" class="sortSel" onchange="loadAds()"><option value="new">Newest</option><option value="low">Low-High</option><option value="high">High-Low</option><option value="fav">❤️ Fav</option></select>
+<button onclick="doSearch()">Search</button>
+</div>
+<div id="currentLocLabel" style="padding:4px 12px;background:#e8f6ff;font-size:11px;display:none"></div>
 <div class="chip-wrap" id="catChips"></div>
 <div class="chip-wrap" id="cityChips" style="padding-top:0"></div>
 </div>
 
 <div id="page-home" class="page active"><div id="homeGrid" class="grid"></div></div>
 
-<div id="page-chats" class="page"><div class="form" style="margin:0;border-radius:0"><h2>💬 Chats - OLX Style Chat</h2><p class="small">Customers yahan 1 dosre se direct chat karenge - bilkul OLX jesa</p><div id="chatList" style="margin-top:10px"></div></div></div>
+<div id="page-chats" class="page"><div class="form" style="margin:0;border-radius:0"><h2>💬 Chats - OLX Style Chat</h2><p class="small">Customers yahan 1 dosre se direct chat karenge</p><div id="chatList" style="margin-top:10px"></div></div></div>
 
 <div id="page-sell" class="page"><div class="form">
 <h2>Sell Fast Now - OLX Style</h2>
@@ -117,7 +100,37 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 
 <div id="page-myads" class="page"><div id="myAdsList" class="form"><h2>My Ads</h2></div></div>
 <div id="page-account" class="page"><div class="form" id="accountBox"></div></div>
-<div id="page-admin" class="page"><div class="form"><h2>Admin Panel</h2><div id="reportList"></div></div><div id="adminList"></div></div>
+
+<div id="page-help" class="page">
+<div class="form">
+<h2>🆘 Online Help Center</h2>
+<p class="small">Koi masla hai? Yahan likho, Admin jawab dega.</p>
+<select id="helpType"><option>Ad Approve Issue</option><option>Payment Issue</option><option>Login Issue</option><option>Ad Delete / Edit</option><option>Other</option></select>
+<textarea id="helpMsg" placeholder="Apna masla likho..."></textarea>
+<button class="btn-main" onclick="sendHelpRequest()">📩 Send to Admin</button>
+<p id="helpStatus" class="small"></p>
+<hr style="margin:12px 0">
+<h3>❓ FAQs</h3>
+<p class="small"><b>Free ad kaise lagayen?</b> Sell > Title/Price > Free select > Post</p>
+<p class="small"><b>Easypaisa kaise bhejen?</b> 03430864009 pe bhejo aur screenshot upload karo</p>
+<p class="small"><b>Location kaise change?</b> Home pe 📍 Near Me ya City chips se</p>
+<div id="myHelpList" style="margin-top:10px"></div>
+</div>
+</div>
+
+<div id="page-admin" class="page">
+<div class="form">
+<h2>Admin Panel</h2>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+<button class="act-btn" style="background:#2A9DF4" onclick="switchAdminTab('ads')">All Ads (Owner View)</button>
+<button class="act-btn" style="background:#e91e63" onclick="switchAdminTab('help')">🆘 Help Requests</button>
+<button class="act-btn" style="background:#ff9800" onclick="switchAdminTab('reports')">🚩 Reports</button>
+</div>
+<div id="adminTab-ads"><div id="reportList"></div><div id="adminList"></div></div>
+<div id="adminTab-help" style="display:none"><div id="adminHelpList"></div></div>
+<div id="adminTab-reports" style="display:none"><div id="adminReportListFull"></div></div>
+</div>
+</div>
 
 <div id="detailModal" onclick="if(event.target==this)closeDetail()"><div class="detailBox">
 <div style="position:relative"><img id="dImg" class="mainImg"><div id="dFeat" style="position:absolute;top:8px;left:8px;background:#ffce32;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:800;display:none">⭐ FEATURED</div><div class="fav" style="top:8px;right:8px" onclick="toggleFavFromDetail()">❤️</div></div>
@@ -134,8 +147,7 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 <button class="btn-main" style="background:#002f34;margin-top:6px" onclick="viewSellerAds()">👤 Seller All Ads</button>
 </div>
 </div></div>
-
-<div id="chatRoom"><div class="detailBox" style="display:flex;flex-direction:column;height:90vh"><div class="detailPad" style="border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center"><div><b id="crTitle">Chat</b><div class="small" id="crSub"></div></div><button onclick="closeChatRoom()" style="background:#eee;border:none;padding:6px 12px;border-radius:20px">✕</button></div><div id="crMessages" style="flex:1;overflow-y:auto;padding:12px;background:#fafafa"></div><div class="chatInputRow"><input id="crInput" placeholder="Type message..."><button onclick="sendChatMsg()">Send</button></div></div></div>
+ <div id="chatRoom"><div class="detailBox" style="display:flex;flex-direction:column;height:90vh"><div class="detailPad" style="border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center"><div><b id="crTitle">Chat</b><div class="small" id="crSub"></div></div><button onclick="closeChatRoom()" style="background:#eee;border:none;padding:6px 12px;border-radius:20px">✕</button></div><div id="crMessages" style="flex:1;overflow-y:auto;padding:12px;background:#fafafa"></div><div class="chatInputRow"><input id="crInput" placeholder="Type message..."><button onclick="sendChatMsg()">Send</button></div></div></div>
 
 <div id="editModal" onclick="if(event.target==this)closeEdit()"><div class="detailBox"><div class="detailPad"><h2>Edit Ad</h2><input id="eTitle"><input id="ePrice" type="number"><input id="ePhone"><select id="eCity"></select><select id="eCategory"></select><textarea id="eDesc"></textarea><label class="small"><b>Update Photos</b></label><input type="file" id="eImageFile" accept="image/*" multiple><div id="ePreviewMulti" style="display:flex;gap:6px;flex-wrap:wrap"></div><button class="btn-main" onclick="saveEdit()">Save</button><button class="btn-main" style="background:#eee;color:#000" onclick="closeEdit()">Cancel</button><p id="editStatus" class="small"></p></div></div></div>
 
@@ -147,12 +159,12 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 <div class="installHead">
 <div class="installIcon"><img src="./logopng.jpg" onerror="this.parentElement.textContent='SM'"></div>
 <div class="installTitle">
-<b>SM FAISALABAD MARKET</b>
+<b>SM <span style="color:#2A9DF4">FAISALABAD</span> MARKET</b>
 <span>SM Market - 46 Cities - OLX Style</span>
 <div class="installStars">⭐ 4.8 • 10k+ installs • Free • OLX Style</div>
 </div>
 </div>
-<p class="small" style="margin-top:12px">App install karo - Ads fast, offline support, Play Store jesa experience! Naya customer khole to auto aayega.</p>
+<p class="small" style="margin-top:12px">App install karo - Ads fast, offline support, Play Store jesa experience!</p>
 <div class="installBtns">
 <button class="btnLater" onclick="closeInstallPopup()">Later</button>
 <button class="btnInstall" onclick="installApp()">⬇️ Install App</button>
@@ -169,10 +181,11 @@ body{background:var(--light);padding-bottom:85px;color:var(--dark)}
 <div class="b-item" onclick="navTo('myads')"><div class="b-icon">📄</div>MY ADS</div>
 <div class="b-item" onclick="navTo('account')"><div class="b-icon">👤</div>ACCOUNT</div>
 </div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = { apiKey:"AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30", authDomain:"sm-market-f7283.firebaseapp.com", projectId:"sm-market-f7283", storageBucket:"sm-market-f7283.firebasestorage.app", messagingSenderId:"467902826161", appId:"1:467902826161:web:3a95a176f7b57d15050490" };
 let app; try{app=initializeApp(firebaseConfig);}catch(e){app=initializeApp(firebaseConfig,"second");}
@@ -181,29 +194,57 @@ const auth=getAuth(app); const db=getFirestore(app);
 const cities46=["Samundri","Gojra","Toba Tek Singh","Faisalabad","Jaranwala","Tandlianwala","Kamalia","Pir Mahal","Mamun Kanjan","Jhang","Chiniot","Lahore","Sargodha","Sahiwal","Okara","Multan","Bahawalpur","Kasur","Sheikhupura","Gujranwala","Gujrat","Sialkot","Rawalpindi","Islamabad","Peshawar","Quetta","Karachi","Hyderabad","Sukkur","Larkana","Rahim Yar Khan","Burewala","Vehari","Khanewal","Bhawana","Lalian","Shorkot","Jhumra","Chak Jhumra","Dijkot","Khurrianwala","Murree","Jhelum","Attock","Mianwali"];
 const categories=[{id:"all",name:"All",icon:"🌐"},{id:"mobiles",name:"Mobiles",icon:"📱"},{id:"vehicles",name:"Vehicles",icon:"🚗"},{id:"property",name:"Property",icon:"🏠"},{id:"bikes",name:"Bikes",icon:"🏍️"},{id:"fashion",name:"Fashion",icon:"👕"},{id:"electronics",name:"Electronics",icon:"💻"},{id:"jobs",name:"Jobs",icon:"💼"},{id:"services",name:"Services",icon:"🔧"},{id:"animals",name:"Animals",icon:"🐓"},{id:"furniture",name:"Furniture",icon:"🛋️"}];
 
-let selectedPlan="free",selectedCity="All Cities",selectedCat="all",currentUser=null,deferredPrompt=null,_lastAds=[],editingId=null,currentDetail=null,multiImages=[],editMultiImages=[],currentChat=null,installShown=false;
+let selectedPlan="free",selectedCity="All Cities",selectedCat="all",currentUser=null,deferredPrompt=null,_lastAds=[],editingId=null,currentDetail=null,multiImages=[],editMultiImages=[],currentChat=null,installShown=false,adminCurrentTab='ads',currentLocationActive=false;
 
 window.selectPlan=(plan,el)=>{selectedPlan=plan;document.querySelectorAll('.plan').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');document.getElementById('easypaisaBox').classList.toggle('show',plan!=='free');};
 
 function renderChips(){
  document.getElementById('catChips').innerHTML=categories.map(c=>`<div class="chip ${selectedCat===c.id?'active':''}" onclick="filterCat('${c.id}')">${c.icon} ${c.name}</div>`).join('');
- document.getElementById('cityChips').innerHTML=`<div class="chip ${selectedCity==='All Cities'?'active':''}" onclick="filterCity('All Cities')">🌍 All</div>`+cities46.slice(0,12).map(ct=>`<div class="chip ${selectedCity===ct?'active':''}" onclick="filterCity('${ct}')">📍 ${ct}</div>`).join('');
+ document.getElementById('cityChips').innerHTML=`<div class="chip ${selectedCity==='All Cities' && !currentLocationActive?'active':''}" onclick="filterCity('All Cities')">🌍 All</div>`+cities46.slice(0,12).map(ct=>`<div class="chip ${selectedCity===ct?'active':''}" onclick="filterCity('${ct}')">📍 ${ct}</div>`).join('');
  document.getElementById('adCity').innerHTML=cities46.map(c=>`<option value="${c}">${c}</option>`).join('');
  document.getElementById('adCategory').innerHTML=categories.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
  document.getElementById('eCity').innerHTML=cities46.map(c=>`<option value="${c}">${c}</option>`).join('');
  document.getElementById('eCategory').innerHTML=categories.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
 }
 window.filterCat=(id)=>{selectedCat=id;renderChips();loadAds();};
-window.filterCity=(city)=>{selectedCity=city;renderChips();loadAds();};
+window.filterCity=(city)=>{selectedCity=city;currentLocationActive=false;document.getElementById('currentLocLabel').style.display='none';renderChips();loadAds();};
 window.doSearch=()=>loadAds();
+
+window.useCurrentLocation=()=>{
+ if(!navigator.geolocation){alert("GPS not supported");return;}
+ const label=document.getElementById('currentLocLabel');
+ label.style.display='block'; label.textContent='📍 Location le raha hun...';
+ navigator.geolocation.getCurrentPosition(async(pos)=>{
+   const lat=pos.coords.latitude; const lon=pos.coords.longitude;
+   currentLocationActive=true;
+   let nearest = "Faisalabad";
+   if(lat>30.5 && lat<32 && lon>72 && lon<74) nearest="Faisalabad";
+   if(lat>30.8 && lat<31.2 && lon>72.5 && lon<73) nearest="Samundri";
+   if(lat>30.7 && lat<31.1 && lon>72.6 && lon<73.2) nearest="Gojra";
+   selectedCity=nearest;
+   label.textContent=`📍 Aapki Location: ${nearest} ke aas paas - ${lat.toFixed(3)}, ${lon.toFixed(3)} - Near Me Active`;
+   renderChips();
+   loadAds();
+ }, (err)=>{ label.textContent='❌ Location failed: '+err.message; });
+};
 
 window.navTo=(p)=>{
  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
- document.getElementById('page-'+p).classList.add('active');
+ const target=document.getElementById('page-'+p);
+ if(target) target.classList.add('active');
+ else document.getElementById('page-help').classList.add('active');
  document.querySelectorAll('.b-item').forEach(b=>b.classList.remove('active'));
- const map={home:0,chats:1,sell:2,myads:3,account:4}; document.querySelectorAll('.b-item')[map[p]]?.classList.add('active');
+ const map={home:0,chats:1,sell:2,myads:3,account:4}; if(map[p]!==undefined) document.querySelectorAll('.b-item')[map[p]]?.classList.add('active');
  document.getElementById('homeFilters').style.display = (p==='home') ? 'block' : 'none';
- if(p==='home')loadAds(); if(p==='myads')loadMyAds(); if(p==='account')renderAccount(); if(p==='admin')loadAdmin(); if(p==='chats')loadChats();
+ if(p==='home')loadAds(); if(p==='myads')loadMyAds(); if(p==='account')renderAccount(); if(p==='admin')loadAdmin(); if(p==='chats')loadChats(); if(p==='help')loadMyHelp();
+};
+window.switchAdminTab=(tab)=>{
+ adminCurrentTab=tab;
+ document.getElementById('adminTab-ads').style.display= tab==='ads'?'block':'none';
+ document.getElementById('adminTab-help').style.display= tab==='help'?'block':'none';
+ document.getElementById('adminTab-reports').style.display= tab==='reports'?'block':'none';
+ if(tab==='help') loadAdminHelp();
+ if(tab==='reports') loadAdminReportsFull();
 };
 
 function toBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});}
@@ -220,14 +261,17 @@ window.postAd=async()=>{
  if(!currentUser){statusEl.textContent="Please login";navTo('account');return;} if(!title||!price){statusEl.textContent="Title Price required";return;} if(multiImages.length===0){statusEl.textContent="1 photo select karo";return;}
  const payFile=document.getElementById('payScreenshot').files[0]; let payImg=""; if(payFile) payImg=await toBase64(payFile);
  const adData={title,price:Number(price),phone,city,category,description:desc,images:multiImages,image:multiImages[0],paymentScreenshot:payImg,plan:selectedPlan,status:selectedPlan==='free'?'approved':'pending',userId:currentUser.uid,userEmail:currentUser.email,createdAt:Date.now(),views:0};
- try{statusEl.textContent="Posting...";await addDoc(collection(db,"ads"),adData);statusEl.textContent="Ad posted!"; multiImages=[]; document.getElementById('previewMulti').innerHTML=''; setTimeout(()=>navTo('home'),1000);}catch(e){statusEl.textContent="Error: "+e.message;}
+ try{statusEl.textContent="Posting...";await addDoc(collection(db,"ads"),adData);statusEl.textContent="Ad posted!"; multiImages=[]; document.getElementById('previewMulti').innerHTML=''; setTimeout(()=>navTo('home'),800);}catch(e){statusEl.textContent="Error: "+e.message;}
 };
 
 async function loadAds(){
  const grid=document.getElementById('homeGrid'); const search=document.getElementById('searchInput').value.toLowerCase(); const sort=document.getElementById('sortSel').value;
- grid.innerHTML="<p class='small' style='padding:20px'>Loading...</p>";
+ if(_lastAds.length===0) grid.innerHTML="<p class='small' style='padding:20px'>Loading...</p>";
  try{
-  const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); let ads=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;ads.push(data);}); _lastAds=ads;
+  if(_lastAds.length===0){
+   const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); let ads=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;ads.push(data);}); _lastAds=ads;
+  }
+  let ads=[..._lastAds];
   ads=ads.filter(a=>a.status==='approved');
   if(selectedCat!=='all')ads=ads.filter(a=>a.category===selectedCat);
   if(selectedCity!=='All Cities')ads=ads.filter(a=>a.city===selectedCity);
@@ -235,10 +279,11 @@ async function loadAds(){
   const favs=getFav(); if(sort==='fav') ads=ads.filter(a=>favs.includes(a.id));
   ads.sort((a,b)=>{ if(a.plan!=='free' && b.plan==='free') return -1; if(b.plan!=='free' && a.plan==='free') return 1; return 0; });
   if(sort==='low') ads.sort((a,b)=> (a.price||0)-(b.price||0)); if(sort==='high') ads.sort((a,b)=> (b.price||0)-(a.price||0));
-  if(ads.length===0){grid.innerHTML="<p style='padding:20px'>No ads found.</p>";return;}
-  grid.innerHTML=ads.map(ad=>`<div class="card" onclick="openAdDetail('${ad.id}')">${ad.plan!=='free'?'<div class="featBadge">⭐ FEATURED</div>':''}<div class="fav" onclick="toggleFav(event,'${ad.id}')">${favs.includes(ad.id)?'❤️':'🤍'}</div><img src="${ad.image||(ad.images&&ad.images[0])}"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div><div class="city">📍 ${ad.city} • 👁️ ${ad.views||0}</div><button class="buybtn" onclick="event.stopPropagation(); openAdDetail('${ad.id}')">View - Chat - Call</button></div></div>`).join('');
+  if(ads.length===0){grid.innerHTML="<p style='padding:20px'>No ads found. Dusri city try karo ya All karo.</p>";return;}
+  grid.innerHTML=ads.map(ad=>`<div class="card" onclick="openAdDetail('${ad.id}')">${ad.plan!=='free'?'<div class="featBadge">⭐ FEATURED</div>':''}<div class="fav" onclick="toggleFav(event,'${ad.id}')">${favs.includes(ad.id)?'❤️':'🤍'}</div><img src="${ad.image||(ad.images&&ad.images[0])}" loading="lazy"><div class="card-body"><div class="price">Rs ${Number(ad.price).toLocaleString()}</div><div class="title">${ad.title}</div><div class="city">📍 ${ad.city} • 👁️ ${ad.views||0}</div><button class="buybtn" onclick="event.stopPropagation(); openAdDetail('${ad.id}')">View - Chat - Call</button></div></div>`).join('');
  }catch(e){grid.innerHTML="<p>Error: "+e.message+"</p>";}
 }
+window.refreshAds=()=>{ _lastAds=[]; loadAds(); };
 
 window.openAdDetail=async(id)=>{
  const ad=_lastAds.find(a=>a.id===id); if(!ad) return; currentDetail=ad;
@@ -250,7 +295,7 @@ window.openAdDetail=async(id)=>{
  document.getElementById('detailModal').style.display='block'; try{ await updateDoc(doc(db,"ads",id),{views:increment(1)}); ad.views=(ad.views||0)+1; }catch(e){}
 };
 window.setMainImg=(idx)=>{ const ad=currentDetail; const imgs=ad.images||[ad.image]; document.getElementById('dImg').src=imgs[idx]; document.querySelectorAll('#dThumbs img').forEach((el,i)=>el.classList.toggle('active', i==idx)); };
-window.closeDetail=()=>{document.getElementById('detailModal').style.display='none'; loadAds();};
+window.closeDetail=()=>{document.getElementById('detailModal').style.display='none';}; // SPEED FIX - no reload
 window.callSeller=()=>{ if(!currentDetail) return; const ph=currentDetail.phone||""; window.open(`tel:${ph}`); };
 window.chatSeller=()=>{ if(!currentDetail) return; let phone=(currentDetail.phone||"").replace(/\D/g,''); if(phone.startsWith('0')) phone='92'+phone.substring(1); if(!phone) phone='923430864009'; const msg=`Salam, mujhe SM Market pe ye chahiye: ${currentDetail.title} Rs ${currentDetail.price}`; window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank'); };
 window.shareAd=async()=>{ if(!currentDetail) return; const url=`https://atiqjutt381-collab.github.io/?ad=${currentDetail.id}`; const text=`${currentDetail.title} - Rs ${currentDetail.price}`; if(navigator.share){ try{await navigator.share({title:text,url});}catch(e){} }else{ await navigator.clipboard.writeText(url); alert("Link copied"); } };
@@ -298,6 +343,41 @@ window.openChatFromList=(adId,sellerId,sellerEmail,buyerId,buyerEmail,adTitle)=>
  document.getElementById('chatRoom').style.display='block'; loadChatMessages();
 };
 
+// HELP CENTER
+window.sendHelpRequest=async()=>{
+ if(!currentUser){alert("Login karo"); navTo('account'); return;}
+ const type=document.getElementById('helpType').value; const msg=document.getElementById('helpMsg').value.trim(); const status=document.getElementById('helpStatus');
+ if(!msg){status.textContent="Message likho"; return;}
+ try{
+  status.textContent="Sending...";
+  await addDoc(collection(db,"helpRequests"),{type,message:msg,userEmail:currentUser.email,userId:currentUser.uid,status:"open",reply:"",createdAt:Date.now()});
+  status.textContent="✅ Admin ko bhej diya! Jaldi jawab ayega.";
+  document.getElementById('helpMsg').value=''; loadMyHelp();
+ }catch(e){status.textContent=e.message;}
+};
+async function loadMyHelp(){
+ if(!currentUser) return; const box=document.getElementById('myHelpList');
+ try{
+  const snap=await getDocs(query(collection(db,"helpRequests"),where("userId","==",currentUser.uid),orderBy("createdAt","desc")));
+  let html="<h4 style='margin-top:10px'>Aapke Requests:</h4>";
+  snap.forEach(d=>{const h=d.data(); html+=`<div class="admin-card" style="background:${h.reply?'#e8f5e9':'#fff3cd'}"><b>${h.type}</b> - ${h.status}<br><span class="small">${h.message}</span>${h.reply?`<br><div style='background:white;padding:6px;border-radius:6px;margin-top:6px;border:1px solid #2A9DF4'><b style='color:#2A9DF4'>Admin Reply:</b> ${h.reply}</div>`:''}</div>`;});
+  box.innerHTML=html;
+ }catch(e){}
+}
+async function loadAdminHelp(){
+ const box=document.getElementById('adminHelpList'); box.innerHTML="Loading help...";
+ try{
+  const snap=await getDocs(query(collection(db,"helpRequests"),orderBy("createdAt","desc")));
+  let html=""; snap.forEach(d=>{const h=d.data(); const id=d.id; html+=`<div class="admin-card"><b>${h.type}</b> - ${h.userEmail} - ${new Date(h.createdAt).toLocaleString()}<br><span class="small">${h.message}</span><br><textarea id="reply-${id}" placeholder="Reply likho..." style="margin-top:6px">${h.reply||''}</textarea><div><button class="act-btn" style="background:#2A9DF4" onclick="replyHelp('${id}')">Reply + Solve</button><button class="act-btn" style="background:#333" onclick="deleteHelp('${id}')">Delete</button></div></div>`;});
+  box.innerHTML=html||"No help requests";
+ }catch(e){box.innerHTML=e.message;}
+}
+window.replyHelp=async(id)=>{
+ const reply=document.getElementById('reply-'+id).value.trim();
+ try{ await updateDoc(doc(db,"helpRequests",id),{reply,status:"solved"}); alert("Reply sent!"); loadAdminHelp(); }catch(e){alert(e.message);}
+};
+window.deleteHelp=async(id)=>{ if(confirm("Delete?")){ await deleteDoc(doc(db,"helpRequests",id)); loadAdminHelp(); }};
+
 async function loadMyAds(){
  const box=document.getElementById('myAdsList'); if(!currentUser){box.innerHTML="<h2>My Ads</h2><p class='small'>Please login.</p>";return;}
  box.innerHTML="<h2>My Ads</h2><p class='small'>Loading...</p>";
@@ -318,37 +398,86 @@ window.saveEdit=async()=>{
  let images=null; if(editMultiImages.length>0) images=editMultiImages;
  const data={title:document.getElementById('eTitle').value.trim(), price:Number(document.getElementById('ePrice').value), phone:document.getElementById('ePhone').value.trim(), city:document.getElementById('eCity').value, category:document.getElementById('eCategory').value, description:document.getElementById('eDesc').value.trim()};
  if(images){ data.images=images; data.image=images[0]; }
- try{ await updateDoc(doc(db,"ads",editingId),data); status.textContent="Saved!"; setTimeout(()=>{closeEdit(); loadMyAds(); loadAds();},800);}catch(e){status.textContent="Error: "+e.message;}
+ try{ await updateDoc(doc(db,"ads",editingId),data); status.textContent="Saved!"; setTimeout(()=>{closeEdit(); _lastAds=[]; loadMyAds(); loadAds();},800);}catch(e){status.textContent="Error: "+e.message;}
 };
-window.deleteMyAd=async(id)=>{ if(!confirm("Delete?")) return; await deleteDoc(doc(db,"ads",id)); loadMyAds(); loadAds(); };
+window.deleteMyAd=async(id)=>{ if(!confirm("Delete?")) return; await deleteDoc(doc(db,"ads",id)); _lastAds=[]; loadMyAds(); loadAds(); };
+
 async function loadAdmin(){
  const list=document.getElementById('adminList'); const rlist=document.getElementById('reportList');
- list.innerHTML="<p class='small'>Loading...</p>";
- try{ const rsnap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let rhtml="<h3>🚩 Reports</h3>"; rsnap.forEach(d=>{const r=d.data(); rhtml+=`<div class='small' style='background:#fff3cd;padding:6px;margin:4px 0;border-radius:6px'>${r.title} - ${r.reason} <button onclick='deleteReport(\"${d.id}\")' style='float:right'>X</button></div>`;}); rlist.innerHTML=rhtml; }catch(e){ rlist.innerHTML=""; }
- const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); let html="";
- snap.forEach(docSnap=>{ const ad=docSnap.data(); const id=docSnap.id; html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - 👁️ ${ad.views||0}<br><span class="small">${ad.userEmail} | ${ad.plan} | ${ad.status}</span><br><img src="${ad.image}"><div><button class="act-btn" style="background:green" onclick="adminAction('${id}','approved')">Approve</button><button class="act-btn" style="background:red" onclick="adminAction('${id}','rejected')">Reject</button><button class="act-btn" style="background:#333" onclick="adminDelete('${id}')">Delete</button></div></div>`;});
+ list.innerHTML="<p class='small'>Loading all ads (Owner View)...</p>";
+ try{ const rsnap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let rhtml=""; let c=0; rsnap.forEach(d=>{if(c++<3){const r=d.data(); rhtml+=`<div class='small' style='background:#fff3cd;padding:6px;margin:4px 0;border-radius:6px'>${r.title} - ${r.reason}</div>`;}}); rlist.innerHTML=rhtml; }catch(e){ rlist.innerHTML=""; }
+ const snap=await getDocs(query(collection(db,"ads"),orderBy("createdAt","desc"))); _lastAds=[]; snap.forEach(d=>{let data=d.data();data.id=d.id;_lastAds.push(data);});
+ let html=`<p class="small">Total Ads: ${_lastAds.length} - Sab mobile ke ads (Owner View)</p>`;
+ _lastAds.forEach(ad=>{ const id=ad.id; html+=`<div class="admin-card"><b>${ad.title}</b> - Rs ${ad.price} - ${ad.city} - 👁️ ${ad.views||0}<br><span class="small">${ad.userEmail} | ${ad.plan} | ${ad.status}</span><br><img src="${ad.image}"><div><button class="act-btn" style="background:green" onclick="adminAction('${id}','approved')">Approve</button><button class="act-btn" style="background:red" onclick="adminAction('${id}','rejected')">Reject</button><button class="act-btn" style="background:#333" onclick="adminDelete('${id}')">Delete</button></div></div>`;});
  list.innerHTML=html;
+ loadAdminHelp();
 }
-window.deleteReport=async(id)=>{ await deleteDoc(doc(db,"reports",id)); loadAdmin(); };
-window.adminAction=async(id,status)=>{await updateDoc(doc(db,"ads",id),{status});loadAdmin();loadAds();};
-window.adminDelete=async(id)=>{if(confirm("Delete?")){await deleteDoc(doc(db,"ads",id));loadAdmin();loadAds();}};
+async function loadAdminReportsFull(){
+ const box=document.getElementById('adminReportListFull'); box.innerHTML="Loading...";
+ const snap=await getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"))); let html=""; snap.forEach(d=>{const r=d.data(); html+=`<div class='admin-card'><b>${r.title}</b> - ${r.reason} - ${r.user}<br><button class="act-btn" style="background:#333" onclick="deleteReport('${d.id}')">Delete Report</button></div>`;}); box.innerHTML=html||"No reports";
+}
+window.deleteReport=async(id)=>{ await deleteDoc(doc(db,"reports",id)); loadAdmin(); loadAdminReportsFull(); };
+window.adminAction=async(id,status)=>{await updateDoc(doc(db,"ads",id),{status});loadAdmin(); _lastAds=[]; loadAds();};
+window.adminDelete=async(id)=>{if(confirm("Delete?")){await deleteDoc(doc(db,"ads",id));loadAdmin(); _lastAds=[]; loadAds();}};
 
-function renderAccount(){
+// ACCOUNT + PROFILE EDIT + HELP + INSTALL
+async function renderAccount(){
  const box=document.getElementById('accountBox');
  if(currentUser){
+  let userData={name:currentUser.displayName||"",phone:"",city:"Samundri"};
+  try{
+   const udoc=await getDoc(doc(db,"users",currentUser.uid));
+   if(udoc.exists()) userData=udoc.data();
+  }catch(e){}
   const isAdmin=currentUser.email==='atiqjutt381@gmail.com'||currentUser.email.includes('atiq');
-  box.innerHTML=`<h2>My Account</h2><p><b>Email:</b> ${currentUser.email}</p><button class="btn-main" onclick="logout()">Logout</button>${isAdmin?'<button class="btn-main" style="background:#e91e63;margin-top:8px" onclick="navTo(\'admin\')">Admin Panel</button>':''}<br><button class="btn-main" style="background:#002f34;margin-top:12px;display:${deferredPrompt?'block':'none'}" id="accountInstall" onclick="installApp()">⬇️ Install App - Play Store Style</button>`;
+  box.innerHTML=`
+  <h2>👤 My Profile - Edit Kar Sakte Ho</h2>
+  <p class="small">Name, City khud change karo - OLX jesa</p>
+  <label class="small"><b>Your Name</b></label>
+  <input id="profileName" placeholder="Aapka Name" value="${userData.name||currentUser.displayName||''}">
+  <label class="small"><b>Phone</b></label>
+  <input id="profilePhone" placeholder="03XXXXXXXXX" value="${userData.phone||''}">
+  <label class="small"><b>City</b></label>
+  <select id="profileCity">${cities46.map(c=>`<option value="${c}" ${userData.city===c?'selected':''}>${c}</option>`).join('')}</select>
+  <label class="small"><b>Email</b></label>
+  <input value="${currentUser.email}" disabled>
+  <button class="btn-main" style="background:#2A9DF4" onclick="saveProfile()">💾 Save Profile - Name Change</button>
+  <p id="profileStatus" class="small"></p>
+  <hr style="margin:12px 0">
+  <button class="btn-main" style="background:#002f34" onclick="navTo('help')">🆘 Help Center - Masla Solve Karo</button>
+  <button class="btn-main" style="background:#002f34;margin-top:8px;display:${deferredPrompt?'block':'none'}" id="accountInstall" onclick="installApp()">⬇️ Install App - Play Store Style</button>
+  <div style="background:#f0f8ff;padding:10px;border-radius:8px;margin-top:8px;border:1px solid #2A9DF4;display:${deferredPrompt?'block':'none'}">
+  <b style="color:#2A9DF4">📲 App Install Profile Me Hai</b><br><span class="small">Yahan se install karo - Home screen pe ayega</span>
+  </div>
+  <button class="btn-main" style="background:#eee;color:#000;margin-top:8px" onclick="logout()">Logout</button>
+  ${isAdmin?'<button class="btn-main" style="background:#e91e63;margin-top:8px" onclick="navTo(\'admin\')">Admin Panel - All Ads + Help Requests</button>':''}
+  `;
  }else{
-  box.innerHTML=`<h2>Login / Signup</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btn-main" onclick="login()">Login</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="signup()">Create Account</button><button class="btn-main btn-google" onclick="loginWithGoogle()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google</button><p id="authMsg" class="small"></p>`;
+  box.innerHTML=`<h2>Login / Signup</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btn-main" onclick="login()">Login</button><button class="btn-main" style="background:white;color:var(--dark);border:1.5px solid var(--dark)" onclick="signup()">Create Account</button><button class="btn-main btn-google" onclick="loginWithGoogle()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google</button><p id="authMsg" class="small"></p><button class="btn-main" style="background:#002f34;margin-top:8px" onclick="navTo('help')">🆘 Help Center</button>`;
  }
 }
+window.saveProfile=async()=>{
+ const name=document.getElementById('profileName').value.trim();
+ const phone=document.getElementById('profilePhone').value.trim();
+ const city=document.getElementById('profileCity').value;
+ const status=document.getElementById('profileStatus');
+ if(!currentUser) return;
+ try{
+  status.textContent="Saving...";
+  await updateProfile(currentUser,{displayName:name});
+  await setDoc(doc(db,"users",currentUser.uid),{name,phone,city,email:currentUser.email,uid:currentUser.uid,updatedAt:Date.now()},{merge:true});
+  status.textContent="✅ Saved! Name change ho gaya - OLX jesa!";
+  setTimeout(()=>renderAccount(),1000);
+ }catch(e){status.textContent="Error: "+e.message;}
+};
+
 window.login=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await signInWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
 window.signup=async()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await createUserWithEmailAndPassword(auth,e,p);}catch(err){document.getElementById('authMsg').textContent=err.message;}};
 window.loginWithGoogle=async()=>{const provider=new GoogleAuthProvider();try{await signInWithPopup(auth,provider);}catch(e){document.getElementById('authMsg').textContent=e.message;}};
 window.logout=async()=>{await signOut(auth);};
-onAuthStateChanged(auth,(user)=>{currentUser=user;renderAccount();loadAds();});
+onAuthStateChanged(auth,(user)=>{currentUser=user;renderAccount();if(_lastAds.length===0)loadAds();});
 
-// PLAY STORE AUTO INSTALL - FINAL CORRECT LOGIC
+// PLAY STORE AUTO INSTALL - FINAL CORRECT LOGIC - FIXED
 window.addEventListener('beforeinstallprompt',(e)=>{
  e.preventDefault();
  deferredPrompt=e;
@@ -391,7 +520,7 @@ window.installApp=async()=>{
    if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
      alert("iPhone me: Share button (⬆️) dabao > Add to Home Screen dabao");
    }else{
-     alert("Browser menu (⋮) > Install App / Add to Home Screen dabao - Bilkul Play Store jesa!");
+     alert("Browser menu (⋮) > Install App / Add to Home Screen dabao - Bilkul Play Store jesa! Profile me se try karo.");
    }
    closeInstallPopup();
  }
