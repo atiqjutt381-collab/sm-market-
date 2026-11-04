@@ -7,19 +7,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f2f4f7;padding-bottom:80px}
-.header{background:#0A2E3E;color:#fff;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:99}
-.header img{width:48px;height:48px;border-radius:12px;background:#fff;object-fit:contain}
+.header{background:#0A2E3E;color:#fff;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
 .header b{font-size:19px;line-height:1.1}
 .header b span{color:#2EA5FF}
-.page{display:none;padding:10px}
-.page.active{display:block}
-.searchBox{display:flex;gap:8px;margin:10px 0}
+#logoImg{width:48px;height:48px;min-width:48px;background:#2EA5FF;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;cursor:pointer;user-select:none}
+.page{display:none !important;padding:10px}
+.page.active{display:block !important}
+.searchBox{display:flex;gap:8px;margin:10px 0;position:relative;z-index:5}
 .searchBox input{flex:1;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:15px;outline:none}
 .searchBox button{padding:12px 16px;background:#0A2E3E;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-.locRow{display:flex;gap:8px;margin-bottom:10px}
+.locRow{display:flex;gap:8px;margin-bottom:10px;position:relative;z-index:5}
 .locRow select{flex:1;padding:11px;border:1px solid #ddd;border-radius:10px;font-size:14px;background:#fff;outline:none}
 .nearBtn{padding:11px 12px;background:#fff;border:1px solid #ddd;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap;color:#0A2E3E}
-.top3{display:flex;gap:8px;padding:2px 0 10px}
+.top3{display:flex;gap:8px;padding:2px 0 10px;position:relative;z-index:5}
 .top3>div{flex:1;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer}
 .top3 .smBox{background:#0A2E3E;color:#fff}
 .top3 .wBox{background:#fff;border:1px solid #e5e7eb}
@@ -27,7 +27,7 @@ body{background:#f2f4f7;padding-bottom:80px}
 .top3 .smBox b{color:#fff;font-size:18px}
 .top3 small{font-size:10px;color:#666}
 .top3 .smBox small{color:#cfeaff}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;position:relative;z-index:5}
 .chips::-webkit-scrollbar{display:none}
 .chip{white-space:nowrap;background:#fff;border:1px solid #e5e7eb;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer}
 .chip.on{background:#0A2E3E;color:#fff;border-color:#0A2E3E}
@@ -44,25 +44,27 @@ body{background:#f2f4f7;padding-bottom:80px}
 input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:10px;font-size:15px;outline:none;background:#fff}
 .btn{width:100%;padding:13px;background:#0A2E3E;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
 .btn2{width:100%;padding:12px;background:#fff;color:#0A2E3E;border:2px solid #0A2E3E;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer;margin-top:8px}
+.bottom .b.on{color:#0A2E3E;font-weight:800}
 </style>
 </head>
 <body>
 
 <div class="header" id="logoArea">
-<img src="https://via.placeholder.com/100x100?text=SM" alt="SM">
+<div id="logoImg">SM</div>
 <div><b>SM <span>FAISALABAD</span> MARKET</b><br><small style="font-size:11px;opacity:.8">Buy & Sell in Pakistan</small></div>
 </div>
 
-<!-- HOME PAGE -->
 <div id="homePage" class="page active">
 <div class="banner"><h2>SM Market me Welcome! 👋</h2><p>Pakistan ka apna Buy & Sell Bazaar - Car, Bike, Mobile, Property sab kuch.</p></div>
-
+<div class="top3">
+<div class="smBox" onclick="setCat('All')"><b>SM</b><br><small>All Ads</small></div>
+<div class="wBox" onclick="setCat('Motors')"><div style="font-size:22px">🚗</div><b>Motors</b><br><small>Car • Bike</small></div>
+<div class="wBox" onclick="setCat('Property')"><div style="font-size:22px">🏠</div><b>Property</b><br><small>House • Plot</small></div>
+</div>
 <div class="searchBox">
-<input id="searchInput" placeholder="Search Mobile, Car, Bike, Property..." oninput="render()">
+<input id="searchInput" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search Mobile, Car, Bike, Property..." oninput="render()">
 <button onclick="render()">Search</button>
 </div>
-
-<!-- LOCATION - ALL PAKISTAN / ALL PAKISTAN + NEAR ME -->
 <div class="locRow">
 <select id="locProvince" onchange="onProvinceChange()">
 <option value="All Pakistan">All Pakistan</option>
@@ -74,268 +76,93 @@ input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radiu
 <option value="AJK">Azad Kashmir</option>
 <option value="Islamabad">Islamabad</option>
 </select>
-<select id="locCity" onchange="render()">
-<option value="All Pakistan">All Pakistan</option>
-</select>
+<select id="locCity" onchange="render()"><option value="All Pakistan">All Pakistan</option></select>
 <button class="nearBtn" onclick="nearMe()">📍 Near Me</button>
 </div>
-
-<!-- TOP 3 BOXES - OLX STYLE -->
-<div class="top3">
-<div class="smBox" onclick="selCat='All';renderCats();render()"><b>SM</b><br><small>All Ads</small></div>
-<div class="wBox" onclick="selCat='Car';renderCats();render()"><div style="font-size:22px">🚗</div><b>Motors</b><br><small>Car • Bike</small></div>
-<div class="wBox" onclick="selCat='Property';renderCats();render()"><div style="font-size:22px">🏠</div><b>Property</b><br><small>House • Plot</small></div>
-</div>
-
-<!-- ALL CATEGORIES WITH ICONS - RenderCats se bharega -->
 <div class="chips" id="catChips"></div>
-
 <div id="adsGrid" class="grid"></div>
 <div id="noAds" style="text-align:center;padding:30px;color:#888;display:none">No Ads Found<br><small>Try All Pakistan select karo</small></div>
 </div>
-<!-- FAVOURITES PAGE -->
-<div id="favsPage" class="page">
-<h2 style="margin-bottom:10px">❤️ My Favourites</h2>
-<div id="favsGrid" class="grid"></div>
-<div id="noFavs" style="text-align:center;padding:30px;color:#888">No Favourites Yet<br><small>❤️ pe click karke save karo</small></div>
-</div>
 
-<!-- CHATS PAGE -->
-<div id="chatsPage" class="page">
-<h2 style="margin-bottom:10px">💬 Chats</h2>
-<div id="chatsList"></div>
-<div id="noChats" style="text-align:center;padding:30px;color:#888">No Chats Yet<br><small>Kisi Ad pe Chat karo</small></div>
-</div>
+<div id="favsPage" class="page"><h2 style="margin-bottom:10px">❤️ My Favourites</h2><div id="favsGrid" class="grid"></div><div id="noFavs" style="text-align:center;padding:30px;color:#888">No Favourites Yet</div></div>
+<div id="chatsPage" class="page"><h2 style="margin-bottom:10px">💬 Chats</h2><div id="chatsList"></div><div id="noChats" style="text-align:center;padding:30px;color:#888">No Chats Yet<br><small>Kisi Ad pe Chat karo</small></div></div>
 
-<!-- SELL PAGE -->
 <div id="sellPage" class="page">
 <h2 style="margin-bottom:10px">📸 Sell Your Item</h2>
 <p style="font-size:13px;color:#666;margin-bottom:12px">Login hona zaroori hai. Bina Login ke Ad post nahi hoga.</p>
 <input id="adTitle" placeholder="Title - e.g. iPhone 13 Pro Max">
 <input id="adPrice" type="number" placeholder="Price - Rs.">
-<select id="adCat">
-<option value="Mobile">📱 Mobile</option>
-<option value="Bike">🏍️ Bike</option>
-<option value="Car">🚗 Car</option>
-<option value="Property">🏠 Property</option>
-<option value="Shop">🏪 Shop</option>
-<option value="Electronics">💻 Electronics</option>
-<option value="Fashion">👗 Fashion</option>
-<option value="Home">🛋️ Home</option>
-<option value="Jobs">💼 Jobs</option>
-<option value="Other">📦 Other</option>
-</select>
-<!-- SELL - ALL PAKISTAN FIX -->
-<select id="adProvince" onchange="onSellProvince()">
-<option value="All Pakistan">All Pakistan</option>
-<option value="Punjab">Punjab</option>
-<option value="Sindh">Sindh</option>
-<option value="KPK">KPK</option>
-<option value="Balochistan">Balochistan</option>
-<option value="Gilgit">Gilgit Baltistan</option>
-<option value="AJK">Azad Kashmir</option>
-<option value="Islamabad">Islamabad</option>
-</select>
-<select id="adCity">
-<option value="All Pakistan">All Pakistan</option>
-</select>
+<select id="adCat"><option value="Mobile">📱 Mobile</option><option value="Bike">🏍️ Bike</option><option value="Car">🚗 Car</option><option value="Property">🏠 Property</option><option value="Shop">🏪 Shop</option><option value="Electronics">💻 Electronics</option><option value="Fashion">👗 Fashion</option><option value="Home">🛋️ Home</option><option value="Jobs">💼 Jobs</option><option value="Other">📦 Other</option></select>
+<select id="adProvince" onchange="onSellProvince()"><option value="All Pakistan">All Pakistan</option><option value="Punjab">Punjab</option><option value="Sindh">Sindh</option><option value="KPK">KPK</option><option value="Balochistan">Balochistan</option><option value="Gilgit">Gilgit Baltistan</option><option value="AJK">Azad Kashmir</option><option value="Islamabad">Islamabad</option></select>
+<select id="adCity"><option value="All Pakistan">All Pakistan</option></select>
 <textarea id="adDesc" rows="3" placeholder="Description likho..."></textarea>
 <input id="adImg" placeholder="Image Link (optional)">
 <button class="btn" onclick="postAd()">Post Ad - FREE</button>
 </div>
 
-<!-- ACCOUNT PAGE -->
 <div id="accountPage" class="page">
 <h2 style="margin-bottom:10px">👤 My Account</h2>
-
-<!-- LOGGED IN INFO - Hamesha dikhega jab login hoga -->
-<div id="userInfo" style="display:none;background:#fff;padding:14px;border-radius:12px;margin-bottom:12px">
-<b id="userNameShow" style="font-size:17px">User</b><br>
-<small id="userEmailShow" style="color:#666"></small><br><br>
-<button class="btn" onclick="logoutUser()" style="background:#dc2626">Logout</button>
+<div id="userInfo" style="display:none;background:#fff;padding:14px;border-radius:12px;margin-bottom:12px"><b id="userNameShow" style="font-size:17px">User</b><br><small id="userEmailShow" style="color:#666"></small><br><br><button class="btn" onclick="logoutUser()" style="background:#dc2626">Logout</button></div>
+<div id="loginBox" style="background:#fff;padding:14px;border-radius:12px"><h3 style="margin-bottom:10px">Login with Email</h3><input id="loginEmail" type="email" autocomplete="off" placeholder="Email"><input id="loginPass" type="password" autocomplete="new-password" placeholder="Password"><button class="btn" onclick="loginEmail()">Login</button><button class="btn2" onclick="signupEmail()">New Account - Sign Up</button><div style="text-align:center;margin:12px 0;color:#888;font-size:13px">OR</div><button class="btn2" onclick="loginGoogle()">🔵 Continue with Google</button></div>
+<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px"><h3 style="margin-bottom:8px">📦 My Ads</h3><div id="myAdsList"></div></div>
+<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px"><h3>❓ Help & Support</h3><p style="font-size:13px;color:#666;margin-top:6px">Admin: atiqjutt381@gmail.com</p></div>
 </div>
 
-<!-- LOGIN BOX - Login ke baad gayab ho jayega -->
-<div id="loginBox" style="background:#fff;padding:14px;border-radius:12px">
-<h3 style="margin-bottom:10px">Login with Email</h3>
-<input id="loginEmail" type="email" placeholder="Email">
-<input id="loginPass" type="password" placeholder="Password">
-<button class="btn" onclick="loginEmail()">Login</button>
-<button class="btn2" onclick="signupEmail()">New Account - Sign Up</button>
-<div style="text-align:center;margin:12px 0;color:#888;font-size:13px">OR</div>
-<button class="btn2" onclick="loginGoogle()">🔵 Login with Google</button>
-</div>
+<div id="detailPage" class="page"><button onclick="showPage('homePage',document.querySelectorAll('.b')[0])" style="padding:8px 14px;border:none;background:#fff;border-radius:20px;cursor:pointer;margin-bottom:10px">← Back</button><div id="detailBox"></div></div>
 
-<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px">
-<h3 style="margin-bottom:8px">📦 My Ads</h3>
-<div id="myAdsList"></div>
-</div>
-
-<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px">
-<h3>❓ Help & Support</h3>
-<p style="font-size:13px;color:#666;margin-top:6px">Koi masla ho to WhatsApp karo: 0300-XXXXXXX<br>Admin: atiqjutt381@gmail.com</p>
-</div>
-</div>
-
-<!-- DETAIL PAGE -->
-<div id="detailPage" class="page">
-<button onclick="showPage('homePage',document.querySelectorAll('.b')[0])" style="padding:8px 14px;border:none;background:#fff;border-radius:20px;cursor:pointer;margin-bottom:10px">← Back</button>
-<div id="detailBox"></div>
-</div>
-
-<!-- BOTTOM MENU - SWAPPED FIX: Home - Chats - Sell - Favourites - Account -->
-<div class="bottom" style="position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #eee;z-index:99">
+<div class="bottom" style="position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #eee;z-index:999">
 <div class="b on" onclick="showPage('homePage',this)" style="text-align:center;font-size:12px;cursor:pointer"><span style="display:block;font-size:20px">🏠</span>Home</div>
 <div class="b" onclick="showPage('chatsPage',this)" style="text-align:center;font-size:12px;cursor:pointer"><span style="display:block;font-size:20px">💬</span>Chats</div>
 <div class="b" style="text-align:center;font-size:12px"><div class="sellBtn" onclick="showPage('sellPage',this)" style="width:48px;height:48px;background:#0A2E3E;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:-18px auto 2px;cursor:pointer">+</div>Sell</div>
 <div class="b" onclick="showPage('favsPage',this)" style="text-align:center;font-size:12px;cursor:pointer"><span style="display:block;font-size:20px">❤️</span>Favourites</div>
 <div class="b" onclick="showPage('accountPage',this)" style="text-align:center;font-size:12px;cursor:pointer"><span style="display:block;font-size:20px">👤</span>Account</div>
 </div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const firebaseConfig = { apiKey:"YOUR_API_KEY", authDomain:"YOUR_PROJECT.firebaseapp.com", projectId:"YOUR_PROJECT" };
+const firebaseConfig = {
+  apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
+  authDomain: "sm-market-f7283.firebaseapp.com",
+  projectId: "sm-market-f7283",
+  storageBucket: "sm-market-f7283.firebasestorage.app",
+  messagingSenderId: "467902826161",
+  appId: "1:467902826161:web:3a95a176f7b57d15050490",
+  measurementId: "G-V4P837LMVS"
+};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
-
-let allAds = [], selCat = 'All', currentUser = null, adminClicks = 0, favs = JSON.parse(localStorage.getItem('smFavs')||'[]');
-
-// CITIES DATA
-const cities = {
-"All Pakistan":["All Pakistan"],
-"Punjab":["All Punjab","Faisalabad","Lahore","Gojra","Multan","Rawalpindi","Sargodha","Gujranwala","Sialkot","Bahawalpur"],
-"Sindh":["All Sindh","Karachi","Hyderabad","Sukkur"],
-"KPK":["All KPK","Peshawar","Abbottabad","Mardan"],
-"Balochistan":["All Balochistan","Quetta"],
-"Gilgit":["All Gilgit","Gilgit","Skardu"],
-"AJK":["All AJK","Muzaffarabad","Mirpur"],
-"Islamabad":["All Islamabad","Islamabad"]
-};
-
-// 1. RENDER CATS WITH ICONS - FIX
-const catIcons = { "All":"🏠 All","Mobile":"📱 Mobile","Bike":"🏍️ Bike","Car":"🚗 Car","Property":"🏠 Property","Shop":"🏪 Shop","Electronics":"💻 Electronics","Fashion":"👗 Fashion","Home":"🛋️ Home","Jobs":"💼 Jobs","Other":"📦 Other" };
-window.renderCats = function(){
-let html = '';
-for(let k in catIcons){
-html += `<div class="chip ${selCat===k?'on':''}" onclick="selCat='${k}';renderCats();render()">${catIcons[k]}</div>`;
-}
-document.getElementById('catChips').innerHTML = html;
-}
-
-// 2. PROVINCE CHANGE - ALL PAKISTAN FIX
-window.onProvinceChange = function(){
-let p = document.getElementById('locProvince').value;
-let c = document.getElementById('locCity');
-c.innerHTML = '';
-cities[p].forEach(x=>{ let o=document.createElement('option'); o.value=x; o.text=x; c.appendChild(o); });
-render();
-}
-window.onSellProvince = function(){
-let p = document.getElementById('adProvince').value;
-let c = document.getElementById('adCity');
-c.innerHTML = '';
-cities[p].forEach(x=>{ let o=document.createElement('option'); o.value=x; o.text=x; c.appendChild(o); });
-}
-
-// 3. NEAR ME
-window.nearMe = function(){
-if(!navigator.geolocation){ alert('GPS not supported'); return; }
-navigator.geolocation.getCurrentPosition(pos=>{
-alert('Near Me ON - Aapke qareebi Ads dikhaye ja rahe hain');
-document.getElementById('locProvince').value='Punjab';
-onProvinceChange();
-document.getElementById('locCity').value='Faisalabad';
-render();
-},()=>{ alert('Location allow karo'); });
-}
-
-// 4. PAGES
-window.showPage = function(id, el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.b').forEach(b=>b.classList.remove('on'));
-if(el) el.classList.add('on');
-if(id==='favsPage') renderFavs();
-window.scrollTo(0,0);
-}
-
-// 5. RENDER ADS - ALL PAKISTAN FILTER
-window.render = async function(){
-if(allAds.length===0){
-let snap = await getDocs(collection(db,"ads"));
-allAds = snap.docs.map(d=>({id:d.id,...d.data()}));
-}
-let q = document.getElementById('searchInput').value.toLowerCase();
-let prov = document.getElementById('locProvince').value;
-let city = document.getElementById('locCity').value;
-let filtered = allAds.filter(a=>{
-let okCat = selCat==='All' || a.cat===selCat || (selCat==='Motors'&&(a.cat==='Car'||a.cat==='Bike'));
-let okSearch = !q || (a.title+a.desc).toLowerCase().includes(q);
-let okProv = prov==='All Pakistan' || a.province===prov || a.province==='All Pakistan';
-let okCity = city==='All Pakistan' || city.includes('All') || a.city===city || a.city==='All Pakistan';
-return okCat && okSearch && okProv && okCity;
-});
-let g = document.getElementById('adsGrid');
-document.getElementById('noAds').style.display = filtered.length===0?'block':'none';
-g.innerHTML = filtered.map(a=>`
-<div class="card" onclick="openDetail('${a.id}')">
-<img src="${a.img||'https://via.placeholder.com/400x300?text=SM'}">
-<div class="cPad"><div class="price">Rs ${Number(a.price||0).toLocaleString()}</div><div class="title">${a.title}</div><div class="meta">${a.city||''} • ${a.cat||''}</div></div>
-</div>`).join('');
-}
-window.openDetail = function(id){
-let a = allAds.find(x=>x.id===id); if(!a) return;
-document.getElementById('detailBox').innerHTML = `<img src="${a.img||'https://via.placeholder.com/400x300?text=SM'}" style="width:100%;border-radius:12px"><h2 style="margin:10px 0">Rs ${a.price}</h2><h3>${a.title}</h3><p style="color:#555;margin:8px 0">${a.desc||''}</p><p style="color:#888">${a.province||''} • ${a.city||''}</p><button class="btn" onclick="alert('Chat feature - Login karo')">💬 Chat Seller</button>`;
-showPage('detailPage',null);
-}
-
-// 6. AUTH - LOGIN BOX HIDE FIX
-window.loginEmail = async function(){
-try{ await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPass').value); alert('Login Success!'); }catch(e){ alert(e.message); }
-}
-window.signupEmail = async function(){
-try{ await createUserWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPass').value); alert('Account Ban Gaya!'); }catch(e){ alert(e.message); }
-}
-window.loginGoogle = async function(){ try{ await signInWithPopup(auth, provider); }catch(e){ alert(e.message); } }
+let allAds = [], selCat = 'All', currentUser = null, adminClicks = 0;
+const demoAds = [
+{id:'d1',title:'iPhone 13 Pro - PTA Approved',price:185000,cat:'Mobile',province:'Punjab',city:'Faisalabad',desc:'Neat condition, with box',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
+{id:'d2',title:'Honda CG 125 - 2023 Model',price:285000,cat:'Bike',province:'Punjab',city:'Gojra',desc:'Total genuine, first owner',img:'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400'},
+{id:'d3',title:'5 Marla House - Gojra Road',price:9500000,cat:'Property',province:'Punjab',city:'Faisalabad',desc:'Gas + Bijli, registry clear',img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400'},
+{id:'d4',title:'Toyota Corolla 2019',price:4850000,cat:'Car',province:'All Pakistan',city:'All Pakistan',desc:'Family used car',img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400'}
+];
+const cities = {"All Pakistan":["All Pakistan"],"Punjab":["All Punjab","Faisalabad","Lahore","Gojra","Multan","Rawalpindi","Sargodha","Gujranwala","Sialkot","Bahawalpur"],"Sindh":["All Sindh","Karachi","Hyderabad","Sukkur"],"KPK":["All KPK","Peshawar","Abbottabad","Mardan"],"Balochistan":["All Balochistan","Quetta"],"Gilgit":["All Gilgit","Gilgit","Skardu"],"AJK":["All AJK","Muzaffarabad","Mirpur"],"Islamabad":["All Islamabad","Islamabad"]};
+const catIcons = { "All":"🏠 All","Motors":"🚗 Motors","Mobile":"📱 Mobile","Bike":"🏍️ Bike","Car":"🚗 Car","Property":"🏠 Property","Shop":"🏪 Shop","Electronics":"💻 Electronics","Fashion":"👗 Fashion","Home":"🛋️ Home","Jobs":"💼 Jobs","Other":"📦 Other" };
+window.setCat = function(c){ selCat=c; renderCats(); render(); }
+window.renderCats = function(){ let html=''; for(let k in catIcons){ html+=`<div class="chip ${selCat===k?'on':''}" onclick="setCat('${k}')">${catIcons[k]}</div>`; } document.getElementById('catChips').innerHTML=html; }
+window.onProvinceChange = function(){ let p=document.getElementById('locProvince').value; let c=document.getElementById('locCity'); c.innerHTML=''; cities[p].forEach(x=>{let o=document.createElement('option');o.value=x;o.text=x;c.appendChild(o);}); render(); }
+window.onSellProvince = function(){ let p=document.getElementById('adProvince').value; let c=document.getElementById('adCity'); c.innerHTML=''; cities[p].forEach(x=>{let o=document.createElement('option');o.value=x;o.text=x;c.appendChild(o);}); }
+window.nearMe = function(){ if(!navigator.geolocation){ alert('GPS not supported'); return; } navigator.geolocation.getCurrentPosition(()=>{ alert('Near Me ON'); document.getElementById('locProvince').value='Punjab'; onProvinceChange(); document.getElementById('locCity').value='Faisalabad'; render(); },()=>{ alert('Location allow karo'); }); }
+window.showPage = function(id, el){ document.querySelectorAll('.page').forEach(p=>{ p.classList.remove('active'); p.style.display='none'; }); let pg=document.getElementById(id); pg.classList.add('active'); pg.style.display='block'; document.querySelectorAll('.b').forEach(b=>b.classList.remove('on')); if(el) el.classList.add('on'); if(id==='favsPage') renderFavs(); window.scrollTo(0,0); }
+window.render = async function(){ if(allAds.length===0){ try{ let snap=await getDocs(collection(db,"ads")); allAds=snap.docs.map(d=>({id:d.id,...d.data()})); if(allAds.length===0) allAds=[...demoAds]; }catch(e){ console.log(e); allAds=[...demoAds]; } } let q=document.getElementById('searchInput').value.toLowerCase(); let prov=document.getElementById('locProvince').value; let city=document.getElementById('locCity').value; let filtered=allAds.filter(a=>{ let okCat=selCat==='All'||a.cat===selCat||(selCat==='Motors'&&(a.cat==='Car'||a.cat==='Bike')); let okSearch=!q||((a.title||'')+(a.desc||'')).toLowerCase().includes(q); let okProv=prov==='All Pakistan'||a.province===prov||a.province==='All Pakistan'; let okCity=city==='All Pakistan'||city.includes('All')||a.city===city||a.city==='All Pakistan'; return okCat&&okSearch&&okProv&&okCity; }); let g=document.getElementById('adsGrid'); document.getElementById('noAds').style.display=filtered.length===0?'block':'none'; g.innerHTML=filtered.map(a=>`<div class="card" onclick="openDetail('${a.id}')"><img src="${a.img||''}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400'"><div class="cPad"><div class="price">Rs ${Number(a.price||0).toLocaleString()}</div><div class="title">${a.title}</div><div class="meta">${a.city||''} • ${a.cat||''}</div></div></div>`).join(''); }
+window.openDetail = function(id){ let a=allAds.find(x=>x.id===id); if(!a) return; document.getElementById('detailBox').innerHTML=`<img src="${a.img||''}" style="width:100%;border-radius:12px"><h2 style="margin:10px 0">Rs ${Number(a.price||0).toLocaleString()}</h2><h3>${a.title}</h3><p style="color:#555;margin:8px 0">${a.desc||''}</p><p style="color:#888">${a.province||''} • ${a.city||''}</p><button class="btn" onclick="alert('Chat feature - Login karo')">💬 Chat Seller</button>`; showPage('detailPage',null); }
+window.loginEmail = async function(){ try{ await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPass').value); alert('Login Success!'); }catch(e){ alert(e.message); } }
+window.signupEmail = async function(){ try{ await createUserWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPass').value); alert('Account Ban Gaya!'); }catch(e){ alert(e.message); } }
+window.loginGoogle = async function(){ try{ await signInWithRedirect(auth, provider); }catch(e){ alert(e.message); } }
+getRedirectResult(auth).then((res)=>{ if(res) alert('Google Login Success!'); }).catch(e=>{ if(e.message) console.log(e.message); });
 window.logoutUser = async function(){ await signOut(auth); alert('Logout ho gaya'); }
-
-onAuthStateChanged(auth, (user)=>{
-currentUser = user;
-let loginBox = document.getElementById('loginBox');
-let userInfo = document.getElementById('userInfo');
-if(user){
-loginBox.style.display='none';
-userInfo.style.display='block';
-document.getElementById('userNameShow').innerText = user.displayName || user.email.split('@')[0];
-document.getElementById('userEmailShow').innerText = user.email;
-} else {
-loginBox.style.display='block';
-userInfo.style.display='none';
-}
-});
-
-// 7. POST AD - LOGIN CHECK FIX
-window.postAd = async function(){
-if(!currentUser){ alert('Pehle Login karo!'); showPage('accountPage',document.querySelectorAll('.b')[4]); return; }
-let title = document.getElementById('adTitle').value;
-let price = document.getElementById('adPrice').value;
-if(!title || !price){ alert('Title aur Price likho'); return; }
-await addDoc(collection(db,"ads"),{ title, price, cat:document.getElementById('adCat').value, province:document.getElementById('adProvince').value, city:document.getElementById('adCity').value, desc:document.getElementById('adDesc').value, img:document.getElementById('adImg').value, uid:currentUser.uid, email:currentUser.email, time:Date.now() });
-alert('Ad Post Ho Gaya! 🎉');
-allAds=[]; render(); showPage('homePage',document.querySelectorAll('.b')[0]);
-}
-window.renderFavs = function(){ document.getElementById('favsGrid').innerHTML = '<p style="padding:20px">Favs yahan aayenge</p>'; }
-
-// 8. ADMIN - 5 CLICKS FIX
-document.getElementById('logoArea').addEventListener('click', ()=>{
-adminClicks++;
-if(adminClicks>=5){ adminClicks=0; let pass = prompt('Admin Password:'); if(pass==='sm123'){ alert('Admin Panel Khul Gaya!'); showPage('accountPage',document.querySelectorAll('.b')[4]); } else { alert('Wrong Password'); } }
-});
-
+onAuthStateChanged(auth,(user)=>{ currentUser=user; let loginBox=document.getElementById('loginBox'); let userInfo=document.getElementById('userInfo'); if(user){ loginBox.style.display='none'; userInfo.style.display='block'; document.getElementById('userNameShow').innerText=user.displayName||user.email.split('@')[0]; document.getElementById('userEmailShow').innerText=user.email; } else{ loginBox.style.display='block'; userInfo.style.display='none'; } });
+window.postAd = async function(){ if(!currentUser){ alert('Pehle Login karo!'); showPage('accountPage',document.querySelectorAll('.b')[4]); return; } let title=document.getElementById('adTitle').value; let price=document.getElementById('adPrice').value; if(!title||!price){ alert('Title aur Price likho'); return; } try{ await addDoc(collection(db,"ads"),{title,price,cat:document.getElementById('adCat').value,province:document.getElementById('adProvince').value,city:document.getElementById('adCity').value,desc:document.getElementById('adDesc').value,img:document.getElementById('adImg').value,uid:currentUser.uid,email:currentUser.email,time:Date.now()}); alert('Ad Post Ho Gaya! 🎉'); allAds=[]; render(); showPage('homePage',document.querySelectorAll('.b')[0]); }catch(e){ alert(e.message); } }
+window.renderFavs = function(){ document.getElementById('favsGrid').innerHTML='<p style="padding:20px">Favs yahan aayenge</p>'; }
+document.getElementById('logoImg').addEventListener('click', ()=>{ adminClicks++; setTimeout(()=>{ adminClicks=0; },2000); if(adminClicks>=5){ adminClicks=0; let pass=prompt('Admin Password:'); if(pass==='atiq726609@'){ alert('Admin Panel Khul Gaya! Atiq Bhai Welcome'); } else { alert('Wrong Password'); } } });
+document.getElementById('locProvince').value='All Pakistan';
 renderCats(); onProvinceChange(); onSellProvince(); render();
 </script>
 </body>
