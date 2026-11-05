@@ -2,294 +2,337 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SM FAISALABAD MARKET</title>
-<link rel="preconnect" href="https://www.gstatic.com">
-<link rel="preconnect" href="https://images.unsplash.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SM Faisalabad Market</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A2E3E">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f2f4f7;padding-bottom:95px}
-.header{background:#0A2E3E;color:#fff;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
-.header b{font-size:19px;line-height:1.1}
-.header b span{color:#2EA5FF}
-#logoImg{width:48px;height:48px;min-width:48px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;cursor:pointer;overflow:hidden;padding:0}
-#logoImg img{width:100%;height:100%;object-fit:cover;object-position:center 28%}
-.page{display:none;padding:10px;width:100%}
-.page.active{display:block}
-.searchBox{display:flex;gap:8px;margin:10px 0}
-.searchBox input{flex:1;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:15px;outline:none}
-.searchBox button{padding:12px 16px;background:#0A2E3E;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-.locRow{display:flex;gap:8px;margin-bottom:10px}
-.locRow select{flex:1;padding:11px;border:1px solid #ddd;border-radius:10px;font-size:14px;background:#fff;outline:none}
-.nearBtn{padding:11px 12px;background:#fff;border:1px solid #ddd;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap;color:#0A2E3E}
-.sortRow{display:flex;gap:8px;margin-bottom:10px}
-.sortRow select{flex:1;padding:11px;border:1px solid #ddd;border-radius:10px;background:#fff}
-.top3{display:flex;gap:8px;padding:2px 0 10px}
-.top3>div{flex:1;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer}
-.top3 .smBox{background:#0A2E3E;color:#fff}
-.top3 .wBox{background:#fff;border:1px solid #e5e7eb}
-.top3 b{font-size:13px;color:#0A2E3E}
-.top3 .smBox b{color:#fff;font-size:18px}
-.top3 small{font-size:10px;color:#666}
-.top3 .smBox small{color:#cfeaff}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{white-space:nowrap;background:#fff;border:1px solid #e5e7eb;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer}
-.chip.on{background:#0A2E3E;color:#fff;border-color:#0A2E3E}
-.banner{background:linear-gradient(135deg,#0A2E3E,#147AB8);color:#fff;border-radius:14px;padding:16px;margin:4px 0 12px}
-.banner h2{font-size:20px}
-.banner p{font-size:13px;opacity:.9;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;content-visibility:auto}
-.card{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #eee;position:relative}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#0A2E3E;color:#fff;padding-bottom:90px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;background:#0A2E3E;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px;cursor:pointer}
+.logo img{width:38px;height:38px;border-radius:10px;object-fit:cover}
+.search{margin:10px 15px;background:#fff;border-radius:25px;display:flex;align-items:center;padding:10px 14px}
+.search input{border:none;outline:none;width:100%;font-size:15px}
+.cats{display:flex;gap:8px;overflow:auto;padding:5px 15px}
+.cats button{white-space:nowrap;border:none;padding:8px 16px;border-radius:20px;background:#13465c;color:#fff;cursor:pointer}
+.cats button.active{background:#25D366;color:#000;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px}
+.card{background:#fff;color:#000;border-radius:14px;overflow:hidden;cursor:pointer;position:relative}
 .card img{width:100%;height:140px;object-fit:cover;background:#eee}
-.card .cPad{padding:10px}
-.card .price{font-weight:800;color:#0A2E3E;font-size:16px}
-.card .title{font-size:13px;margin:4px 0;color:#222;min-height:36px;overflow:hidden}
-.card .meta{font-size:11px;color:#888}
-.favBtn{position:absolute;top:8px;right:8px;background:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.2);z-index:2}
-.featBadge{position:absolute;top:8px;left:8px;background:#FFC107;color:#000;font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px;z-index:2}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:10px;font-size:15px;outline:none;background:#fff}
-.btn{width:100%;padding:13px;background:#0A2E3E;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
-.btn2{width:100%;padding:12px;background:#fff;color:#0A2E3E;border:2px solid #0A2E3E;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer;margin-top:8px}
-.btnGreen{width:100%;padding:12px;background:#00A651;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:8px}
-.btnYellow{width:100%;padding:13px;background:#00A651;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:8px}
-.btnRed{padding:8px 14px;background:#dc2626;color:#fff;border:none;border-radius:8px;cursor:pointer}
-.btnSmall{padding:8px 12px;background:#0A2E3E;color:#fff;border:none;border-radius:8px;cursor:pointer}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 10px;border-top:1px solid #eee;z-index:999}
-.bottom .b{text-align:center;font-size:11px;cursor:pointer;color:#666}
-.bottom .b.on{color:#0A2E3E;font-weight:800}
-.adminBox{background:#fff;padding:14px;border-radius:12px;margin-bottom:10px;border:1px solid #eee}
-.uploadBox{border:2px dashed #0A2E3E;border-radius:12px;padding:14px;text-align:center;background:#f0f8ff;margin-bottom:10px;cursor:pointer}
-.uploadBox b{color:#0A2E3E}
-#imgPreviewWrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-#imgPreviewWrap img{width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #ddd}
-#payPreview{width:100%;height:180px;object-fit:cover;border-radius:12px;display:none;margin-bottom:10px}
-.priceHint{font-size:12px;color:#0A2E3E;font-weight:700;margin:-6px 0 10px}
-.planCard{background:#fff;border:2px solid #00A651;border-radius:14px;padding:16px;margin-bottom:12px;text-align:center}
-.faqItem{background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;border:1px solid #eee;cursor:pointer}
-.faqItem p{display:none;color:#555;font-size:13px;margin-top:8px}
-.faqItem.open p{display:block}
-.payBox{background:#FFF8E1;border:2px solid #FFC107;border-radius:14px;padding:16px;margin-bottom:12px;text-align:center}
-#loginGate{position:fixed;top:0;left:0;right:0;bottom:0;background:#0A2E3E;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
-#loginGate .gateBox{background:#fff;width:100%;max-width:360px;border-radius:18px;padding:22px;text-align:center}
-#loginGate .gateBox h2{color:#0A2E3E;margin:8px 0 4px}
-#loginGate .gateBox p{font-size:13px;color:#666;margin-bottom:14px}
-.customCityBox{display:none;background:#E8F5E9;border:1px solid #25D366;border-radius:10px;padding:10px;margin-bottom:10px}
-.customCityBox b{font-size:13px;color:#0A2E3E}
-#imgViewer{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column}
-#imgViewer img{max-width:100%;max-height:85vh;object-fit:contain}
-#imgViewer button{margin-top:12px;padding:10px 20px;background:#fff;border:none;border-radius:20px;font-weight:800;cursor:pointer}
-.thumbRow{display:flex;gap:8px;margin:10px 0;overflow-x:auto}
-.thumbRow img{width:70px;height:70px;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid #eee}
-.thumbRow img.on{border-color:#00A651}
+.card .p{padding:10px}
+.card h4{font-size:14px;height:36px;overflow:hidden}
+.card .price{color:#0A7a3e;font-weight:800;margin-top:4px}
+.card .loc{font-size:12px;color:#666}
+.favBtn{position:absolute;top:8px;right:8px;background:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;border:none;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 12px;border-top:1px solid #ddd;z-index:20}
+.bottom button{border:none;background:none;font-size:11px;color:#666;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.bottom button.active{color:#0A2E3E;font-weight:700}
+.bottom .sell{margin-top:-28px;background:#25D366;width:58px;height:58px;border-radius:50%;color:#000;font-size:22px;justify-content:center;border:4px solid #0A2E3E}
+.page{display:none;padding:15px}
+.page.active{display:block}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:8px 0;font-size:15px;background:#fff;color:#000}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;background:#25D366;font-weight:800;font-size:16px;cursor:pointer;color:#000;margin-top:8px}
+.btn2{background:#fff;border:1px solid #333}
+.btnG{background:#fff;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:disabled{opacity:.6}
+.gate{position:fixed;inset:0;background:#0A2E3E;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.gateBox{background:#E8F0E8;width:100%;max-width:380px;border-radius:22px;padding:25px;text-align:center;color:#000}
+.gateBox img{width:70px;height:70px;border-radius:16px}
+.imgBox{display:flex;gap:8px;flex-wrap:wrap}
+.imgBox img{width:70px;height:70px;object-fit:cover;border-radius:8px}
+.small{font-size:13px;color:#ccc;text-align:center;margin-top:8px}
+.detailImg{width:100%;height:280px;object-fit:cover;border-radius:14px;background:#eee}
+.chip{display:inline-block;background:#13465c;padding:6px 12px;border-radius:20px;font-size:12px;margin:3px}
+.accCard{background:#fff;color:#000;border-radius:14px;padding:15px;margin-bottom:12px}
+.plan{background:#fff;color:#000;border-radius:14px;padding:16px;margin-bottom:12px}
 </style>
 </head>
 <body>
-<div id="imgViewer" onclick="closeViewer()"><img id="viewerImg" src=""><button onclick="closeViewer()">✕ Close</button></div>
 
-<div id="loginGate">
-<div class="gateBox">
-<img src="logo.jpg" style="width:110px;height:110px;object-fit:contain;background:#fff;border-radius:16px;margin:0 auto;display:block" onerror="this.style.display='none'">
-<h2>Welcome to SM Market!</h2>
-<p>Pakistan's Own Buy & Sell Bazaar<br>Please Login / Create Account to Continue</p>
-<form autocomplete="off" onsubmit="return false">
-<input id="gateEmail" type="text" name="new-email" placeholder="Email" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-<input id="gatePass" type="password" name="new-password" placeholder="Password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-</form>
-<button class="btn" onclick="gateLogin()">Login</button>
-<button class="btn2" onclick="gateSignup()">New Account - Sign Up</button>
-<div style="text-align:center;margin:12px 0;color:#888;font-size:13px">OR</div>
-<button class="btn2" onclick="loginGoogle()">🔵 Continue with Google</button>
-<p style="font-size:11px;color:#999;margin-top:12px">By continuing, you agree to buy & sell safely.</p>
-</div>
+<div id="gate" class="gate">
+  <div class="gateBox">
+    <img src="logo.jpg" onerror="this.src='https://via.placeholder.com/70'">
+    <div style="font-size:11px;font-weight:800;margin-top:5px">SM FAISALABAD MARKET</div>
+    <h2 style="margin:15px 0 5px">Welcome to SM Market!</h2>
+    <p style="color:#555">Pakistan's Own Buy & Sell Bazaar</p>
+    <input id="gateEmail" placeholder="Email" type="email">
+    <input id="gatePass" placeholder="Password (6+ characters)" type="password">
+    <button class="btn" onclick="doLogin()">Login</button>
+    <button class="btn btn2" onclick="doSignup()">New Account - Sign Up</button>
+    <div style="margin:12px">OR</div>
+    <button class="btn btnG" onclick="googleLogin()">🔵 Continue with Google</button>
+    <p class="small" style="color:#777">By continuing, you agree to buy & sell safely.</p>
+  </div>
 </div>
 
-<div class="header"><div id="logoImg"><img src="logo.jpg" loading="lazy" decoding="async" onerror="this.remove();document.getElementById('logoImg').textContent='SM'"><span style="display:none">SM</span></div><div><b>SM <span>FAISALABAD</span> MARKET</b><br><small style="font-size:11px;opacity:.8">Buy & Sell in Pakistan - FREE Posting</small></div></div>
+<div class="topbar">
+  <div class="logo" onclick="goHome()"><img src="logo.jpg" onerror="this.src='https://via.placeholder.com/38'"> SM <span style="font-size:12px;font-weight:400">Market</span></div>
+  <div style="display:flex;gap:10px"><span onclick="showPage('plansPage')" style="cursor:pointer">⭐ Plans</span><span onclick="showPage('profilePage')" style="cursor:pointer">👤</span></div>
+</div>
 
 <div id="homePage" class="page active">
-<div class="banner"><h2>Welcome to SM Market!</h2><p>Pakistan's Own Buy & Sell Bazaar - Car, Bike, Mobile, Property and More. Post Ad FREE!</p></div>
-<div class="top3"><div class="smBox" onclick="setCat('All')"><b>SM</b><br><small>All Ads</small></div><div class="wBox" onclick="setCat('Motors')"><div style="font-size:22px">🚗</div><b>Motors</b><br><small>Car • Bike</small></div><div class="wBox" onclick="setCat('Property')"><div style="font-size:22px">🏠</div><b>Property</b><br><small>House • Plot</small></div></div>
-<div class="searchBox"><input id="searchInput" placeholder="Search Mobile, Car, Bike, Property..." oninput="render()" autocomplete="off"><button onclick="render()">Search</button></div>
-<div class="locRow"><select id="locProvince" onchange="onProvinceChange()"><option value="All Pakistan">All Pakistan</option><option value="Punjab">Punjab</option><option value="Sindh">Sindh</option><option value="KPK">KPK</option><option value="Balochistan">Balochistan</option><option value="Gilgit">Gilgit Baltistan</option><option value="AJK">Azad Kashmir</option><option value="Islamabad">Islamabad</option></select><select id="locCity" onchange="onHomeCityChange()"><option value="All Pakistan">All Pakistan</option></select><button class="nearBtn" onclick="nearMe()">📍 Near Me</button></div>
-<div id="homeCustomCityBox" class="customCityBox"><b>✏️ Apna City Likhein</b><input id="locCityCustom" placeholder="Apna City / Gaon likhein - e.g. Chak Jhumra" oninput="render()" autocomplete="off" style="margin-top:8px;margin-bottom:0"></div>
-<div class="sortRow"><select id="sortBy" onchange="render()"><option value="newest">Sort: Newest First</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select><select id="priceRange" onchange="render()"><option value="all">All Prices</option><option value="0-50000">Under 50k</option><option value="50000-200000">50k - 2 Lakh</option><option value="200000-1000000">2 - 10 Lakh</option><option value="1000000-999999999">10 Lakh+</option></select></div>
-<div class="chips" id="catChips"></div>
-<div id="featSection" style="display:none"><h3 style="margin:8px 0">⭐ Featured Ads</h3><div id="featGrid" class="grid"></div><h3 style="margin:12px 0 8px">All Ads</h3></div>
-<div id="adsGrid" class="grid"></div>
-<div id="noAds" style="text-align:center;padding:30px;color:#888;display:none">No Ads Found<br><small>Please select All Pakistan</small></div>
+  <div class="search"><span>🔍</span><input id="searchInp" placeholder="Search Car, Bike, Mobile..." oninput="render()"></div>
+  <div class="cats" id="cats"></div>
+  <div class="grid" id="grid"></div>
 </div>
 
-<div id="favsPage" class="page"><h2 style="margin-bottom:10px">❤️ My Favourites</h2><div id="favsGrid" class="grid"></div><div id="noFavs" style="text-align:center;padding:30px;color:#888;display:none">No Favourites Yet<br><small>Tap Heart on any Ad</small></div></div>
+<div id="favPage" class="page"><h2>❤️ Favourites</h2><div class="grid" id="favGrid"></div></div>
 
 <div id="sellPage" class="page">
-<h2 style="margin-bottom:10px">📸 Sell Your Item</h2>
-<p style="font-size:13px;color:#666;margin-bottom:12px">Post Ad is 100% FREE. 1 se 4 Photos laga sakte ho.</p>
-<input id="adTitle" placeholder="Title - e.g. iPhone 13 Pro Max" maxlength="80" autocomplete="off">
-<input id="adPrice" type="text" inputmode="numeric" placeholder="Price - e.g. 70000" oninput="formatPrice(this)" autocomplete="off">
-<div class="priceHint" id="priceHint">Rs 0</div>
-<select id="adCat"><option value="Mobile">📱 Mobile</option><option value="Bike">🏍️ Bike</option><option value="Car">🚗 Car</option><option value="Property">🏠 Property</option><option value="Shop">🏪 Shop</option><option value="Electronics">💻 Electronics</option><option value="Fashion">👗 Fashion</option><option value="Home">🛋️ Home</option><option value="Jobs">💼 Jobs</option><option value="Other">📦 Other</option></select>
-<select id="adProvince" onchange="onSellProvince()"><option value="All Pakistan">All Pakistan</option><option value="Punjab" selected>Punjab</option><option value="Sindh">Sindh</option><option value="KPK">KPK</option><option value="Balochistan">Balochistan</option><option value="Gilgit">Gilgit Baltistan</option><option value="AJK">Azad Kashmir</option><option value="Islamabad">Islamabad</option></select>
-<select id="adCity" onchange="onSellCityChange()"><option value="Faisalabad">Faisalabad</option></select>
-<div id="sellCustomCityBox" class="customCityBox"><b>✏️ Apna City Likhein</b><input id="adCityCustom" placeholder="Apna City / Gaon likhein - e.g. Chak Jhumra" autocomplete="off" style="margin-top:8px;margin-bottom:0"></div>
-<textarea id="adDesc" rows="3" placeholder="Write Description... (Required)" maxlength="500"></textarea>
-<input id="adPhone" type="tel" name="new-phone" placeholder="WhatsApp Number - e.g. 03001234567" maxlength="11" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-<div class="uploadBox" onclick="document.getElementById('adImgFile').click()">
-<div style="font-size:32px">📷</div><b>Upload Photos - 1 se 4 Tak</b><br><small style="color:#666" id="photoMsg">1 Photo lazmi, 4 tak laga sakte ho</small>
-</div>
-<input type="file" id="adImgFile" accept="image/*" multiple style="display:none" onchange="handleImage(this)">
-<div id="imgPreviewWrap"></div>
-<button class="btn" onclick="postAd()">Post Ad - FREE</button>
-<div style="height:20px"></div>
+  <h2 id="sellTitle">Post Your Ad - FREE</h2>
+  <input id="adTitle" placeholder="Title - e.g. Honda CG 125 2022">
+  <select id="adCat"><option>Car</option><option>Bike</option><option>Mobile</option><option>Property</option><option>Electronics</option><option>Home Appliances</option><option>Furniture</option><option>Fashion - Clothes</option><option>Shoes</option><option>Beauty</option><option>Jobs</option><option>Services</option><option>Pets & Animals</option><option>Agriculture</option><option>Sports</option><option>Books</option><option>Toys & Baby</option><option>Grocery & Food</option><option>Hardware & Tools</option><option>Business</option><option>Other</option></select>
+  <input id="adPrice" placeholder="Price - e.g. 250000" type="number">
+  <input id="adLoc" placeholder="Location - e.g. Faisalabad">
+  <input id="adPhone" placeholder="WhatsApp Number - 0300xxxxxxx">
+  <textarea id="adDesc" placeholder="Description..."></textarea>
+  <label style="font-size:14px">Photos (1 to 4) - Pehli photo Cover hogi</label>
+  <input type="file" id="adImgs" accept="image/*" multiple onchange="handleImage(this)">
+  <div class="imgBox" id="imgPreviewBox"></div>
+  <button class="btn" id="postBtn" onclick="postAd()">Post Ad</button>
+  <p class="small" id="postMsg"></p>
 </div>
 
-<div id="myAdsPage" class="page">
-<h2 style="margin-bottom:10px">📦 My Ads</h2>
-<p style="font-size:13px;color:#666;margin-bottom:12px">Sirf tumhari apni Ads yahan dikhen gi. Edit / Delete / SELL FAST NOW yahan se hoga.</p>
-<div id="myAdsList"><small style="color:#888">No Ad Yet</small></div>
+<div id="myAdsPage" class="page"><h2>My Ads</h2><div class="grid" id="myGrid"></div></div>
+
+<div id="profilePage" class="page">
+  <h2>My Profile</h2>
+  <div class="accCard">
+    <b>Login Accounts</b>
+    <div id="savedAccs" style="margin-top:10px"></div>
+    <p style="font-size:12px;color:#666;margin-top:8px">Switch dabao to Email khud aa jaye ga, sirf Password likhna hai.</p>
+  </div>
+  <div class="accCard">
+    <input id="editName" placeholder="Your Name" oninput="enableSave()">
+    <input id="editPhone" placeholder="Phone" oninput="enableSave()">
+    <input id="editCity" placeholder="City" oninput="enableSave()">
+    <button class="btn" id="saveBtn" onclick="saveProfile()" disabled>Save Profile</button>
+    <p id="saveMsg" class="small" style="color:green;display:none">Saved!</p>
+    <button class="btn btn2" onclick="doLogout()">Logout</button>
+  </div>
 </div>
 
-<div id="accountPage" class="page">
-<h2 style="margin-bottom:10px">👤 My Profile</h2>
-<div id="userInfo" style="display:none;background:#fff;padding:14px;border-radius:12px;margin-bottom:12px">
-<b id="userNameShow" style="font-size:17px">User</b><br>
-<small id="userEmailShow" style="color:#666"></small>
-<div style="margin-top:12px;border-top:1px solid #eee;padding-top:12px">
-<b>Edit Profile</b><br><br>
-<input id="editName" placeholder="Your Name" autocomplete="off">
-<input id="editPhone" type="tel" name="new-phone" placeholder="Your Phone - e.g. 03001234567" maxlength="11" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-<button id="saveBtn" class="btnGreen" onclick="saveProfile()">Save Profile</button>
-<p id="saveMsg" style="display:none;color:#00A651;text-align:center;font-weight:700;margin-top:8px">✅ Profile Save Ho Gayi Hai!</p>
-<div style="margin-top:16px;border-top:1px solid #eee;padding-top:12px">
-<b>🔄 Switch Account - 2 Accounts</b><p style="font-size:12px;color:#666;margin:6px 0">1 Logout kar ke dusra foran login karo</p>
-<div id="savedAccounts"></div>
-<button class="btn2" onclick="addCurrentAccount()">➕ Is Account ko Save Karo</button>
-<button class="btn2" onclick="logoutUser()" style="color:#dc2626;border-color:#dc2626">Logout</button>
-</div>
-</div>
-</div>
-<div id="loginBox" style="background:#fff;padding:14px;border-radius:12px"><h3 style="margin-bottom:10px">Login with Email</h3><form autocomplete="off" onsubmit="return false"><input id="loginEmail" type="text" name="new-email" placeholder="Email" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')"><input id="loginPass" type="password" name="new-password" placeholder="Password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')"></form><button class="btn" onclick="loginEmail()">Login</button><button class="btn2" onclick="signupEmail()">New Account - Sign Up</button><div style="text-align:center;margin:12px 0;color:#888;font-size:13px">OR</div><button class="btn2" onclick="loginGoogle()">🔵 Continue with Google</button></div>
-<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px;text-align:center"><h3>📱 SM Market App</h3><p style="font-size:13px;color:#666;margin:8px 0">App Install Karo - Tez Chalegi</p><button class="btnGreen" onclick="installApp()">⬇️ INSTALL APP</button><small style="color:#999;display:block;margin-top:8px">Play Store jesa Real Install</small></div>
-<div style="margin-top:14px;background:#fff;padding:14px;border-radius:12px"><h3>❓ Help & Support</h3><p style="font-size:13px;color:#666;margin:8px 0">Any problem? Chat with Admin on WhatsApp.</p><a href="https://wa.me/923430864009?text=Hello%20SM%20Market%20Support" target="_blank" style="text-decoration:none"><button class="btnGreen">💚 WhatsApp Support</button></a><button class="btn2" onclick="showPage('faqPage',null)">❓ View FAQ</button></div>
-</div>
-
-<div id="faqPage" class="page">
-<h2 style="margin-bottom:12px">❓ Frequently Asked Questions</h2>
-<div class="faqItem" onclick="this.classList.toggle('open')"><b>1. How to post an Ad?</b><p>Login first, then tap Sell button, fill title, price, photo and tap Post Ad. It is 100% FREE.</p></div>
-<div class="faqItem" onclick="this.classList.toggle('open')"><b>2. How to make my Ad Featured?</b><p>Go to My Ads, tap SELL FAST NOW, select plan, pay on Easypaisa and upload screenshot. Admin will approve within 1-2 hours.</p></div>
-<div class="faqItem" onclick="this.classList.toggle('open')"><b>3. How to contact seller?</b><p>Open Ad detail, you can Call or WhatsApp seller.</p></div>
-<div class="faqItem" onclick="this.classList.toggle('open')"><b>4. How to edit or delete my Ad?</b><p>Go to My Ads page, tap Edit or Delete. Only your own Ads can be edited.</p></div>
-<div class="faqItem" onclick="this.classList.toggle('open')"><b>5. Is it safe to buy?</b><p>Always meet in a public place, check item before payment. Never send advance payment to unknown person.</p></div>
-<button class="btn2" onclick="goHome()">← Back to Home</button>
-</div>
+<div id="detailPage" class="page"><div id="detailBox"></div></div>
 
 <div id="plansPage" class="page">
-<h2>⚡ SELL FAST NOW</h2><p style="color:#666;font-size:13px;margin:8px 0 14px">Make your Ad Featured. Get 10x more views. Normal Ad Posting is FREE.</p>
-<div class="planCard"><h3>14 Days Plan</h3><h2 style="color:#0A2E3E;margin:8px 0">Rs 500</h2><p style="font-size:13px;color:#666">Featured for 14 Days • Top Position</p><button class="btnYellow" onclick="selectPlan('14 Days - Rs 500',500)">Select 14 Days Plan</button></div>
-<div class="planCard"><h3>30 Days Plan - BEST VALUE</h3><h2 style="color:#0A2E3E;margin:8px 0">Rs 1000</h2><p style="font-size:13px;color:#666">Featured for 30 Days • Top Position • More Calls</p><button class="btnYellow" onclick="selectPlan('30 Days - Rs 1000',1000)">Select 30 Days Plan</button></div>
-<button class="btn2" onclick="goHome()">← Back</button>
+  <h2>⭐ Plans</h2>
+  <div class="plan"><h3>Free Plan - Rs 0</h3><p>3 Ads FREE • Normal Show</p><button class="btn" onclick="alert('Free Plan Active Hai!')">Active</button></div>
+  <div class="plan"><h3>🔥 Featured - Rs 500 / 7 Din</h3><p>Top pe show • 5x Zyada Views</p><button class="btn" onclick="alert('Featured ke liye WhatsApp karein: 0300-xxxxxxx')">Buy Featured</button></div>
+  <div class="plan"><h3>👑 VIP - Rs 1000 / 30 Din</h3><p>Shop Badge • Unlimited Ads</p><button class="btn" onclick="alert('VIP ke liye WhatsApp karein')">Buy VIP</button></div>
 </div>
-
-<div id="paymentPage" class="page">
-<h2>💳 Payment</h2>
-<p style="color:#666;font-size:13px;margin:8px 0">Plan: <b id="payPlanName">-</b></p>
-<div class="payBox"><b style="font-size:16px">Easypaisa Payment</b><br><br><b style="font-size:22px;color:#0A2E3E">03430864009</b><br><small>Name: Atiq Ur Rehman</small><br><small>Send payment to this number</small></div>
-<p style="font-size:13px;color:#666;margin-bottom:10px">Step 1: Send payment on Easypaisa.<br>Step 2: Take screenshot of payment.<br>Step 3: Upload screenshot below and Submit.</p>
-<div class="uploadBox" onclick="document.getElementById('payFile').click()"><div style="font-size:32px">🧾</div><b>Upload Payment Screenshot</b><br><small style="color:#666">Tap to select screenshot</small></div>
-<input type="file" id="payFile" accept="image/*" style="display:none" onchange="handlePayImage(this)">
-<img id="payPreview" loading="lazy">
-<input id="paySender" type="tel" name="new-phone" placeholder="Your Easypaisa Number - e.g. 03001234567" maxlength="11" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
-<button class="btn" onclick="submitPayment()" style="background:#00A651;color:#fff">Submit Payment Screenshot</button>
-<button class="btn2" onclick="goHome()">Cancel</button>
-</div>
-
-<div id="detailPage" class="page"><button onclick="goHome()" style="padding:8px 14px;border:none;background:#fff;border-radius:20px;cursor:pointer;margin-bottom:10px">← Back</button><div id="detailBox"></div></div>
-<div id="adminPage" class="page"><h2>🛡️ Admin Panel</h2><p style="color:#666;font-size:13px;margin:6px 0 12px">Only for Admin</p><div class="adminBox"><h3>Total Ads: <span id="adminTotal">0</span> | Featured: <span id="adminFeat">0</span> | Payments: <span id="adminPay">0</span></h3></div><h3 style="margin:10px 0">Payment Requests</h3><div id="adminPayList"></div><h3 style="margin:14px 0 10px">All Ads</h3><div id="adminList"></div><button class="btn" onclick="goHome()" style="background:#666;margin-top:10px">← Back to Home</button></div>
 
 <div class="bottom">
-<div class="b on" onclick="showPage('homePage',this)"><span style="display:block;font-size:20px">🏠</span>Home</div>
-<div class="b" onclick="showPage('favsPage',this)"><span style="display:block;font-size:20px">❤️</span>Favourites</div>
-<div class="b" onclick="showPage('sellPage',this)"><div style="width:48px;height:48px;background:#0A2E3E;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:-18px auto 2px">+</div>Sell</div>
-<div class="b" onclick="showPage('myAdsPage',this)"><span style="display:block;font-size:20px">📦</span>My Ads</div>
-<div class="b" onclick="showPage('accountPage',this)"><span style="display:block;font-size:20px">👤</span>Profile</div>
+  <button class="b active" onclick="showPage('homePage',this)">🏠<span>Home</span></button>
+  <button class="b" onclick="showPage('favPage',this)">❤️<span>Fav</span></button>
+  <button class="b sell" onclick="showPage('sellPage',this)">+</button>
+  <button class="b" onclick="showPage('myAdsPage',this)">📋<span>My Ads</span></button>
+  <button class="b" onclick="showPage('profilePage',this)">👤<span>Profile</span></button>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-const firebaseConfig = { apiKey: "AIzaSyCL9suGZQVZDlZOOS7Ni30", authDomain: "sm-market-f7283.firebaseapp.com", projectId: "sm-market-f7283", storageBucket: "sm-market-f7283.firebasestorage.app", messagingSenderId: "467902826161", appId: "1:467902826161:web:3a95a176f7b57d15050490", measurementId: "G-V4P837LMVS" };
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
+  authDomain: "sm-market-f7283.firebaseapp.com",
+  projectId: "sm-market-f7283",
+  storageBucket: "sm-market-f7283.firebasestorage.app",
+  messagingSenderId: "467902826161",
+  appId: "1:467902826161:web:3a95a176f7b57d15050490",
+  measurementId: "G-V4P837LMVS"
+};
+
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); const db = getFirestore(app); const provider = new GoogleAuthProvider();
-let allAds=[], selCat='All', currentUser=null, adminClicks=0, uploadedImgs=[], uploadedImg='', payImg='', favs=JSON.parse(localStorage.getItem('sm_favs')||'[]'), views=JSON.parse(localStorage.getItem('sm_views')||'{}'), editingId=null, selectedAdForBoost=null, selectedPlan='', selectedPrice=0, allPayments=[], deferredPrompt=null, currentDetailImgs=[];
-const demoAds=[
-{id:'d1',title:'iPhone 13 Pro - PTA Approved',price:185000,cat:'Mobile',province:'Punjab',city:'Faisalabad',desc:'Neat condition, with box',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=60',imgs:['https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&q=70'],phone:'03001234567',featured:true,time:Date.now()},
-{id:'d2',title:'Honda CG 125 - 2023 Model',price:285000,cat:'Bike',province:'Punjab',city:'Gojra',desc:'Total genuine, first owner',img:'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=500&q=60',imgs:['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=70'],phone:'03001234567',featured:false,time:Date.now()-1000},
-{id:'d3',title:'5 Marla House - Gojra Road Faisalabad',price:9500000,cat:'Property',province:'Punjab',city:'Faisalabad',desc:'Gas + Electricity, registry clear',img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500&q=60',imgs:['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=70'],phone:'03001234567',featured:false,time:Date.now()-2000},
-{id:'d4',title:'Smart Watch - Original',price:200000,cat:'Electronics',province:'Punjab',city:'Samundri',desc:'Original watch, with box',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=60',imgs:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=70'],phone:'03001234567',featured:false,time:Date.now()-3000},
-{id:'d5',title:'Toyota Corolla 2019',price:4850000,cat:'Car',province:'Punjab',city:'Faisalabad',desc:'Family used car',img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500&q=60',imgs:['https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=70'],phone:'03001234567',featured:false,time:Date.now()-4000}
-];
-const cities={"All Pakistan":["All Pakistan"],"Punjab":["Faisalabad","Gojra","Samundri","Jaranwala","Tandlianwala","Lahore","Multan","Rawalpindi","Sargodha","Gujranwala","Sialkot","Bahawalpur"],"Sindh":["Karachi","Hyderabad","Sukkur"],"KPK":["Peshawar","Abbottabad","Mardan"],"Balochistan":["Quetta"],"Gilgit":["Gilgit","Skardu"],"AJK":["Muzaffarabad","Mirpur"],"Islamabad":["Islamabad"]};
-const catIcons={"All":"🏠 All","Motors":"🚗 Motors","Mobile":"📱 Mobile","Bike":"🏍️ Bike","Car":"🚗 Car","Property":"🏠 Property","Shop":"🏪 Shop","Electronics":"💻 Electronics","Fashion":"👗 Fashion","Home":"🛋️ Home","Jobs":"💼 Jobs","Other":"📦 Other"};
-const catImages={Mobile:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=60',Bike:'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=500&q=60',Car:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500&q=60',Property:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500&q=60',Shop:'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=60',Electronics:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=60',Fashion:'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&q=60',Home:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=60',Jobs:'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=500&q=60',Other:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=60'};
-window.formatPrice=function(el){ let v=el.value.replace(/[^0-9]/g,''); if(!v){ document.getElementById('priceHint').innerText='Rs 0'; el.value=''; return; } let n=parseInt(v); el.value=n.toLocaleString('en-PK'); document.getElementById('priceHint').innerText='Rs '+n.toLocaleString('en-PK'); }
-window.getPriceNumber=function(){ return parseInt(document.getElementById('adPrice').value.replace(/[^0-9]/g,''))||0; }
-// 1 SE 4 PHOTOS
-window.handleImage=function(input){ let files=[...input.files]; if(uploadedImgs.length + files.length > 4){ alert('Bhai! Sirf 4 tak photos lagao!'); input.value=''; return; } let remaining = files.slice(0, 4 - uploadedImgs.length); let done=0; remaining.forEach(file=>{ let reader=new FileReader(); reader.onload=function(e){ let img=new Image(); img.onload=function(){ let canvas=document.createElement('canvas'); let max=800; let w=img.width, h=img.height; if(w>max){ h=h*max/w; w=max; } canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h); let data=canvas.toDataURL('image/jpeg',0.7); uploadedImgs.push(data); uploadedImg=uploadedImgs[0]; renderImgPreview(); }; img.src=e.target.result; }; reader.readAsDataURL(file); }); }
-function renderImgPreview(){ document.getElementById('imgPreviewWrap').innerHTML=uploadedImgs.map((u,i)=>`<div style="position:relative"><img src="${u}"><span onclick="removeImg(${i})" style="position:absolute;top:-6px;right:-6px;background:red;color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer">✕</span></div>`).join(''); document.getElementById('photoMsg').innerText=uploadedImgs.length+' / 4 Photos Ho Gayi'; }
-window.removeImg=function(i){ uploadedImgs.splice(i,1); uploadedImg=uploadedImgs[0]||''; renderImgPreview(); }
-window.handlePayImage=function(input){ let file=input.files[0]; if(!file) return; let reader=new FileReader(); reader.onload=function(e){ let img=new Image(); img.onload=function(){ let canvas=document.createElement('canvas'); let max=800; let w=img.width, h=img.height; if(w>max){ h=h*max/w; w=max; } canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h); payImg=canvas.toDataURL('image/jpeg',0.7); let p=document.getElementById('payPreview'); p.src=payImg; p.style.display='block'; }; img.src=e.target.result; }; reader.readAsDataURL(file); }
-window.goHome=function(){ showPage('homePage',document.querySelectorAll('.b')[0]); }
-window.setCat=function(c){ selCat=c; renderCats(); render(); }
-window.renderCats=function(){ let h=''; for(let k in catIcons){ h+=`<div class="chip ${selCat===k?'on':''}" onclick="setCat('${k}')">${catIcons[k]}</div>`; } document.getElementById('catChips').innerHTML=h; }
-window.onProvinceChange=function(){ let p=document.getElementById('locProvince').value; let c=document.getElementById('locCity'); c.innerHTML=''; if(p==='All Pakistan'){ let o=document.createElement('option'); o.value='All Pakistan'; o.text='All Pakistan'; c.appendChild(o); } else { cities[p].forEach(x=>{let o=document.createElement('option');o.value=x;o.text=x;c.appendChild(o);}); } let o2=document.createElement('option'); o2.value='CUSTOM'; o2.text='✏️ Apna City Likhein...'; c.appendChild(o2); onHomeCityChange(); }
-window.onHomeCityChange=function(){ let v=document.getElementById('locCity').value; let box=document.getElementById('homeCustomCityBox'); if(box) box.style.display=(v==='CUSTOM')?'block':'none'; render(); }
-window.onSellProvince=function(){ let p=document.getElementById('adProvince').value; let c=document.getElementById('adCity'); c.innerHTML=''; if(p==='All Pakistan'){ let o=document.createElement('option'); o.value='All Pakistan'; o.text='All Pakistan'; c.appendChild(o); } else { cities[p].forEach(x=>{let o=document.createElement('option');o.value=x;o.text=x;c.appendChild(o);}); } let o2=document.createElement('option'); o2.value='CUSTOM'; o2.text='✏️ Apna City Likhein...'; c.appendChild(o2); if(p==='Punjab') c.value='Faisalabad'; onSellCityChange(); }
-window.onSellCityChange=function(){ let v=document.getElementById('adCity').value; let box=document.getElementById('sellCustomCityBox'); if(box) box.style.display=(v==='CUSTOM')?'block':'none'; }
-window.getSellCity=function(){ let v=document.getElementById('adCity').value; if(v==='CUSTOM'){ let custom=document.getElementById('adCityCustom').value.trim(); return custom||'Faisalabad'; } return v; }
-window.getHomeCity=function(){ let v=document.getElementById('locCity').value; if(v==='CUSTOM'){ let custom=(document.getElementById('locCityCustom')?.value||'').trim(); return custom||'CUSTOM_EMPTY'; } return v; }
-window.nearMe=function(){ if(!navigator.geolocation){ alert('GPS not supported'); return; } navigator.geolocation.getCurrentPosition(()=>{ alert('Near Me ON - Showing All Pakistan'); document.getElementById('locProvince').value='All Pakistan'; onProvinceChange(); document.getElementById('locCity').value='All Pakistan'; render(); },()=>{ alert('Please allow Location'); }); }
-window.showPage=function(id,el){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); let target=document.getElementById(id); if(target) target.classList.add('active'); document.querySelectorAll('.b').forEach(b=>b.classList.remove('on')); if(el) el.classList.add('on'); if(id==='favsPage') renderFavs(); if(id==='myAdsPage') renderMyAds(); if(id==='accountPage') renderSavedAccounts(); window.scrollTo(0,0); }
-window.toggleFav=function(id,ev){ if(ev) ev.stopPropagation(); if(favs.includes(id)) favs=favs.filter(x=>x!==id); else favs.push(id); localStorage.setItem('sm_favs',JSON.stringify(favs)); render(); }
-window.renderFavs=function(){ let list=allAds.filter(a=>favs.includes(a.id)); document.getElementById('noFavs').style.display=list.length===0?'block':'none'; document.getElementById('favsGrid').innerHTML=list.map(a=>cardHTML(a)).join(''); }
-window.cardHTML=function(a){ return `<div class="card" onclick="openDetail('${a.id}')">${a.featured?'<div class="featBadge">⭐ Featured</div>':''}<div class="favBtn" onclick="toggleFav('${a.id}',event)">${favs.includes(a.id)?'❤️':'🤍'}</div><img loading="lazy" decoding="async" src="${a.img||catImages[a.cat]||catImages.Other}" onerror="this.src='${catImages.Other}'"><div class="cPad"><div class="price">Rs ${Number(a.price||0).toLocaleString()}</div><div class="title">${a.title}</div><div class="meta">${a.city||''} • ${a.cat||''} • 👁️ ${views[a.id]||0}</div></div></div>`; }
-window.renderMyAds=function(){ if(!currentUser){ document.getElementById('myAdsList').innerHTML='<small style="color:#888">Please Login to see your Ads</small>'; return; } let mine=allAds.filter(a=>a.uid===currentUser.uid); document.getElementById('myAdsList').innerHTML=mine.length===0?'<small style="color:#888">No Ad Yet</small>':mine.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><b>${a.title}</b> - Rs ${Number(a.price).toLocaleString()}<br><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btnSmall" onclick="editAd('${a.id}')">Edit</button> <button class="btnRed" onclick="deleteAd('${a.id}')">Delete</button> <button class="btnSmall" style="background:#00A651;color:#fff" onclick="openBoost('${a.id}')">⚡ SELL FAST NOW</button></div>${a.featured?'<div style="color:#FF9800;font-weight:700;margin-top:6px">⭐ Featured</div>':''}</div>`).join(''); }
-window.openBoost=function(id){ selectedAdForBoost=id; showPage('plansPage',null); }
-window.selectPlan=function(plan,price){ selectedPlan=plan; selectedPrice=price; document.getElementById('payPlanName').innerText=plan; showPage('paymentPage',null); }
-window.submitPayment=async function(){ if(!selectedAdForBoost||!selectedPlan){ alert('Please select your Ad and Plan again from My Ads - SELL FAST NOW'); goHome(); return; } if(!payImg){ alert('Please upload payment screenshot first'); return; } let sender=document.getElementById('paySender').value.trim(); if(!sender||sender.length<11){ alert('Please enter correct 11 digit Easypaisa number'); return; } try{ await addDoc(collection(db,"topups"),{adId:selectedAdForBoost,plan:selectedPlan,price:selectedPrice,sender:sender,img:payImg,email:currentUser?currentUser.email:'',time:Date.now(),status:'pending'}); alert('Payment Submitted! Admin will approve within 1-2 hours.'); payImg=''; selectedAdForBoost=null; selectedPlan=''; document.getElementById('payPreview').style.display='none'; document.getElementById('paySender').value=''; goHome(); }catch(e){ alert(e.message); } }
-window.editAd=function(id){ let a=allAds.find(x=>x.id===id); if(!a) return; editingId=id; document.getElementById('adTitle').value=a.title; document.getElementById('adPrice').value=Number(a.price).toLocaleString(); formatPrice(document.getElementById('adPrice')); document.getElementById('adCat').value=a.cat; document.getElementById('adProvince').value=a.province||'Punjab'; onSellProvince(); let citySel=document.getElementById('adCity'); if([...citySel.options].some(o=>o.value===a.city)){ citySel.value=a.city||'Faisalabad'; } else { citySel.value='CUSTOM'; document.getElementById('adCityCustom').value=a.city||''; } onSellCityChange(); document.getElementById('adDesc').value=a.desc||''; document.getElementById('adPhone').value=a.phone||''; uploadedImgs=a.imgs||[a.img]; uploadedImg=uploadedImgs[0]; renderImgPreview(); showPage('sellPage',document.querySelectorAll('.b')[2]); alert('Now edit and tap Post Ad - It will update'); }
-window.render=async function(){ if(allAds.length===0){ try{ let snap=await getDocs(collection(db,"ads")); allAds=snap.docs.map(d=>({id:d.id,...d.data()})); if(allAds.length===0) allAds=[...demoAds]; }catch(e){ allAds=[...demoAds]; } } let q=document.getElementById('searchInput').value.toLowerCase().trim(); let prov=document.getElementById('locProvince').value; let city=getHomeCity(); let sort=document.getElementById('sortBy').value; let pr=document.getElementById('priceRange').value; let filtered=allAds.filter(a=>{ let okCat=selCat==='All'||a.cat===selCat||(selCat==='Motors'&&(a.cat==='Car'||a.cat==='Bike')); let okSearch=!q||((a.title||'')+' '+(a.desc||'')+' '+(a.city||'')).toLowerCase().includes(q); let okProv=prov==='All Pakistan'||a.province===prov||a.province==='All Pakistan'; let okCity=true; if(city==='All Pakistan'||city==='CUSTOM_EMPTY'){ okCity=true; } else if(city==='CUSTOM'){ okCity=true; } else { okCity=a.city===city||a.city==='All Pakistan'; } if(city!=='All Pakistan'&&city!=='CUSTOM_EMPTY'&&city!=='CUSTOM'&&document.getElementById('locCity').value==='CUSTOM'&&document.getElementById('locCityCustom').value.trim()){ okCity=(a.city||'').toLowerCase().includes(city.toLowerCase()); } let okPrice=true; if(pr!=='all'){ let [mn,mx]=pr.split('-').map(Number); okPrice=Number(a.price)>=mn && Number(a.price)<=mx; } return okCat&&okSearch&&okProv&&okCity&&okPrice; }); if(sort==='low') filtered.sort((a,b)=>a.price-b.price); if(sort==='high') filtered.sort((a,b)=>b.price-a.price); if(sort==='newest') filtered.sort((a,b)=>(b.time||0)-(a.time||0)); let feat=filtered.filter(a=>a.featured); document.getElementById('featSection').style.display=feat.length>0 && !q ?'block':'none'; document.getElementById('featGrid').innerHTML=feat.map(a=>cardHTML(a)).join(''); let g=document.getElementById('adsGrid'); document.getElementById('noAds').style.display=filtered.length===0?'block':'none'; if(q){ g.innerHTML=filtered.map(a=>cardHTML(a)).join(''); } else { g.innerHTML=filtered.filter(a=>!a.featured).map(a=>cardHTML(a)).join(''); } if(currentUser) renderMyAds(); }
-// FULL SCREEN IMAGE
-window.openViewer=function(src){ document.getElementById('viewerImg').src=src; document.getElementById('imgViewer').style.display='flex'; }
-window.closeViewer=function(){ document.getElementById('imgViewer').style.display='none'; }
-window.setMainImg=function(src,el){ document.getElementById('mainDetailImg').src=src; document.querySelectorAll('.thumbRow img').forEach(i=>i.classList.remove('on')); if(el) el.classList.add('on'); }
-window.openDetail=function(id){ let a=allAds.find(x=>x.id===id); if(!a) return; views[id]=(views[id]||0)+1; localStorage.setItem('sm_views',JSON.stringify(views)); let phone=(a.phone||'03001234567').replace(/[^0-9]/g,''); let waPhone=phone.startsWith('92')?phone:'92'+phone.substring(1); let imgs=a.imgs||[a.img||catImages[a.cat]]; currentDetailImgs=imgs; document.getElementById('detailBox').innerHTML=`<img id="mainDetailImg" loading="lazy" src="${imgs[0]}" onclick="openViewer(this.src)" style="width:100%;border-radius:12px;height:260px;object-fit:cover;cursor:zoom-in"><small style="color:#888">👆 Photo pe click karo - Full Screen me dekho</small><div class="thumbRow">${imgs.map((im,i)=>`<img src="${im}" class="${i===0?'on':''}" onclick="setMainImg('${im}',this)">`).join('')}</div><h2 style="margin:10px 0">Rs ${Number(a.price||0).toLocaleString()}</h2><h3>${a.title} ${a.featured?'⭐':''}</h3><p style="color:#555;margin:8px 0">${a.desc||'No description'}</p><p style="color:#888">${a.province||''} • ${a.city||''} • ${a.cat||''} • 👁️ ${views[id]} views</p><div style="background:#E8F5E9;padding:12px;border-radius:12px;margin:10px 0;text-align:center"><b>💚 Contact Seller on WhatsApp</b><br><small style="color:#666">Fast Reply - Direct Chat</small></div><a href="tel:${phone}" style="text-decoration:none"><button class="btn2">📞 Call Seller</button></a><a href="https://wa.me/${waPhone}?text=${encodeURIComponent('Hello! I am interested in your ad: '+a.title+' - Rs '+Number(a.price).toLocaleString())}" target="_blank" style="text-decoration:none"><button class="btnGreen">💚 WhatsApp Seller</button></a><button class="btn2" onclick="shareAd('${a.id}')">🔗 Share Ad</button><button class="btn2" onclick="toggleFav('${a.id}',event)">❤️ Favourite</button><div style="background:#FFF8E1;border:1px solid #FFC107;border-radius:12px;padding:12px;margin-top:12px"><b>🛡️ Safety Tips</b><p style="font-size:12px;color:#555;margin-top:6px">Meet in a public place. Check item before payment. Never send advance payment to unknown person.</p></div><button class="btn2" onclick="reportAd()" style="color:#dc2626;border-color:#dc2626">⚠️ Report Ad</button>`; showPage('detailPage',null); }
-window.shareAd=function(id){ let a=allAds.find(x=>x.id===id); let txt='SM Market - '+a.title+' Rs '+Number(a.price).toLocaleString()+' - '+location.href; if(navigator.share){ navigator.share({title:a.title,text:txt,url:location.href}); } else { navigator.clipboard.writeText(txt); alert('Link copied!'); } }
-window.reportAd=function(){ alert('Report received. Admin will check. Thank you!'); }
-window.loginEmail=async function(){ let em=document.getElementById('loginEmail').value.trim(); let ps=document.getElementById('loginPass').value.trim(); if(!em||!ps){ alert('Please enter Email and Password'); return; } try{ await signInWithEmailAndPassword(auth,em,ps); alert('Login Success!'); }catch(e){ alert(e.message); } }
-window.signupEmail=async function(){ let em=document.getElementById('loginEmail').value.trim(); let ps=document.getElementById('loginPass').value.trim(); if(!em||!ps){ alert('Please enter Email and Password'); return; } if(ps.length<6){ alert('Password must be at least 6 characters'); return; } try{ await createUserWithEmailAndPassword(auth,em,ps); alert('Account Created!'); }catch(e){ alert(e.message); } }
-window.gateLogin=async function(){ let em=document.getElementById('gateEmail').value.trim(); let ps=document.getElementById('gatePass').value.trim(); if(!em||!ps){ alert('Please enter Email and Password'); return; } try{ await signInWithEmailAndPassword(auth,em,ps); }catch(e){ alert(e.message); } }
-window.gateSignup=async function(){ let em=document.getElementById('gateEmail').value.trim(); let ps=document.getElementById('gatePass').value.trim(); if(!em||!ps){ alert('Please enter Email and Password'); return; } if(ps.length<6){ alert('Password must be at least 6 characters'); return; } try{ await createUserWithEmailAndPassword(auth,em,ps); alert('Account Created! Welcome to SM Market'); }catch(e){ alert(e.message); } }
-window.loginGoogle=async function(){ try{ await signInWithRedirect(auth,provider); }catch(e){ alert(e.message); } }
-getRedirectResult(auth).then(res=>{ if(res) alert('Google Login Success!'); }).catch(e=>{});
-window.logoutUser=async function(){ await signOut(auth); alert('Logged out'); }
-// 2 ACCOUNTS
-window.renderSavedAccounts=function(){ let accs=JSON.parse(localStorage.getItem('sm_accounts')||'[]'); document.getElementById('savedAccounts').innerHTML=accs.length===0?'<small style="color:#888">Abhi koi saved account nahi. Pehle Login karo phir Save karo.</small>':accs.map((a,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:#f2f4f7;padding:10px;border-radius:10px;margin-bottom:8px"><b>${a.name||a.email}</b><button class="btnSmall" onclick="switchToAccount(${i})">Switch</button></div>`).join(''); }
-window.addCurrentAccount=function(){ if(!currentUser) return alert('Pehle Login karo'); let accs=JSON.parse(localStorage.getItem('sm_accounts')||'[]'); if(accs.length>=2){ alert('Sirf 2 Accounts save ho sakte hain!'); return; } if(accs.some(a=>a.email===currentUser.email)){ alert('Ye account pehle se saved hai'); return; } accs.push({email:currentUser.email,name:currentUser.displayName||localStorage.getItem('sm_profile_name')||currentUser.email.split('@')[0]}); localStorage.setItem('sm_accounts',JSON.stringify(accs)); renderSavedAccounts(); alert('Account Save Ho Gaya! Ab dusra login kar sakte ho.'); }
-window.switchToAccount=function(i){ let accs=JSON.parse(localStorage.getItem('sm_accounts')||'[]'); let a=accs[i]; if(!a) return; alert('Account: '+a.email+' - Apna Password likh ke Login karo. Dobara Email nahi likhna pare ga.'); document.getElementById('loginEmail').value=a.email; showPage('accountPage',null); }
-// INSTALL APP
-window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; });
-window.installApp=function(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{ if(r.outcome==='accepted') alert('App Install Ho Rahi Hai!'); deferredPrompt=null; }); } else { alert('Upar 3 Dots > Add to Home Screen dabao - App Install Ho Jaye Gi'); } }
-// SAVE PROFILE FIX
-window.saveProfile=async function(){ let n=document.getElementById('editName').value.trim(); let ph=document.getElementById('editPhone').value.trim(); if(!n){ alert('Please enter name'); return; } try{ if(currentUser) await updateProfile(currentUser,{displayName:n}); localStorage.setItem('sm_profile_phone',ph); localStorage.setItem('sm_profile_name',n); document.getElementById('userNameShow').innerText=n; let btn=document.getElementById('saveBtn'); btn.innerText='✅ Profile Saved'; btn.style.background='#00A651'; btn.disabled=true; document.getElementById('saveMsg').style.display='block'; }catch(e){ alert(e.message); } }
-onAuthStateChanged(auth,(user)=>{ currentUser=user; let gate=document.getElementById('loginGate'); if(gate){ gate.style.display=user?'none':'flex'; } let lb=document.getElementById('loginBox'); let ui=document.getElementById('userInfo'); if(user){ lb.style.display='none'; ui.style.display='block'; document.getElementById('userNameShow').innerText=user.displayName||localStorage.getItem('sm_profile_name')||user.email.split('@')[0]; document.getElementById('userEmailShow').innerText=user.email; document.getElementById('editName').value=user.displayName||localStorage.getItem('sm_profile_name')||''; document.getElementById('editPhone').value=localStorage.getItem('sm_profile_phone')||''; let btn=document.getElementById('saveBtn'); if(btn){ btn.innerText='Save Profile'; btn.disabled=false; btn.style.background='#00A651'; } document.getElementById('saveMsg').style.display='none'; renderMyAds(); renderSavedAccounts(); } else{ lb.style.display='block'; ui.style.display='none'; } });
-window.postAd=async function(){ if(!currentUser){ alert('Please Login first!'); showPage('accountPage',document.querySelectorAll('.b')[4]); return; } let title=document.getElementById('adTitle').value.trim(); let price=getPriceNumber(); let desc=document.getElementById('adDesc').value.trim(); if(!title||!price){ alert('Please write Title and Price'); return; } if(!desc){ alert('Description is required'); return; } if(price<100){ alert('Price cannot be less than 100'); return; } if(uploadedImgs.length===0){ alert('Please 1 Photo to lagao!'); return; } let cat=document.getElementById('adCat').value; let img=uploadedImgs[0]; let phone=document.getElementById('adPhone').value.trim(); let finalCity=getSellCity(); let finalProvince=document.getElementById('adProvince').value; try{ if(editingId){ await updateDoc(doc(db,"ads",editingId),{title,price,cat,province:finalProvince,city:finalCity,desc,img,imgs:uploadedImgs,phone}); alert('Ad Updated!'); editingId=null; } else { await addDoc(collection(db,"ads"),{title,price,cat,province:finalProvince,city:finalCity,desc,img,imgs:uploadedImgs,uid:currentUser.uid,email:currentUser.email,phone,time:Date.now(),featured:false}); alert('Ad Posted FREE!'); } allAds=[]; uploadedImgs=[]; uploadedImg=''; document.getElementById('adTitle').value=''; document.getElementById('adPrice').value=''; document.getElementById('adDesc').value=''; document.getElementById('adPhone').value=''; document.getElementById('adCityCustom').value=''; document.getElementById('priceHint').innerText='Rs 0'; document.getElementById('imgPreviewWrap').innerHTML=''; render(); showPage('homePage',document.querySelectorAll('.b')[0]); }catch(e){ alert(e.message); } }
-window.deleteAd=async function(id){ if(!confirm('Delete this Ad?')) return; try{ await deleteDoc(doc(db,"ads",id)); }catch(e){} allAds=allAds.filter(a=>a.id!==id); render(); renderMyAds(); if(document.getElementById('adminPage').classList.contains('active')) renderAdmin(); alert('Deleted'); }
-window.toggleFeatured=async function(id){ let a=allAds.find(x=>x.id===id); if(!a) return; let nv=!a.featured; try{ await updateDoc(doc(db,"ads",id),{featured:nv}); }catch(e){} a.featured=nv; render(); renderAdmin(); alert(nv?'Made Featured':'Removed from Featured'); }
-window.approvePayment=async function(pid,adId){ try{ await updateDoc(doc(db,"topups",pid),{status:'approved'}); await updateDoc(doc(db,"ads",adId),{featured:true}); }catch(e){} let a=allAds.find(x=>x.id===adId); if(a) a.featured=true; alert('Approved - Ad is now Featured'); render(); renderAdmin(); }
-window.rejectPayment=async function(pid){ try{ await updateDoc(doc(db,"topups",pid),{status:'rejected'}); }catch(e){} alert('Rejected'); renderAdmin(); }
-window.renderAdmin=async function(){ document.getElementById('adminTotal').innerText=allAds.length; document.getElementById('adminFeat').innerText=allAds.filter(a=>a.featured).length; try{ let snap=await getDocs(collection(db,"topups")); allPayments=snap.docs.map(d=>({id:d.id,...d.data()})); }catch(e){} document.getElementById('adminPay').innerText=allPayments.length; document.getElementById('adminPayList').innerHTML=allPayments.length===0?'<div class="adminBox"><small>No Payment Requests</small></div>':allPayments.map(p=>`<div class="adminBox"><b>${p.plan} - Rs ${p.price}</b><br><small>Sender: ${p.sender} • Status: ${p.status}</small><br><img loading="lazy" src="${p.img}" style="width:100%;border-radius:10px;margin:8px 0;max-height:220px;object-fit:cover"><div style="display:flex;gap:8px"><button class="btnSmall" style="background:#25D366" onclick="approvePayment('${p.id}','${p.adId}')">Approve</button><button class="btnRed" onclick="rejectPayment('${p.id}')">Reject</button></div></div>`).join(''); document.getElementById('adminList').innerHTML=allAds.map(a=>`<div class="adminBox"><b>${a.title}</b><br><small>${a.city} • Rs ${Number(a.price).toLocaleString()} • 👁️ ${views[a.id]||0}</small><br><div style="display:flex;gap:8px;margin-top:8px"><button class="btnSmall" onclick="toggleFeatured('${a.id}')">${a.featured?'⭐ Unfeature':'⭐ Feature'}</button><button onclick="deleteAd('${a.id}')" class="btnRed">Delete</button></div></div>`).join(''); }
-document.getElementById('logoImg').addEventListener('click',(e)=>{ e.stopPropagation(); adminClicks++; setTimeout(()=>{adminClicks=0},2000); if(adminClicks>=5){ adminClicks=0; let pass=prompt('Admin Password:'); if(pass==='atiq726609@'){ renderAdmin(); showPage('adminPage',null); } else alert('Wrong Password'); } });
-renderCats(); onProvinceChange(); onSellProvince(); render();
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+let allAds = [], favs = JSON.parse(localStorage.getItem('sm_favs')||'[]'), uploadedImgs = [], editingId = null, currentUser = null, currentDetailImgs = [];
+let cats = ['All','Car','Bike','Mobile','Property','Electronics','Home Appliances','Furniture','Fashion - Clothes','Shoes','Beauty','Jobs','Services','Pets & Animals','Agriculture','Sports','Books','Toys & Baby','Grocery & Food','Hardware & Tools','Business','Other'];
+let activeCat = 'All';
+
+window.goHome = ()=> showPage('homePage', document.querySelectorAll('.b')[0]);
+
+window.showPage = (id, el)=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(el){ document.querySelectorAll('.b').forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
+  if(id=='favPage') renderFavs();
+  if(id=='myAdsPage') renderMyAds();
+  if(id=='profilePage') renderSavedAccs();
+  window.scrollTo(0,0);
+};
+
+window.enableSave = ()=>{
+  let btn=document.getElementById('saveBtn');
+  btn.disabled=false; btn.innerText='Save Profile';
+  document.getElementById('saveMsg').style.display='none';
+};
+
+function renderCats(){
+  document.getElementById('cats').innerHTML = cats.map(c=>`<button class="${c==activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+}
+window.setCat = (c)=>{ activeCat=c; renderCats(); render(); };
+
+function demoAds(){
+  return [
+    {id:'d1',title:'Honda CG 125 2023 Model - Neat Condition',cat:'Bike',price:285000,loc:'Faisalabad',phone:'03001234567',desc:'Total genuine, new tyres.',imgs:['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600']},
+    {id:'d2',title:'iPhone 13 Pro 256GB PTA Approved',cat:'Mobile',price:215000,loc:'Lahore',phone:'03001234567',desc:'Battery 88%, with box.',imgs:['https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600']},
+    {id:'d3',title:'Suzuki Mehran 2015 - Family Car',cat:'Car',price:950000,loc:'Faisalabad',phone:'03001234567',desc:'Engine ok, AC working.',imgs:['https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600']},
+    {id:'d4',title:'5 Marla House For Sale - Madina Town',cat:'Property',price:8500000,loc:'Faisalabad',phone:'03001234567',desc:'Gas bijli pani available.',imgs:['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600']}
+  ];
+}
+
+async function loadAds(){
+  try{
+    let snap = await getDocs(collection(db,'ads'));
+    let fire = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    allAds = [...fire, ...demoAds()];
+  }catch(e){ allAds = demoAds(); }
+  renderCats(); render();
+}
+
+window.render = ()=>{
+  let q = (document.getElementById('searchInp').value||'').toLowerCase();
+  let list = allAds.filter(a=> (activeCat=='All'||a.cat==activeCat) && (a.title||'').toLowerCase().includes(q));
+  document.getElementById('grid').innerHTML = list.map(a=>`
+    <div class="card" onclick="openDetail('${a.id}')">
+      <img src="${(a.imgs&&a.imgs[0])||'https://via.placeholder.com/300'}" onerror="this.src='https://via.placeholder.com/300'">
+      <button class="favBtn" onclick="event.stopPropagation();toggleFav('${a.id}',this)">${favs.includes(a.id)?'❤️':'🤍'}</button>
+      <div class="p"><h4>${a.title}</h4><div class="price">Rs ${Number(a.price).toLocaleString()}</div><div class="loc">📍 ${a.loc} • ${a.cat}</div></div>
+    </div>`).join('') || '<p style="grid-column:span 2;text-align:center;padding:20px">Koi Ad nahi mila</p>';
+};
+
+window.toggleFav = (id,btn)=>{
+  if(favs.includes(id)) favs=favs.filter(x=>x!=id); else favs.push(id);
+  localStorage.setItem('sm_favs', JSON.stringify(favs));
+  if(btn) btn.innerText = favs.includes(id)?'❤️':'🤍';
+  renderFavs();
+};
+window.renderFavs = ()=>{
+  let list = allAds.filter(a=>favs.includes(a.id));
+  document.getElementById('favGrid').innerHTML = list.map(a=>`<div class="card" onclick="openDetail('${a.id}')"><img src="${(a.imgs&&a.imgs[0])||''}"><div class="p"><h4>${a.title}</h4><div class="price">Rs ${Number(a.price).toLocaleString()}</div></div></div>`).join('') || '<p style="grid-column:span 2;text-align:center">Abhi koi Favourite nahi</p>';
+};
+window.renderMyAds = ()=>{
+  if(!currentUser){ document.getElementById('myGrid').innerHTML='<p style="grid-column:span 2;text-align:center">Login karo to apne Ads dekho ge</p>'; return; }
+  let list = allAds.filter(a=>a.uid==currentUser.uid);
+  document.getElementById('myGrid').innerHTML = list.map(a=>`<div class="card"><img src="${(a.imgs&&a.imgs[0])||''}" onclick="openDetail('${a.id}')"><div class="p"><h4>${a.title}</h4><div class="price">Rs ${Number(a.price).toLocaleString()}</div><button class="btn" style="padding:8px" onclick="editAd('${a.id}')">Edit</button><button class="btn btn2" style="padding:8px" onclick="delAd('${a.id}')">Delete</button></div></div>`).join('') || '<p style="grid-column:span 2;text-align:center">Abhi koi Ad nahi post kiya</p>';
+};
+
+window.openDetail = (id)=>{
+  let a = allAds.find(x=>x.id==id); if(!a) return;
+  currentDetailImgs = a.imgs||[];
+  document.getElementById('detailBox').innerHTML = `
+    <img class="detailImg" id="mainImg" src="${currentDetailImgs[0]||''}" onclick="openFull(0)">
+    <div style="display:flex;gap:8px;margin-top:8px">${currentDetailImgs.map((im,i)=>`<img src="${im}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer" onclick="changeMain(${i})">`).join('')}</div>
+    <h2 style="margin-top:12px">${a.title}</h2>
+    <h3 style="color:#25D366;margin:8px 0">Rs ${Number(a.price).toLocaleString()}</h3>
+    <span class="chip">${a.cat}</span><span class="chip">📍 ${a.loc}</span>
+    <p style="margin:12px 0;line-height:1.6">${a.desc||''}</p>
+    <button class="btn" onclick="toggleFav('${a.id}',this)">${favs.includes(a.id)?'❤️ Favourite - Remove':'🤍 Add to Favourite'}</button>
+    <a href="https://wa.me/92${String(a.phone||'').replace(/^0/,'')}" target="_blank" style="text-decoration:none"><button class="btn">💬 Chat on WhatsApp</button></a>
+    <button class="btn btn2" onclick="showPage('homePage',document.querySelectorAll('.b')[0])">← Back</button>`;
+  showPage('detailPage', null);
+};
+window.changeMain = (i)=>{ document.getElementById('mainImg').src = currentDetailImgs[i]; };
+window.openFull = (i)=>{ let src=currentDetailImgs[i]; if(!src) return; let w=window.open(''); w.document.write(`<img src="${src}" style="width:100%">`); };
+
+window.handleImage = (inp)=>{
+  uploadedImgs = [];
+  let files = [...inp.files].slice(0,4);
+  if(inp.files.length>4) alert('Sirf 4 Photos allowed hain!');
+  let done=0;
+  if(files.length==0) return;
+  files.forEach(f=>{
+    let r=new FileReader(); r.onload=e=>{ uploadedImgs.push(e.target.result); done++; if(done==files.length) showPreviews(); }; r.readAsDataURL(f);
+  });
+};
+function showPreviews(){ document.getElementById('imgPreviewBox').innerHTML = uploadedImgs.map(i=>`<img src="${i}">`).join(''); }
+
+window.postAd = async ()=>{
+  if(!currentUser){ alert('Pehle Login karo!'); return; }
+  let t=document.getElementById('adTitle').value.trim(), p=document.getElementById('adPrice').value, l=document.getElementById('adLoc').value.trim(), ph=document.getElementById('adPhone').value.trim(), d=document.getElementById('adDesc').value.trim(), c=document.getElementById('adCat').value;
+  if(!t||!p||!l||!ph){ alert('Title, Price, Location, Phone zaroori hai!'); return; }
+  if(uploadedImgs.length==0 && !editingId){ alert('Kam se kam 1 Photo lagao!'); return; }
+  document.getElementById('postBtn').innerText='Posting...';
+  try{
+    if(editingId){
+      let upd = {title:t,cat:c,price:Number(p),loc:l,phone:ph,desc:d};
+      if(uploadedImgs.length>0) upd.imgs = uploadedImgs;
+      await updateDoc(doc(db,'ads',editingId), upd);
+      alert('Ad Updated!');
+    }else{
+      await addDoc(collection(db,'ads'),{title:t,cat:c,price:Number(p),loc:l,phone:ph,desc:d,imgs:uploadedImgs,uid:currentUser.uid,createdAt:Date.now()});
+      alert('Ad Posted! Mubarak Ho!');
+    }
+    editingId=null; uploadedImgs=[]; document.getElementById('imgPreviewBox').innerHTML='';
+    ['adTitle','adPrice','adLoc','adPhone','adDesc'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('sellTitle').innerText='Post Your Ad - FREE';
+    await loadAds(); showPage('myAdsPage', document.querySelectorAll('.b')[3]);
+  }catch(e){ alert(e.message); }
+  document.getElementById('postBtn').innerText='Post Ad';
+};
+window.editAd = (id)=>{
+  let a=allAds.find(x=>x.id==id); if(!a) return;
+  editingId=id; uploadedImgs=a.imgs||[];
+  document.getElementById('adTitle').value=a.title; document.getElementById('adCat').value=a.cat; document.getElementById('adPrice').value=a.price; document.getElementById('adLoc').value=a.loc; document.getElementById('adPhone').value=a.phone; document.getElementById('adDesc').value=a.desc||'';
+  document.getElementById('sellTitle').innerText='Edit Ad';
+  showPreviews(); showPage('sellPage', document.querySelectorAll('.b')[2]);
+};
+window.delAd = async (id)=>{ if(!confirm('Delete karna hai?')) return; try{ await deleteDoc(doc(db,'ads',id)); await loadAds(); renderMyAds(); }catch(e){ alert(e.message); } };
+
+function saveAcc(email){
+  let accs = JSON.parse(localStorage.getItem('sm_accs')||'[]');
+  if(!accs.includes(email)){ accs.push(email); localStorage.setItem('sm_accs', JSON.stringify(accs)); }
+}
+window.renderSavedAccs = ()=>{
+  let accs = JSON.parse(localStorage.getItem('sm_accs')||'[]');
+  document.getElementById('savedAccs').innerHTML = accs.length? accs.map(e=>`<div style="display:flex;justify-content:space-between;align-items:center;background:#eee;padding:10px;border-radius:10px;margin-bottom:8px"><span>${e}</span><button style="background:#25D366;border:none;padding:7px 12px;border-radius:8px;font-weight:700;cursor:pointer" onclick="switchAcc('${e}')">Switch</button></div>`).join('') : '<p style="color:#666">Koi saved account nahi</p>';
+};
+window.switchAcc = (email)=>{
+  document.getElementById('gateEmail').value=email;
+  document.getElementById('gate').style.display='flex';
+  alert('Email aa gaya hai! Ab sirf Password likh ke Login dabao.');
+};
+window.saveProfile = ()=>{
+  localStorage.setItem('sm_name', document.getElementById('editName').value);
+  localStorage.setItem('sm_phone', document.getElementById('editPhone').value);
+  localStorage.setItem('sm_city', document.getElementById('editCity').value);
+  let btn=document.getElementById('saveBtn'); btn.disabled=true; btn.innerText='Saved ✓';
+  document.getElementById('saveMsg').style.display='block';
+};
+
+window.doLogin = async ()=>{
+  let e=document.getElementById('gateEmail').value.trim(), p=document.getElementById('gatePass').value;
+  if(!e||!p){ alert('Email aur Password likho!'); return; }
+  try{ await signInWithEmailAndPassword(auth,e,p); }catch(err){ alert(err.message); }
+};
+window.doSignup = async ()=>{
+  let e=document.getElementById('gateEmail').value.trim(), p=document.getElementById('gatePass').value;
+  if(!e||p.length<6){ alert('Password 6+ characters hona chahiye!'); return; }
+  try{ await createUserWithEmailAndPassword(auth,e,p); alert('Account ban gaya!'); }catch(err){ alert(err.message); }
+};
+window.googleLogin = async ()=>{ try{ await signInWithPopup(auth,provider); }catch(err){ alert(err.message); } };
+window.doLogout = async ()=>{ await signOut(auth); location.reload(); };
+
+onAuthStateChanged(auth,(user)=>{
+  currentUser=user;
+  if(user){
+    document.getElementById('gate').style.display='none';
+    saveAcc(user.email);
+    document.getElementById('editName').value = localStorage.getItem('sm_name')||'';
+    document.getElementById('editPhone').value = localStorage.getItem('sm_phone')||'';
+    document.getElementById('editCity').value = localStorage.getItem('sm_city')||'';
+    document.getElementById('saveBtn').disabled=false;
+    loadAds();
+  }else{
+    document.getElementById('gate').style.display='flex';
+    loadAds();
+  }
+});
 </script>
 </body>
 </html>
