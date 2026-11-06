@@ -12,46 +12,47 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+html,body{overflow-x:hidden !important;max-width:100vw !important}
 body{background:#eef1f6;padding-bottom:85px}
-header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:900;cursor:pointer}
-.logo img{width:38px;height:38px;border-radius:8px;object-fit:cover;background:#fff}
-.banner{background:#0A2A5E;color:#fff;margin:10px;border-radius:12px;padding:18px;text-align:center}
+header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99;width:100%;max-width:100vw}
+.logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:900;cursor:pointer;white-space:nowrap;overflow:hidden}
+.logo img{width:38px;height:38px;border-radius:8px;object-fit:cover;background:#fff;flex-shrink:0}
+.banner{background:#0A2A5E;color:#fff;margin:10px;border-radius:12px;padding:18px;text-align:center;width:calc(100% - 20px);max-width:100%}
 .banner h2{font-size:20px}.banner p{font-size:13px;opacity:.9;margin-top:4px}
-.searchBar{background:#fff;padding:10px;display:flex;gap:8px}
-.searchBar input,.searchBar select{flex:1;padding:11px;border:1px solid #ccc;border-radius:6px}
-.bigCats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;background:#fff}
+.searchBar{background:#fff;padding:10px;display:flex;gap:8px;width:100%;max-width:100vw}
+.searchBar input,.searchBar select{flex:1;padding:11px;border:1px solid #ccc;border-radius:6px;min-width:0}
+.bigCats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;background:#fff;width:100%}
 .bigCat{background:#eef2ff;border:2px solid #0A2A5E;border-radius:12px;padding:16px 6px;text-align:center;cursor:pointer}
 .bigCat b{font-size:28px;display:block}.bigCat span{font-size:13px;font-weight:900;color:#0A2A5E}
-.cats{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#fff;scrollbar-width:none}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#fff;scrollbar-width:none;width:100%}
 .cats button{white-space:nowrap;background:#eef2ff;padding:8px 12px;font-weight:700;border:none;border-radius:20px;cursor:pointer;flex-shrink:0}
 .cats button.active{background:#0A2A5E;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:#fff;border-radius:10px;overflow:hidden;padding-bottom:8px;position:relative;cursor:pointer;display:flex;flex-direction:column}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;width:100%}
+.card{background:#fff;border-radius:10px;overflow:hidden;padding-bottom:8px;position:relative;cursor:pointer;display:flex;flex-direction:column;width:100%;max-width:100%}
 .card img{width:100%;height:150px;object-fit:cover}
-.card h3{padding:6px 8px 0;font-size:14px;line-height:1.3;min-height:36px}
-.card p{padding:2px 8px;font-size:12px;color:#555}
+.card h3{padding:6px 8px 0;font-size:14px;line-height:1.3;min-height:36px;word-break:break-word}
+.card p{padding:2px 8px;font-size:12px;color:#555;word-break:break-word}
 .card .desc{color:#333;font-size:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
 .price{color:#0A2A5E!important;font-weight:900!important;font-size:15px!important}
 .topBadge{position:absolute;top:8px;left:8px;background:#0A2A5E;color:#fff;padding:3px 8px;font-size:11px;font-weight:900;border-radius:20px}
 .fav{position:absolute;top:8px;right:8px;background:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;border:none;cursor:pointer}
-.page{display:none;padding:12px}.page.active{display:block}
-.box{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px}
+.page{display:none;padding:12px;width:100%;max-width:100vw;overflow-x:hidden}.page.active{display:block}
+.box{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;width:100%;max-width:100%;overflow:hidden}
 .box h2{margin-bottom:10px;color:#0A2A5E}
-.box input,.box select,.box textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px}
+.box input,.box select,.box textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px;max-width:100%}
 .bigBtn{width:100%;padding:14px;background:#0A2A5E;color:#fff;font-weight:900;font-size:16px;margin-top:8px;border:none;border-radius:8px;cursor:pointer}
 .greenBtn{width:100%;padding:14px;background:#25D366;color:#fff;font-weight:900;font-size:16px;margin-top:8px;border:none;border-radius:8px;cursor:pointer}
 .googleBtn{width:100%;padding:13px;background:#fff;border:1px solid #ccc;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center;border-radius:8px;cursor:pointer;margin:5px 0}
 .plan{border:2px solid #eee;padding:12px;border-radius:10px;margin:8px 0;cursor:pointer}
 .plan.sel{border-color:#0A2A5E;background:#eef2ff}
-.profileRow{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid #eee;font-size:15px;cursor:pointer;white-space:nowrap}
+.profileRow{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid #eee;font-size:15px;cursor:pointer;white-space:nowrap;gap:8px}
 .profileRow b{flex:1}.profileRow span{flex-shrink:0}
-.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding:6px 0 8px;z-index:99}
-.bottomNav button{flex:1;background:none;font-size:12px;font-weight:700;border:none;cursor:pointer;color:#666}
+.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding:6px 0 8px;z-index:99;width:100%;max-width:100vw}
+.bottomNav button{flex:1;background:none;font-size:12px;font-weight:700;border:none;cursor:pointer;color:#666;min-width:0}
 .bottomNav button.active{color:#0A2A5E}
 .bottomNav b{font-size:22px;display:block}
 .sellCenter{width:52px;height:52px;background:#0A2A5E;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:-18px auto 2px;border:3px solid #fff;color:#fff}
-#gate{position:fixed;inset:0;background:#0A2A5E;color:#fff;z-index:999;display:flex;flex-direction:column;justify-content:center;padding:20px;text-align:center;overflow:auto}
+#gate{position:fixed;inset:0;background:#0A2A5E;color:#fff;z-index:999;display:flex;flex-direction:column;justify-content:flex-start;padding:12px;text-align:center;overflow:auto;width:100% !important;max-width:100vw !important;overflow-x:hidden !important;box-sizing:border-box !important}
 .hidden{display:none!important}
 .modal{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;color:#fff}
 .modal.open{display:flex}
@@ -66,6 +67,11 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 .preview{display:flex;gap:6px;flex-wrap:wrap}.preview img{width:70px;height:70px;object-fit:cover;border-radius:8px}
 .starRow{font-size:32px;text-align:center;letter-spacing:6px;cursor:pointer}.starRow span{cursor:pointer}
 .pwWrap{position:relative}.pwWrap button{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:18px;cursor:pointer}
+#gate h1{font-size:26px !important;white-space:normal !important;word-break:break-word !important;text-align:center !important;line-height:1.2 !important}
+#gate p{white-space:normal !important;word-break:break-word !important;text-align:center !important}
+#gate > div{width:100% !important;max-width:420px !important;margin:0 auto !important;box-sizing:border-box !important}
+#gate input,#gate button{max-width:100% !important;box-sizing:border-box !important}
+#homeExtras{width:100%;max-width:100vw;overflow-x:hidden}
 </style>
 </head>
 <body>
@@ -80,36 +86,36 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <button class="googleBtn" style="background:#1877F2;color:#fff" onclick="fbLogin()">f Continue with Facebook</button>
 <button class="googleBtn" onclick="emailLogin()">✉️ Continue with Email</button>
 <button class="googleBtn" onclick="phoneLogin()">📱 Continue with Phone</button>
-<div id="emailBox" class="hidden"><input id="loginEmail" placeholder="Email Address" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><div class="pwWrap"><input id="loginPass" type="password" placeholder="Password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button onclick="togglePw('loginPass',this)">👁️</button></div></div>
-<div id="phoneBox" class="hidden"><input id="loginPhone" placeholder="Phone - 03xx-xxxxxxx" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><input id="loginOtp" placeholder="OTP Code - Demo: 1234" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"></div>
-<input id="gName" placeholder="Your Full Name - Required" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
-<input id="gCity" placeholder="Your City - e.g Gojra" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
+<div id="emailBox" class="hidden"><input id="loginEmail" placeholder="Email Address" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><div class="pwWrap"><input id="loginPass" type="password" placeholder="Password" autocomplete="new-password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button onclick="togglePw('loginPass',this)">👁️</button></div></div>
+<div id="phoneBox" class="hidden"><input id="loginPhone" placeholder="Phone - 03xx-xxxxxxx" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><input id="loginOtp" placeholder="OTP Code - Demo: 1234" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"></div>
+<input id="gName" placeholder="Your Full Name - Required" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
+<input id="gCity" placeholder="Your City - e.g Gojra" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
 <button class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
 </div></div>
 
 <header>
 <div class="logo" id="logoClick"><img src="logo.jpg" onerror="this.src='icon-192.png'"> SM Faisalabad Market</div>
-<div style="font-size:13px;font-weight:700;cursor:pointer" onclick="openLocation()">📍 <span id="headerLoc">Faisalabad</span> ⌄</div>
+<div style="font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap" onclick="openLocation()">📍 <span id="headerLoc">All Pakistan</span> ⌄</div>
 </header>
 
 <div id="homeExtras">
 <div class="banner"><h2>Welcome SM Faisalabad Market</h2><p>Buy & Sell in Faisalabad and across Pakistan</p></div>
 <div class="bigCats">
-<div class="bigCat" onclick="filterCat('Cars',null);filterCat('Bikes',null);currentCat='All';renderAds();filterCat('Cars',null)"><b>🚗🏍️</b><span>SM Motors</span></div>
+<div class="bigCat" onclick="filterCat('All',null)"><b>🚗🏍️</b><span>SM Motors</span></div>
 <div class="bigCat" onclick="filterCat('Property',null)"><b>🏠</b><span>Property</span></div>
 <div class="bigCat" onclick="filterCat('All',null)"><b>🛍️</b><span>All Categories</span></div>
 </div>
-<div class="searchBar"><select id="cityFilter" onchange="renderAds()"></select><select id="areaFilter" onchange="renderAds()"><option>All Areas</option></select><input id="searchInput" placeholder="Search - Mobile, Bike, Car..." oninput="renderAds()"></div>
+<div class="searchBar"><select id="cityFilter" onchange="renderAds()"></select><select id="areaFilter" onchange="renderAds()"><option>All Areas</option></select><input id="searchInput" placeholder="Search - Mobile, Bike, Car..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="renderAds()"></div>
 <div style="display:flex;gap:8px;padding:0 10px 10px;background:#fff"><button class="bigBtn" style="margin:0" onclick="useNearMe()">📍 Near Me</button><button class="bigBtn" style="margin:0;background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="openLocation()">📍 Change Location</button></div>
 <div class="cats" id="catsBar"></div>
 </div>
 
-<div id="homePage" class="page active"><div style="display:flex;justify-content:space-between;padding:0 10px"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div><div class="grid" id="adsGrid"></div></div>
+<div id="homePage" class="page active"><div style="display:flex;justify-content:space-between;padding:0 10px"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div><div class="grid" id="adsGrid"><p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p></div></div>
 
 <div id="favPage" class="page"><div class="box"><h2>❤️ My Favourites</h2><p id="favEmpty">No favourites yet. Tap the heart ❤️ to save.</p></div><div class="grid" id="favGrid"></div></div>
 
 <div id="sellPage" class="page"><div class="box"><h2>Post Ad - SELL</h2>
-<input id="adTitle" placeholder="Ad Title - e.g iPhone 13 For Sale">
+<input id="adTitle" placeholder="Ad Title - e.g iPhone 13 For Sale" autocomplete="off">
 <select id="adCat"></select>
 <input id="adPrice" type="text" inputmode="numeric" placeholder="Price - e.g 50,000" oninput="formatSellPrice(this)">
 <select id="adCity"></select>
@@ -117,7 +123,7 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <select id="adBrand"><option>Brand - Select</option><option>Nokia</option><option>Samsung</option><option>Apple</option><option>Honda</option><option>Toyota</option><option>Other</option></select>
 <select id="adCondition"><option>Used</option><option>New</option></select>
 <select id="adPta"><option>PTA Approved</option><option>PTA Non-Approved</option><option>Not Applicable</option></select>
-<input id="adPhone" placeholder="WhatsApp / Call Number - 03xx-xxxxxxx">
+<input id="adPhone" placeholder="WhatsApp / Call Number - 03xx-xxxxxxx" autocomplete="off">
 <textarea id="adDesc" placeholder="Full Description - e.g PTA Approved, Battery 90%..."></textarea>
 <p><b>Upload Photos - 1 to 4</b></p>
 <input type="file" id="adFiles" accept="image/*" multiple onchange="handleFiles(this)">
@@ -147,8 +153,11 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <div class="profileRow"><b>📍 City</b><span id="pCity">-</span></div>
 <div class="profileRow"><b>📱 Phone</b><span id="pPhone">-</span></div>
 <div class="profileRow"><b>⭐ My Ads</b><span id="pAds">0 Ads</span></div>
-<input id="editName" placeholder="Edit Name"><input id="editCity" placeholder="Edit City"><input id="editPhone" placeholder="Edit Phone">
-<button class="bigBtn" onclick="saveProfile()">Save Profile</button></div>
+<div id="editProfileBox" style="display:none">
+<input id="editName" placeholder="Edit Name" autocomplete="off"><input id="editCity" placeholder="Edit City" autocomplete="off"><input id="editPhone" placeholder="Edit Phone" autocomplete="off">
+<button class="bigBtn" onclick="saveProfile()">Save Profile</button>
+</div>
+<button class="bigBtn" id="editBtn" onclick="document.getElementById('editProfileBox').style.display='block';this.style.display='none'">Edit Profile</button></div>
 <div class="box">
 <div class="profileRow" onclick="openPage('changepass')"><b>🔒 Change Password</b><span>›</span></div>
 <div class="profileRow" onclick="openPage('feedback')"><b>⭐ Help Us Improve - Feedback</b><span>›</span></div>
@@ -172,7 +181,7 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <textarea id="fbMsg" placeholder="Write your feedback here..."></textarea>
 <button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
 
-<div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><button class="bigBtn" onclick="useNearMe()">📍 Use My Current Location - Near Me</button><input id="locSearch" placeholder="Search City / Area..." oninput="filterLocList()"><div id="locList"></div><button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="setLocation('All Pakistan','All Areas')">All Pakistan - Clear Location</button></div></div>
+<div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><button class="bigBtn" onclick="useNearMe()">📍 Use My Current Location - Near Me</button><input id="locSearch" placeholder="Search City / Area..." autocomplete="off" oninput="filterLocList()"><div id="locList"></div><button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="setLocation('All Pakistan','All Areas')">All Pakistan - Clear Location</button></div></div>
 
 <div id="faqPage" class="page"><div class="box faq"><h2>❓ View FAQ - Full Details</h2>
 <p><b>1. How to Post a Free Ad?</b><br>Tap SELL, enter Title, Price, City, Phone, Description and 1 to 4 Photos, then tap POST AD. Your ad will be visible to all customers.</p>
@@ -231,6 +240,7 @@ const cities=["All Pakistan","Karachi","Lahore","Islamabad","Rawalpindi","Faisal
 const areas=["All Areas","Gojra","Samundri","Jaranwala","Tandlianwala","Dijkot","Satiana","City Area"];
 let currentCat='All',selectedPlan='Free',selectedPrice=0,uploadedImages=[],currentAd=null,currentImgIdx=0,currentStars=0,selectedCity='All Pakistan',selectedArea='All Areas';
 let ads=[];
+let adsLoaded=false;
 let favs=JSON.parse(localStorage.getItem('sm_favs')||'[]');
 let myDeviceId = localStorage.getItem('sm_device') || ('dev_'+Date.now()+'_'+Math.floor(Math.random()*9999));
 localStorage.setItem('sm_device', myDeviceId);
@@ -243,13 +253,19 @@ document.getElementById('cityFilter').innerHTML=cities.map(c=>`<option>${c}</opt
 document.getElementById('areaFilter').innerHTML=areas.map(a=>`<option>${a}</option>`).join('');
 document.getElementById('adCity').innerHTML=cities.slice(1).map(c=>`<option>${c}</option>`).join('');
 document.getElementById('adCat').innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
+document.getElementById('cityFilter').value='All Pakistan';
+document.getElementById('areaFilter').value='All Areas';
+document.getElementById('headerLoc').innerText='All Pakistan';
+document.getElementById('searchInput').value='';
 }fillAll();
 function listenAds(){
+  document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';
   adsRef.on('value',(snap)=>{
     ads=[];let val=snap.val();
     if(val){Object.keys(val).forEach(key=>{let d=val[key];d._id=key;if(!d.imgs&&d.img)d.imgs=[d.img];if(d.featured!==undefined)d.top=!!d.featured;if(!d.createdAt&&d.time)d.createdAt=d.time;if(!d.owner&&d.uid)d.owner=d.uid;ads.push(d)});ads.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));}
+    adsLoaded=true;
     if(ads.length===0){seedDemoAds()}else{renderAds();renderMyAds()}
-  },(err)=>{console.log(err)});
+  },(err)=>{console.log(err);document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads... Please Wait</p>';});
 }
 function seedDemoAds(){
   let demos=[
@@ -282,7 +298,7 @@ if(p==='home'){document.getElementById('homePage').classList.add('active');docum
 if(p==='fav'){document.getElementById('favPage').classList.add('active');document.getElementById('navFav').classList.add('active');renderFavs()}
 if(p==='sell'){document.getElementById('sellPage').classList.add('active');document.getElementById('navSell').classList.add('active')}
 if(p==='myads'){document.getElementById('myAdsPage').classList.add('active');document.getElementById('navMyAds').classList.add('active');renderMyAds()}
-if(p==='profile'){document.getElementById('profilePage').classList.add('active');document.getElementById('navProfile').classList.add('active')}
+if(p==='profile'){document.getElementById('profilePage').classList.add('active');document.getElementById('navProfile').classList.add('active');document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';}
 if(p==='faq'){document.getElementById('faqPage').classList.add('active')}
 if(p==='changepass'){document.getElementById('changePassPage').classList.add('active')}
 if(p==='feedback'){document.getElementById('feedbackPage').classList.add('active')}
@@ -298,7 +314,9 @@ function useNearMe(){
 }
 function filterCat(c,el){currentCat=c;document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderAds()}
 function cardHTML(a,i){let isFav=favs.includes(a.title);let desc=a.desc||'';let imgSrc=(a.imgs&&a.imgs[0])||a.img||'';return `<div class="card" onclick="openAd(${i})">${a.top?'<span class=topBadge>⭐ TOP AD</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${a.title.replace(/'/g,"")}')">${isFav?'❤️':'♡'}</button><img src="${imgSrc}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city||''} ${a.area?', '+a.area:''} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p><p class=desc>${desc}</p></div>`}
-function renderAds(){let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(area==='All Areas'||!a.area||a.area===area)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(b.top?1:0)-(a.top?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad!</p>';let myCount=ads.filter(a=>a.owner===myDeviceId).length;document.getElementById('pAds').innerText=myCount+" Ads";}
+function renderAds(){
+  if(!adsLoaded){document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';return}
+  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(area==='All Areas'||!a.area||a.area===area)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(b.top?1:0)-(a.top?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad!</p>';let myCount=ads.filter(a=>a.owner===myDeviceId).length;document.getElementById('pAds').innerText=myCount+" Ads";}
 function toggleFav(title){if(favs.includes(title)){favs=favs.filter(f=>f!==title);}else{favs.push(title);alert('Added to Favourites ❤️')}saveFavs();renderAds();renderFavs()}
 function renderFavs(){let list=ads.filter(a=>favs.includes(a.title));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
 function renderMyAds(){let my=ads.filter(a=>a.owner===myDeviceId);document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${a.top?'⭐ TOP':'Normal'}</span></div><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
@@ -343,7 +361,7 @@ async function postAd(){
     openPage('home');
   }catch(e){alert('Database Error - Set Rules Read/Write True! - '+e.message)}
 }
-function saveProfile(){let u=JSON.parse(localStorage.getItem('sm_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sm_user',JSON.stringify(u));updateUser();openPage('profile')}
+function saveProfile(){let u=JSON.parse(localStorage.getItem('sm_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sm_user',JSON.stringify(u));updateUser();document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';alert('Profile Saved!');openPage('profile')}
 function changePassword(){
   let oldP=document.getElementById('oldPass').value;let newP=document.getElementById('newPass').value;let conf=document.getElementById('confirmPass').value;
   let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
