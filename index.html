@@ -3,166 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SM Market - All Pakistan</title>
+<title>SMS Faisalabad Market</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f2f2f2}
-header{background:#002f34;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.logo{font-size:22px;font-weight:900} .logo span{color:#3a77ff}
-.topbtns{display:flex;gap:6px;align-items:center}
-button{cursor:pointer;border:none;border-radius:6px}
-.install{background:#fff;color:#002f34;padding:8px 10px;font-weight:700;font-size:12px}
-.sellBtn{background:#ffc800;color:#002f34;padding:10px 16px;font-weight:900;font-size:16px;border-bottom:4px solid #002f34}
-.searchBar{background:#fff;padding:10px;display:flex;gap:8px}
+body{background:#eef1f6;padding-bottom:80px}
+header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.logo{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:900;cursor:pointer}
+.logo img{width:38px;height:38px;border-radius:8px;object-fit:cover;background:#fff}
+.topbtns button{background:#fff;color:#0A2A5E;padding:8px 10px;font-weight:700;border:none;border-radius:6px;cursor:pointer}
+.banner{background:#0A2A5E;color:#fff;margin:10px;border-radius:12px;padding:18px;text-align:center}
+.banner h2{font-size:20px}.banner p{font-size:13px;opacity:.9;margin-top:4px}
+.searchBar{background:#fff;padding:10px;display:flex;gap:8px;position:sticky;top:60px;z-index:90}
 .searchBar input,.searchBar select{flex:1;padding:11px;border:1px solid #ccc;border-radius:6px}
-.cats{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#fff}
-.cats button{white-space:nowrap;background:#eef2ff;padding:8px 14px;font-weight:700}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#fff;scrollbar-width:none}
+.cats button{white-space:nowrap;background:#eef2ff;padding:8px 12px;font-weight:700;border:none;border-radius:20px;cursor:pointer;flex-shrink:0}
+.cats button.active{background:#0A2A5E;color:#fff}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:#fff;border-radius:10px;overflow:hidden;padding-bottom:8px;position:relative}
-.card img{width:100%;height:140px;object-fit:cover}
+.card{background:#fff;border-radius:10px;overflow:hidden;padding-bottom:8px;position:relative;cursor:pointer}
+.card img{width:100%;height:150px;object-fit:cover}
 .card h3{padding:6px 8px 0;font-size:14px}
 .card p{padding:2px 8px;font-size:12px;color:#555}
-.price{color:#002f34;font-weight:900!important;font-size:15px!important}
+.price{color:#0A2A5E!important;font-weight:900!important;font-size:15px!important}
 .topBadge{position:absolute;top:8px;left:8px;background:#ffc800;padding:3px 8px;font-size:11px;font-weight:900;border-radius:20px}
-.fav{position:absolute;top:8px;right:8px;background:#fff;width:30px;height:30px;border-radius:50%;font-size:16px}
-.page{display:none;padding:12px} .page.active{display:block}
+.fav{position:absolute;top:8px;right:8px;background:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;border:none;cursor:pointer}
+.page{display:none;padding:12px}.page.active{display:block}
 .box{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px}
-.box h2{margin-bottom:10px}
+.box h2{margin-bottom:10px;color:#0A2A5E}
 .box input,.box select,.box textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px}
-.bigBtn{width:100%;padding:14px;background:#002f34;color:#fff;font-weight:900;font-size:16px;margin-top:8px}
-.googleBtn{width:100%;padding:13px;background:#fff;border:1px solid #ccc;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center}
+.bigBtn{width:100%;padding:14px;background:#0A2A5E;color:#fff;font-weight:900;font-size:16px;margin-top:8px;border:none;border-radius:8px;cursor:pointer}
+.greenBtn{width:100%;padding:14px;background:#25D366;color:#fff;font-weight:900;font-size:16px;margin-top:8px;border:none;border-radius:8px;cursor:pointer}
+.googleBtn{width:100%;padding:13px;background:#fff;border:1px solid #ccc;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center;border-radius:8px;cursor:pointer}
 .plan{border:2px solid #eee;padding:12px;border-radius:10px;margin:8px 0;cursor:pointer}
-.plan.sel{border-color:#002f34;background:#fff8c5}
-.profileRow{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid #eee;font-size:15px}
-.profileRow b{font-weight:700} .profileRow span{color:#888}
-.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding:8px 0;z-index:99}
-.bottomNav button{flex:1;background:none;font-size:12px;font-weight:700}
-.bottomNav b{font-size:20px;display:block}
-#gate{position:fixed;inset:0;background:#002f34;color:#fff;z-index:999;display:flex;flex-direction:column;justify-content:center;padding:20px;text-align:center}
-#gate h1{font-size:38px} #gate h1 span{color:#3a77ff}
+.plan.sel{border-color:#0A2A5E;background:#fff8c5}
+.profileRow{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid #eee;font-size:15px;cursor:pointer}
+.bottomNav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding:6px 0 8px;z-index:99}
+.bottomNav button{flex:1;background:none;font-size:12px;font-weight:700;border:none;cursor:pointer;color:#666}
+.bottomNav button.active{color:#0A2A5E}
+.bottomNav b{font-size:22px;display:block}
+.sellCenter{width:52px;height:52px;background:#ffc800;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:-18px auto 2px;border:3px solid #fff}
+#gate{position:fixed;inset:0;background:#0A2A5E;color:#fff;z-index:999;display:flex;flex-direction:column;justify-content:center;padding:20px;text-align:center}
 .hidden{display:none!important}
+.modal{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;color:#fff}
+.modal.open{display:flex}
+.modal img{width:100%;height:62vh;object-fit:contain;background:#000}
+.modalBody{background:#fff;color:#000;padding:14px;border-radius:16px 16px 0 0;margin-top:-10px;flex:1;overflow:auto}
+.callRow{display:flex;gap:8px;margin-top:10px}
+.callRow a{flex:1;text-align:center;padding:14px;border-radius:8px;font-weight:900;text-decoration:none}
+.thumbs{display:flex;gap:6px;margin-top:8px}.thumbs img{width:60px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}.thumbs img.sel{border-color:#0A2A5E}
+.faq p{padding:10px 0;border-bottom:1px solid #eee;line-height:1.6;font-size:14px}
+.preview{display:flex;gap:6px;flex-wrap:wrap}.preview img{width:70px;height:70px;object-fit:cover;border-radius:8px}
 </style>
 </head>
 <body>
 
-<!-- LOGIN / SIGNUP GATE -->
 <div id="gate">
-<h1>SM <span>Market</span></h1>
-<p style="margin:10px 0 20px">All Pakistan - Buy & Sell Everything</p>
+<img src="logo.jpg" style="width:80px;height:80px;border-radius:16px;margin:0 auto 10px;object-fit:cover" onerror="this.style.display='none'">
+<h1 style="font-size:34px">SMS Faisalabad Market</h1>
+<p style="margin:10px 0 20px">Buy & Sell in Faisalabad and across Pakistan</p>
 <div style="background:#fff;color:#000;border-radius:12px;padding:16px">
-<h3>Login / Sign Up</h3>
-<p style="font-size:13px;color:#666;margin:6px 0">Market Dekhne Ke Liye Login Zaroori Hai</p>
+<h3>Login / Sign Up</h3><p style="font-size:13px;color:#666;margin:6px 0">Market Dekhne Ke Liye Login Zaroori Hai</p>
 <button class="googleBtn" onclick="googleLogin()">G Continue with Google</button>
-<input id="gName" placeholder="Apna Naam Likhen">
-<input id="gCity" placeholder="Apna City Likhen - e.g Gojra">
+<input id="gName" placeholder="Apna Naam Likhen" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
+<input id="gCity" placeholder="Apna City - e.g Gojra" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
 <button class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
-<p style="font-size:11px;color:#888;margin-top:8px">Continue With Google - Sab Theek Se Work Karega</p>
-</div>
-</div>
+</div></div>
 
 <header>
-<div class="logo">SM <span>Market</span></div>
-<div class="topbtns">
-<button class="install" onclick="installApp()">⬇ Install App</button>
-<button onclick="openPage('profile')">👤 My Profile</button>
-</div>
+<div class="logo" id="logoClick"><img src="logo.jpg" onerror="this.src='https://via.placeholder.com/100'"> SMS Faisalabad Market</div>
+<div class="topbtns"><button onclick="openPage('profile')">👤 Profile</button></div>
 </header>
+
+<div class="banner"><h2>Welcome SMS Faisalabad Market</h2><p>Buy & Sell in Faisalabad and across Pakistan</p></div>
 
 <div class="searchBar">
 <select id="cityFilter" onchange="renderAds()"></select>
-<input id="searchInput" placeholder="Search - Mobile, Bike, Car, Shoes..." oninput="renderAds()">
+<input id="searchInput" placeholder="Search - Mobile, Bike, Car..." oninput="renderAds()">
 </div>
 
-<div class="cats">
-<button onclick="filterCat('All')">All</button><button onclick="filterCat('Mobiles')">📱 Mobiles</button><button onclick="filterCat('Bikes')">🏍️ Bikes</button><button onclick="filterCat('Cars')">🚗 Cars</button><button onclick="filterCat('Fashion')">👕 Fashion</button><button onclick="filterCat('Sports')">⚽ Sports</button><button onclick="filterCat('Home')">🏠 Home</button>
-</div>
+<div class="cats" id="catsBar"></div>
 
-<!-- HOME -->
-<div id="homePage" class="page active">
-<div style="padding:0 10px;display:flex;justify-content:space-between"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div>
-<div class="grid" id="adsGrid"></div>
-<div style="height:80px"></div>
-</div>
+<div id="homePage" class="page active"><div style="display:flex;justify-content:space-between;padding:0 10px"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div><div class="grid" id="adsGrid"></div></div>
 
-<!-- SELL -->
-<div id="sellPage" class="page">
-<div class="box"><h2>SELL + - Ad Lagayen</h2>
+<div id="favPage" class="page"><div class="box"><h2>❤️ My Favourites</h2><p id="favEmpty">Abhi koi Favourite nahi hai.</p></div><div class="grid" id="favGrid"></div></div>
+
+<div id="sellPage" class="page"><div class="box"><h2>Ad Lagayen - SELL</h2>
 <input id="adTitle" placeholder="Ad Title - e.g iPhone 13 For Sale">
-<select id="adCat"><option>Mobiles</option><option>Bikes</option><option>Cars</option><option>Fashion</option><option>Sports</option><option>Home</option></select>
+<select id="adCat"></select>
 <input id="adPrice" type="number" placeholder="Price - Rs">
 <select id="adCity"></select>
-<input id="adPhone" placeholder="WhatsApp Number - 03xx-xxxxxxx">
+<input id="adPhone" placeholder="WhatsApp / Call Number - 03xx-xxxxxxx">
 <textarea id="adDesc" placeholder="Description Likhen..."></textarea>
-<input id="adImg" placeholder="Image Link (Optional) - https://...">
-<h3 style="margin-top:10px">Plan Select Karen:</h3>
-<div class="plan sel" id="planFree" onclick="selectPlan('Free',0)">✅ Free Ad - Rs 0 <br><small>Normal Ad - Neeche Nazar Aayega</small></div>
-<div class="plan" id="plan14" onclick="selectPlan('14 Days Top',500)">⭐ Top Ad - 14 Days Plan - Rs 500 <br><small>Upar Nazar Aayega - 14 Din</small></div>
-<div class="plan" id="plan30" onclick="selectPlan('30 Days Top',1000)">🔥 Top Ad - 30 Days Plan - Rs 1000 <br><small>Sab Se Upar - 30 Din</small></div>
-<div id="payBox" class="hidden" style="background:#fff8c5;padding:12px;border-radius:10px;margin-top:8px">
-<b>Payment - Easypaisa</b><br>Name: Atiq Ur Rehman<br>Number: 03430864009<br>Amount: <b id="payAmt">Rs 500</b><br><small>Payment Karke Screenshot WhatsApp Pe Bhejen</small>
-</div>
-<button class="bigBtn" onclick="postAd()">POST AD - SELL +</button>
-</div>
-</div>
+<p><b>Photos Upload Karen - 1 Se 4 Tak</b></p>
+<input type="file" id="adFiles" accept="image/*" multiple onchange="handleFiles(this)">
+<div class="preview" id="imgPreview"></div>
+<small>1 Pic Zaroori Hai - Zyada Se Zyada 4 Pics</small>
+<button class="bigBtn" onclick="postAd()">POST AD</button>
+</div></div>
 
-<!-- PROFILE -->
+<div id="myAdsPage" class="page">
+<div class="box"><h2>📄 My Ads</h2><p>Apne Ads Yahan Dekhen Aur Top Pe Lagayen</p><div id="myAdsList"></div></div>
+<div class="box"><h2>🚀 Sell Fast Now</h2>
+<div class="plan sel" id="planFree" onclick="selectPlan('Free',0)">✅ Free Ad - Rs 0<br><small>Normal Ad - Neeche Nazar Aayega</small></div>
+<div class="plan" id="plan14" onclick="selectPlan('14 Days Top',500)">⭐ Top Ad - 14 Days - Rs 500<br><small>Upar Nazar Aayega - 14 Din</small></div>
+<div class="plan" id="plan30" onclick="selectPlan('30 Days Top',1000)">🔥 Top Ad - 30 Days - Rs 1000<br><small>Sab Se Upar - 30 Din</small></div>
+<div id="payBox" class="hidden" style="background:#fff8c5;padding:12px;border-radius:10px;margin-top:8px">
+<b>Payment - Easypaisa</b><br>Name: Atiq Ur Rehman<br>Number: 03430864009<br>Amount: <b id="payAmt">Rs 500</b><br><br>
+<label><b>Payment Screenshot Upload Karen:</b></label>
+<input type="file" id="payShot" accept="image/*" onchange="document.getElementById('payShotName').innerText=this.files[0]?this.files[0].name:'Screenshot Select Ho Gaya'">
+<p id="payShotName" style="font-size:12px;color:green"></p>
+<small>Payment Karke Screenshot Upload Karen - Admin Verify Karke Top Pe Lagayega</small><br>
+<button class="bigBtn" onclick="submitPayment()">Payment Submit Karen</button>
+</div></div></div>
+
 <div id="profilePage" class="page">
 <div class="box"><h2>My Profile</h2>
 <div class="profileRow"><b>👤 Name</b><span id="pName">-</span></div>
 <div class="profileRow"><b>📍 City</b><span id="pCity">-</span></div>
 <div class="profileRow"><b>📱 Phone</b><span id="pPhone">-</span></div>
 <div class="profileRow"><b>⭐ My Ads</b><span id="pAds">0 Ads</span></div>
-<input id="editName" placeholder="Edit Name">
-<input id="editCity" placeholder="Edit City">
-<input id="editPhone" placeholder="Edit Phone">
-<button class="bigBtn" onclick="saveProfile()">Save Profile</button>
-</div>
+<input id="editName" placeholder="Edit Name"><input id="editCity" placeholder="Edit City"><input id="editPhone" placeholder="Edit Phone">
+<button class="bigBtn" onclick="saveProfile()">Save Profile - Edit Profile</button></div>
 <div class="box">
-<div class="profileRow" onclick="showFavs()"><b>❤️ My Favourites</b><span>›</span></div>
-<div class="profileRow" onclick="openPage('sell')"><b>➕ My Ads / Sell +</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('fav')"><b>❤️ My Favourites</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('myads')"><b>📄 My Ads / Sell Fast Now</b><span>›</span></div>
 <div class="profileRow" onclick="helpSupport()"><b>💬 Help & Support</b><span>WhatsApp ›</span></div>
-<div class="profileRow" onclick="alert('FAQ: Free Ad Rs 0, 14 Days Rs 500, 30 Days Rs 1000. Payment Easypaisa Atiq Ur Rehman 03430864009')"><b>❓ View FAQ</b><span>›</span></div>
-<div class="profileRow" onclick="installApp()"><b>⬇ Install App</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('faq')"><b>❓ View FAQ</b><span>›</span></div>
+<button class="greenBtn" onclick="installApp()">⬇ Install App - Play Store Jesa</button>
 <div class="profileRow" onclick="logout()"><b>🚪 Logout</b><span>›</span></div>
-<div class="profileRow" onclick="deleteProfile()" style="color:red"><b style="color:red">🗑️ Delete My Profile</b><span>›</span></div>
-</div>
-</div>
+</div></div>
+
+<div id="faqPage" class="page"><div class="box faq"><h2>❓ View FAQ - Full Details</h2>
+<p><b>1. Free Ad Kese Lagayen?</b><br>SELL Pe Click Karen, Title, Price, City, Phone Aur 1 Se 4 Pics Upload Karen, Phir POST AD Dabain. Free Ad Rs 0 Me Lag Jayega.</p>
+<p><b>2. Top Ad Kya Hai?</b><br>Top Ad Upar Nazar Aata Hai. 14 Days Plan Rs 500 Ka Hai Aur 30 Days Plan Rs 1000 Ka Hai.</p>
+<p><b>3. Payment Kese Karni Hai?</b><br>Easypaisa Pe Payment Karen. Name: Atiq Ur Rehman, Number: 03430864009. Phir Screenshot Upload Karen. Admin Verify Karke Ad Top Pe Laga Dega.</p>
+<p><b>4. Customer Se Rabta Kese Hoga?</b><br>Chat Button Nahi Hai. Sirf Direct Call Aur Direct WhatsApp Call Ka Button Hoga. Dabate Hi Call Lag Jayegi.</p>
+<p><b>5. Pic Kitni Upload Kar Sakte Hain?</b><br>1 Se 4 Pics Tak Upload Kar Sakte Hain. Ad Khulne Pe Pic Full Size Me Khulegi.</p>
+<p><b>6. Help Chahiye To?</b><br>Help & Support Pe Click Karen, WhatsApp Pe Atiq Bhai Se Rabta Ho Jayega.</p>
+</div></div>
 
 <div class="bottomNav">
-<button onclick="openPage('home')">🏠<br>Home</button>
-<button onclick="openPage('sell')" style="color:#e6a800"><b style="font-size:22px;margin-top:-6px">SELL +</b></button>
-<button onclick="openPage('profile')">👤<br>Profile</button>
+<button onclick="openPage('home')" id="navHome" class="active">🏠<br>Home</button>
+<button onclick="openPage('fav')" id="navFav">❤️<br>Favourite</button>
+<button onclick="openPage('sell')" id="navSell"><div class="sellCenter">+</div>SELL</button>
+<button onclick="openPage('myads')" id="navMyAds">📄<br>My Ads</button>
+<button onclick="openPage('profile')" id="navProfile">👤<br>My Profile</button>
 </div>
 
+<div id="adModal" class="modal">
+<div style="display:flex;justify-content:space-between;padding:12px"><button onclick="closeAd()" style="background:#fff;padding:8px 12px;border:none;border-radius:6px;font-weight:900">✕ Close</button><span id="modalCount" style="background:#ffc800;color:#000;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900">1 / 1</span></div>
+<img id="modalImg" src="">
+<div class="thumbs" id="modalThumbs" style="padding:0 12px"></div>
+<div class="modalBody"><h2 id="mTitle"></h2><p class="price" id="mPrice" style="font-size:20px!important;margin:6px 0"></p><p id="mMeta" style="color:#666;font-size:13px"></p><p id="mDesc" style="margin-top:8px;line-height:1.6"></p>
+<div class="callRow"><a href="#" id="callBtn" style="background:#0A2A5E;color:#fff">📞 Direct Call</a><a href="#" id="waBtn" style="background:#25D366;color:#fff">💬 Direct WhatsApp Call</a></div>
+<p style="font-size:11px;color:#888;text-align:center;margin-top:8px">Chat Nahi Hoga - Sirf Direct Call / WhatsApp Call</p></div></div>
+
+<div id="adminPanel" class="modal" style="background:#0A2A5E">
+<div style="padding:20px;color:#fff"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
+
 <script>
+const cats=["Mobiles","Bikes","Cars","Fashion","Sports","Home","Electronics","Jobs","Property","Furniture","Animals","Books","Beauty","Toys","Kitchen","Grocery","Services","Education","Medical","Agriculture","Others"];
+const catIcons={Mobiles:"📱",Bikes:"🏍️",Cars:"🚗",Fashion:"👕",Sports:"⚽",Home:"🏠",Electronics:"💻",Jobs:"💼",Property:"🏢",Furniture:"🛋️",Animals:"🐄",Books:"📚",Beauty:"💄",Toys:"🧸",Kitchen:"🍳",Grocery:"🛒",Services:"🔧",Education:"🎓",Medical:"💊",Agriculture:"🌾",Others:"📦"};
 const cities=["All Pakistan","Karachi","Lahore","Islamabad","Rawalpindi","Faisalabad","Multan","Hyderabad","Peshawar","Quetta","Sialkot","Gujranwala","Bahawalpur","Sargodha","Abbottabad","Samundri","Gojra","Jhang","Toba Tek Singh","Chiniot","Kasur","Okara","Sahiwal","Mardan","Swat","Gujrat","Jhelum","Attock","Chakwal","Mirpur","Muzaffarabad","Larkana","Sukkur","Nawabshah","Khairpur","Dera Ghazi Khan","Rahim Yar Khan","Vehari","Khanewal","Narowal","Hafizabad","Mandi Bahauddin","Nowshera","Kohat","Dera Ismail Khan","Turbat","Gwadar","Chaman","Loralai","Zhob"];
-let currentCat='All', selectedPlan='Free', selectedPrice=0;
-let ads=JSON.parse(localStorage.getItem('sm_ads')||'[]');
+let currentCat='All',selectedPlan='Free',selectedPrice=0,uploadedImages=[],currentAd=null,currentImgIdx=0;
+let ads=JSON.parse(localStorage.getItem('sms_ads')||'[]');
+let favs=JSON.parse(localStorage.getItem('sms_favs')||'[]');
 if(ads.length===0){ads=[
-{title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500",top:true},
-{title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",img:"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=500",top:true},
-{title:"Nike Shoes - Original",price:8500,cat:"Fashion",city:"Karachi",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",top:false},
-{title:"Cricket Bat - Kashmir Willow",price:4500,cat:"Sports",city:"Sialkot",img:"https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500",top:false},
-]; saveAds();}
-function saveAds(){localStorage.setItem('sm_ads',JSON.stringify(ads))}
-function fillCities(){let h='';cities.forEach(c=>h+=`<option>${c}</option>`);document.getElementById('cityFilter').innerHTML=h;document.getElementById('adCity').innerHTML=cities.slice(1).map(c=>`<option>${c}</option>`).join('')}
-fillCities();
+{title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",phone:"03430864009",desc:"PTA Approved, Battery 90%, Full Box",imgs:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800"],top:true},
+{title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",phone:"03430864009",desc:"2023 Model, Total Genuine, Documents Clear",imgs:["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800"],top:true},
+{title:"Nike Shoes - Original",price:8500,cat:"Fashion",city:"Karachi",phone:"03430864009",desc:"Original Nike, Size 42, New Condition",imgs:["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800"],top:false},
+{title:"Cricket Bat - Kashmir Willow",price:4500,cat:"Sports",city:"Sialkot",phone:"03430864009",desc:"Kashmir Willow, Full Size, Best Quality",imgs:["https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800"],top:false},
+];saveAds();}
+function saveAds(){localStorage.setItem('sms_ads',JSON.stringify(ads))}
+function saveFavs(){localStorage.setItem('sms_favs',JSON.stringify(favs))}
+function fmt(n){return Number(n).toLocaleString('en-PK')}
+function fillAll(){
+let ch='<button class="active" onclick="filterCat(\'All\',this)">All</button>';cats.forEach(c=>ch+=`<button onclick="filterCat('${c}',this)">${catIcons[c]} ${c}</button>`);document.getElementById('catsBar').innerHTML=ch;
+document.getElementById('cityFilter').innerHTML=cities.map(c=>`<option>${c}</option>`).join('');
+document.getElementById('adCity').innerHTML=cities.slice(1).map(c=>`<option>${c}</option>`).join('');
+document.getElementById('adCat').innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
+}fillAll();
 function googleLogin(){let n=prompt("Google Name - Apna Naam Likhen")||"Google User";document.getElementById('gName').value=n;alert("Continue with Google - Success! Ab Login Dabao");}
-function doLogin(){let n=document.getElementById('gName').value||"Customer";let c=document.getElementById('gCity').value||"Gojra";localStorage.setItem('sm_user',JSON.stringify({name:n,city:c}));document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Market Khul Gayi");}
-function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('pPhone').innerText=u.phone||"-";} }
-updateUser();
-function openPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));if(p==='home')document.getElementById('homePage').classList.add('active');if(p==='sell')document.getElementById('sellPage').classList.add('active');if(p==='profile')document.getElementById('profilePage').classList.add('active');window.scrollTo(0,0)}
-function filterCat(c){currentCat=c;renderAds()}
-function renderAds(){let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(b.top?1:0)-(a.top?1:0));document.getElementById('adsGrid').innerHTML=list.map((a,i)=>`<div class="card" onclick="alert('${a.title}\\nPrice: Rs ${a.price}\\nCity: ${a.city}\\nWhatsApp Pe Rabta Karen')">${a.top?'<span class=topBadge>⭐ TOP AD</span>':''}<button class=fav onclick="event.stopPropagation();alert('Added to Favourites ❤️')">♡</button><img src="${a.img||'https://via.placeholder.com/400'}"><h3>${a.title}</h3><p class=price>Rs ${a.price.toLocaleString()}</p><p>${a.city} - ${a.cat}</p></div>`).join('')||'<p style="grid-column:1/3;text-align:center;padding:20px">Koi Ad Nahi Mila - Pehla Ad Tum Lagao!</p>';document.getElementById('pAds').innerText=ads.length+" Ads"}
-renderAds();
-function selectPlan(name,price){selectedPlan=name;selectedPrice=price;document.querySelectorAll('.plan').forEach(x=>x.classList.remove('sel'));if(price===0){document.getElementById('planFree').classList.add('sel');document.getElementById('payBox').classList.add('hidden')}if(price===500){document.getElementById('plan14').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 500'}if(price===1000){document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 1000'}}
-function postAd(){let t=document.getElementById('adTitle').value;let p=document.getElementById('adPrice').value;if(!t||!p){alert("Title Aur Price Likhen!");return}let newAd={title:t,price:parseInt(p),cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,img:document.getElementById('adImg').value||"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",top:selectedPrice>0};ads.unshift(newAd);saveAds();renderAds();openPage('home');if(selectedPrice>0){alert("Top Ad Selected - "+selectedPlan+" - Payment Easypaisa: Atiq Ur Rehman - 03430864009 - Amount Rs "+selectedPrice)}else{alert("Ad Post Ho Gaya! Free Ad")} }
-function saveProfile(){let u=JSON.parse(localStorage.getItem('sm_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sm_user',JSON.stringify(u));updateUser();alert("Profile Save Ho Gaya!")}
-function helpSupport(){window.open("https://wa.me/923430864009?text=Hello%20SM%20Market%2C%20I%20Need%20Help","_blank")}
-function installApp(){alert("Install App - Share / Add to Home Screen Dabao - App Install Ho Jayegi!")}
-function showFavs(){alert("My Favourites - Jo Ads Tumne ❤️ Kiye Hain Wo Yahan Honge")}
-function logout(){localStorage.removeItem('sm_user');location.reload()}
-function deleteProfile(){if(confirm("Delete My Profile? Pakka?")){localStorage.clear();location.reload()}}
+function doLogin(){let n=document.getElementById('gName').value||"Customer";let c=document.getElementById('gCity').value||"Gojra";localStorage.setItem('sms_user',JSON.stringify({name:n,city:c,phone:""}));document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Market Khul Gayi");}
+function updateUser(){let u=JSON.parse(localStorage.getItem('sms_user')||'null');if(u){document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";}}updateUser();
+function openPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.bottomNav button').forEach(x=>x.classList.remove('active'));
+if(p==='home'){document.getElementById('homePage').classList.add('active');document.getElementById('navHome').classList.add('active')}
+if(p==='fav'){document.getElementById('favPage').classList.add('active');document.getElementById('navFav').classList.add('active');renderFavs()}
+if(p==='sell'){document.getElementById('sellPage').classList.add('active');document.getElementById('navSell').classList.add('active')}
+if(p==='myads'){document.getElementById('myAdsPage').classList.add('active');document.getElementById('navMyAds').classList.add('active');renderMyAds()}
+if(p==='profile'){document.getElementById('profilePage').classList.add('active');document.getElementById('navProfile').classList.add('active')}
+if(p==='faq'){document.getElementById('faqPage').classList.add('active')}window.scrollTo(0,0)}
+function filterCat(c,el){currentCat=c;document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderAds()}
+function cardHTML(a,i){let isFav=favs.includes(a.title);return `<div class="card" onclick="openAd(${i})">${a.top?'<span class=topBadge>⭐ TOP AD</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${a.title}',this)">${isFav?'❤️':'♡'}</button><img src="${(a.imgs&&a.imgs[0])||a.img}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p></div>`}
+function renderAds(){let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(b.top?1:0)-(a.top?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">Koi Ad Nahi Mila - Pehla Ad Tum Lagao!</p>';document.getElementById('pAds').innerText=ads.length+" Ads"}renderAds();
+function toggleFav(title,btn){if(favs.includes(title)){favs=favs.filter(f=>f!==title);btn.innerText='♡'}else{favs.push(title);btn.innerText='❤️';alert('Added to Favourites ❤️')}saveFavs();renderFavs()}
+function renderFavs(){let list=ads.filter(a=>favs.includes(a.title));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
+function renderMyAds(){let u=JSON.parse(localStorage.getItem('sms_user')||'{}');let my=ads.filter(a=>a.mine);document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${a.top?'⭐ TOP':'Normal'}</span></div>`).join(''):'<p>Abhi koi My Ad nahi hai. SELL Se Ad Lagayen.</p>'}
+function openAd(idx){currentAd=ads[idx];currentImgIdx=0;showImg();document.getElementById('mTitle').innerText=currentAd.title;document.getElementById('mPrice').innerText='Rs '+fmt(currentAd.price);document.getElementById('mMeta').innerText=currentAd.city+' • '+currentAd.cat+' • '+(currentAd.imgs||[]).length+' Pics';document.getElementById('mDesc').innerText=currentAd.desc||'Description nahi likhi gayi.';let ph=(currentAd.phone||'03430864009').replace(/\D/g,'');if(ph.startsWith('0'))ph='92'+ph.slice(1);document.getElementById('callBtn').href='tel:'+ph;document.getElementById('waBtn').href='https://wa.me/'+ph+'?text='+encodeURIComponent('Hello, Mujhe Ye Ad Chahiye: '+currentAd.title+' - Rs '+fmt(currentAd.price));document.getElementById('adModal').classList.add('open')}
+function showImg(){let imgs=currentAd.imgs&&currentAd.imgs.length?currentAd.imgs:[currentAd.img];document.getElementById('modalImg').src=imgs[currentImgIdx];document.getElementById('modalCount').innerText=(currentImgIdx+1)+' / '+imgs.length;document.getElementById('modalThumbs').innerHTML=imgs.map((im,i)=>`<img src="${im}" class="${i===currentImgIdx?'sel':''}" onclick="currentImgIdx=${i};showImg()">`).join('')}
+document.getElementById('modalImg').onclick=()=>{let imgs=currentAd.imgs;currentImgIdx=(currentImgIdx+1)%imgs.length;showImg()}
+function closeAd(){document.getElementById('adModal').classList.remove('open')}
+function handleFiles(inp){uploadedImages=[];let files=Array.from(inp.files).slice(0,4);if(inp.files.length>4)alert('Sirf 4 Pics Tak Upload Kar Sakte Hain - Pehli 4 Li Gayi Hain');files.forEach(f=>{let r=new FileReader();r.onload=e=>{uploadedImages.push(e.target.result);document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('')};r.readAsDataURL(f)})}
+function selectPlan(n,p){selectedPlan=n;selectedPrice=p;document.querySelectorAll('.plan').forEach(x=>x.classList.remove('sel'));if(p===0){document.getElementById('planFree').classList.add('sel');document.getElementById('payBox').classList.add('hidden')}if(p===500){document.getElementById('plan14').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 500'}if(p===1000){document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 1000'}}
+function submitPayment(){let f=document.getElementById('payShot').files[0];if(!f){alert('Pehle Payment Screenshot Upload Karen!');return}alert('Payment Screenshot Submit Ho Gaya! Admin Verify Karke Ad Top Pe Laga Dega - Easypaisa 03430864009')}
+function postAd(){let t=document.getElementById('adTitle').value;let p=document.getElementById('adPrice').value;let ph=document.getElementById('adPhone').value;if(!t||!p){alert('Title Aur Price Likhen!');return}if(uploadedImages.length===0){alert('Kam Se Kam 1 Pic Upload Karen!');return}let na={title:t,price:parseInt(p),cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,imgs:uploadedImages,top:selectedPrice>0,mine:true};ads.unshift(na);saveAds();renderAds();openPage('home');if(selectedPrice>0)alert('Top Ad Selected - '+selectedPlan+' - Payment Easypaisa: Atiq Ur Rehman - 03430864009 - Rs '+selectedPrice+' - Screenshot Upload Karen');else alert('Ad Post Ho Gaya! Free Ad - Rs '+fmt(p))}
+function saveProfile(){let u=JSON.parse(localStorage.getItem('sms_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sms_user',JSON.stringify(u));updateUser();alert('Profile Save Ho Gaya! - Edit Profile Done')}
+function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SMS Faisalabad Market, I Need Help'),'_blank')}
+function installApp(){alert('Install App - Play Store Jesa - Share Button Se Add To Home Screen Dabao - App Install Ho Jayegi!')}
+function logout(){localStorage.removeItem('sms_user');location.reload()}
+// ADMIN - Logo Pe 13 Click
+let clicks=0,clickTimer;
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Admin Password Likhen:');if(pw==='Atiq123'){document.getElementById('adminCount').innerText=ads.length;document.getElementById('adminList').innerHTML=ads.map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd(${i})" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
+function deleteAd(i){if(confirm('Ad Delete Karna Hai?')){ads.splice(i,1);saveAds();renderAds();alert('Ad Delete Ho Gaya')}};
 </script>
 </body>
 </html>
