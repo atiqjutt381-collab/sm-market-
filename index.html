@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>SM Faisalabad Market</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0A2A5E">
@@ -12,7 +12,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-html,body{overflow-x:hidden !important;max-width:100vw !important}
+html,body{overflow-x:hidden !important;max-width:100vw !important;touch-action:pan-y !important;overscroll-behavior:none !important;-webkit-text-size-adjust:100% !important}
 body{background:#eef1f6;padding-bottom:85px}
 header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99;width:100%;max-width:100vw}
 .logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:900;cursor:pointer;white-space:nowrap;overflow:hidden}
@@ -214,7 +214,7 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <p style="font-size:11px;color:#888;text-align:center;margin-top:8px">No Chat - Only Direct Call / WhatsApp Call</p></div></div>
 
 <div id="adminPanel" class="modal" style="background:#0A2A5E">
-<div style="padding:20px;color:#fff"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><h3 style="margin-top:14px">Feedbacks</h3><div id="adminFeedback"></div><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
+<div style="padding:20px;color:#fff"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><p>Total Users: <span id="adminUsers">0</span></p><h3 style="margin-top:14px">👥 All Users</h3><div id="adminUsersList"></div><h3 style="margin-top:14px">Feedbacks</h3><div id="adminFeedback"></div><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
 
 <script>
 const firebaseConfig = {
@@ -230,6 +230,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const adsRef = db.ref('ads');
+const usersRef = db.ref('users');
 let deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installStatus').innerText='✅ Install Ready - Tap Button to Install';});
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){document.getElementById('installStatus').innerText='✅ App Installing...';}else{document.getElementById('installStatus').innerText='Install Cancelled - Try Again';}deferredPrompt=null;});}else{alert('Install App - If popup does not appear, use Browser Menu (3 Dots) > Add To Home Screen / Install App');}}
@@ -287,9 +288,10 @@ function doLogin(){
   if(document.getElementById('phoneBox').classList.contains('hidden')===false && ph && document.getElementById('loginOtp').value.trim()!=='1234'){alert("Wrong OTP - Demo Code is 1234");return}
   let pass=document.getElementById('loginPass').value||"sm123456@";
   localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass}));
+  usersRef.child(myDeviceId).set({name:n,city:c,phone:ph||"",email:em||"",time:Date.now()});
   document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Market Opened - You Can See All Ads");
 }
-function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";}}updateUser();
+function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";try{usersRef.child(myDeviceId).set({name:u.name,city:u.city,phone:u.phone||"",email:u.email||"",time:Date.now()});}catch(e){}}}updateUser();
 function openPage(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
 document.querySelectorAll('.bottomNav button').forEach(x=>x.classList.remove('active'));
@@ -380,8 +382,22 @@ function submitFeedback(){
 function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SM Faisalabad Market, I Need Help'),'_blank')}
 function logout(){localStorage.removeItem('sm_user');location.reload()}
 let clicks=0,clickTimer;
-document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.length;let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.length;usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'} ${uu.email?'- '+uu.email:''}</div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
 async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
+</script>
+<script>
+// PINCH ZOOM + DOUBLE TAP ZOOM BAND - APP JESA LOCK - AKHRI FIX
+document.addEventListener('gesturestart', function(e){ e.preventDefault(); });
+document.addEventListener('gesturechange', function(e){ e.preventDefault(); });
+document.addEventListener('gestureend', function(e){ e.preventDefault(); });
+document.addEventListener('touchstart', function(e){ if(e.touches.length > 1){ e.preventDefault(); } }, {passive:false});
+document.addEventListener('touchmove', function(e){ if(e.touches.length > 1){ e.preventDefault(); } }, {passive:false});
+let lastTouch = 0;
+document.addEventListener('touchend', function(e){
+  let now = new Date().getTime();
+  if(now - lastTouch <= 300){ e.preventDefault(); }
+  lastTouch = now;
+}, {passive:false});
 </script>
 </body>
 </html>
