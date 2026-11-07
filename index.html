@@ -35,6 +35,7 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 .card .desc{color:#333;font-size:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
 .price{color:#0A2A5E!important;font-weight:900!important;font-size:15px!important}
 .topBadge{position:absolute;top:8px;left:8px;background:#0A2A5E;color:#fff;padding:3px 8px;font-size:11px;font-weight:900;border-radius:20px}
+.pendingBadge{position:absolute;top:8px;left:8px;background:#FF9800;color:#fff;padding:3px 8px;font-size:11px;font-weight:900;border-radius:20px}
 .fav{position:absolute;top:8px;right:8px;background:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;border:none;cursor:pointer}
 .page{display:none;padding:12px;width:100%;max-width:100vw;overflow-x:hidden;overflow-y:visible}.page.active{display:block}
 .box{background:#fff;padding:14px;border-radius:10px;margin-bottom:12px;width:100%;max-width:100%;overflow:hidden}
@@ -77,7 +78,6 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 </head>
 <body>
 <div id="ptrBar">↓ Neeche Khaincho — Refresh Ke Liye</div>
-
 <div id="gate">
 <img src="logo.jpg" style="width:80px;height:80px;border-radius:16px;margin:0 auto 10px;object-fit:cover" onerror="this.style.display='none'">
 <h1 style="font-size:30px">SM Faisalabad Market</h1>
@@ -94,12 +94,10 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <input id="gCity" placeholder="Your City - e.g Gojra" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
 <button class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
 </div></div>
-
 <header>
 <div class="logo" id="logoClick"><img src="logo.jpg" onerror="this.src='icon-192.png'"> SM Faisalabad Market</div>
 <div style="font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap" onclick="openLocation()">📍 <span id="headerLoc">All Pakistan</span> ⌄</div>
 </header>
-
 <div id="homeExtras">
 <div class="banner"><h2>Welcome SM Faisalabad Market</h2><p>Buy & Sell in Faisalabad and across Pakistan</p></div>
 <div class="bigCats">
@@ -111,11 +109,8 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <div style="display:flex;gap:8px;padding:0 10px 10px;background:#fff"><button class="bigBtn" style="margin:0" onclick="useNearMe()">📍 Near Me</button><button class="bigBtn" style="margin:0;background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="openLocation()">📍 Change Location</button></div>
 <div class="cats" id="catsBar"></div>
 </div>
-
 <div id="homePage" class="page active"><div style="display:flex;justify-content:space-between;padding:0 10px"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div><div class="grid" id="adsGrid"><p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p></div></div>
-
 <div id="favPage" class="page"><div class="box"><h2>❤️ My Favourites</h2><p id="favEmpty">No favourites yet. Tap the heart ❤️ to save.</p></div><div class="grid" id="favGrid"></div></div>
-
 <div id="sellPage" class="page"><div class="box"><h2>Post Ad - SELL</h2>
 <input id="adTitle" placeholder="Ad Title - e.g iPhone 13 For Sale" autocomplete="off">
 <select id="adCat"></select>
@@ -133,7 +128,6 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <small>1 Photo Required - Maximum 4 Photos</small>
 <button class="bigBtn" onclick="postAd()">POST AD</button>
 </div></div>
-
 <div id="myAdsPage" class="page">
 <div class="box"><h2>📄 My Ads</h2><p>View, Edit and Delete Your Ads Here</p><div id="myAdsList"></div></div>
 <div class="box"><h2>🚀 Sell Fast Now</h2>
@@ -148,7 +142,6 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <small>After payment, upload screenshot - Admin will verify and set Top Ad</small><br>
 <button class="bigBtn" onclick="submitPayment()">Submit Payment</button>
 </div></div></div>
-
 <div id="profilePage" class="page">
 <div class="box"><h2>My Profile</h2>
 <div class="profileRow"><b>👤 Name</b><span id="pName">-</span></div>
@@ -169,22 +162,18 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <p id="installStatus" style="font-size:12px;text-align:center;color:#666;margin-top:6px">Tap Install - App Popup Will Appear</p>
 <div class="profileRow" onclick="logout()"><b>🚪 Logout</b><span>›</span></div>
 </div></div>
-
 <div id="changePassPage" class="page"><div class="box"><h2>🔒 Change Password</h2><p style="font-size:13px;color:#666">Choose a strong password to keep your account safe.</p>
 <label>Old Password</label><div class="pwWrap"><input id="oldPass" type="password" placeholder="Old Password"><button onclick="togglePw('oldPass',this)">👁️</button></div>
 <label>New Password</label><div class="pwWrap"><input id="newPass" type="password" placeholder="New Password"><button onclick="togglePw('newPass',this)">👁️</button></div>
 <label>Confirm New Password</label><div class="pwWrap"><input id="confirmPass" type="password" placeholder="Confirm New Password"><button onclick="togglePw('confirmPass',this)">👁️</button></div>
 <div style="font-size:13px;line-height:1.8;color:#555;margin:8px 0">✅ At least 8 characters<br>✅ At least one uppercase letter<br>✅ At least one number<br>✅ At least one special character (@, #, $, etc.)</div>
 <button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
-
 <div id="feedbackPage" class="page"><div class="box"><h2>⭐ Help Us Improve!</h2><p>Rate your experience and tell us how we can improve.</p>
 <div class="starRow" id="starRow"><span onclick="setStars(1)">☆</span><span onclick="setStars(2)">☆</span><span onclick="setStars(3)">☆</span><span onclick="setStars(4)">☆</span><span onclick="setStars(5)">☆</span></div>
 <p style="text-align:center" id="starLabel">Tap to Rate</p>
 <textarea id="fbMsg" placeholder="Write your feedback here..."></textarea>
 <button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
-
 <div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><button class="bigBtn" onclick="useNearMe()">📍 Use My Current Location - Near Me</button><input id="locSearch" placeholder="Search City / Area..." autocomplete="off" oninput="filterLocList()"><div id="locList"></div><button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="setLocation('All Pakistan','All Areas')">All Pakistan - Clear Location</button></div></div>
-
 <div id="faqPage" class="page"><div class="box faq"><h2>❓ View FAQ - Full Details</h2>
 <p><b>1. How to Post a Free Ad?</b><br>Tap SELL, enter Title, Price, City, Phone, Description and 1 to 4 Photos, then tap POST AD. Your ad will be visible to all customers.</p>
 <p><b>2. What is Top Ad?</b><br>Top Ad shows on top. 14 Days Plan is Rs 500 and 30 Days Plan is Rs 1000.</p>
@@ -193,7 +182,6 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <p><b>5. How Many Photos?</b><br>1 to 4 Photos. On ad open, photo opens in full size.</p>
 <p><b>6. How to See All Ads?</b><br>On Home, all customers ads are shown.</p>
 </div></div>
-
 <div class="bottomNav">
 <button onclick="openPage('home')" id="navHome" class="active">🏠<br>Home</button>
 <button onclick="openPage('fav')" id="navFav">❤️<br>Favourite</button>
@@ -201,7 +189,6 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <button onclick="openPage('myads')" id="navMyAds">📄<br>My Ads</button>
 <button onclick="openPage('profile')" id="navProfile">👤<br>My Profile</button>
 </div>
-
 <div id="adModal" class="modal">
 <div style="display:flex;justify-content:space-between;padding:12px"><button onclick="closeAd()" style="background:#fff;padding:8px 12px;border:none;border-radius:6px;font-weight:900">✕ Close</button><span id="modalCount" style="background:#0A2A5E;color:#fff;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900">1 / 1</span></div>
 <img id="modalImg" src="">
@@ -209,15 +196,15 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <div class="modalBody"><h2 id="mTitle"></h2><p class="price" id="mPrice" style="font-size:20px!important;margin:6px 0"></p><p id="mMeta" style="color:#666;font-size:13px"></p>
 <div class="tabs"><button id="tabDetails" class="active" onclick="showTab('details')">Details</button><button id="tabDesc" onclick="showTab('desc')">Description</button><button id="tabPosted" onclick="showTab('posted')">Posted by</button><button id="tabRelated" onclick="showTab('related')">Related Ads</button></div>
 <div id="tabDetailsBox"><table class="detailTable"><tr><td>Brand</td><td id="dBrand">-</td></tr><tr><td>Model</td><td id="dModel">-</td></tr><tr><td>Condition</td><td id="dCond">-</td></tr><tr><td>PTA Status</td><td id="dPta">-</td></tr><tr><td>Location</td><td id="dLoc">-</td></tr></table></div>
-<div id="tabDescBox" class="hidden"><p id="mDesc" style="line-height:1.7;white-space:pre-wrap"></p></div>
+<div id="tabDescBox" class="hidden"><p id="mDesc" style="line-height:1.7;white-space:pre-wrap;font-size:14px"></p></div>
 <div id="tabPostedBox" class="hidden"><div style="background:#eef2ff;padding:12px;border-radius:10px"><b id="postedName">Seller</b><p id="postedMeta" style="font-size:13px;color:#555;margin-top:4px"></p><p style="font-size:13px">Ad ID: <span id="postedAdId"></span></p></div><p style="margin-top:10px;cursor:pointer" onclick="reportAd()">🚩 Report This Ad</p></div>
 <div id="tabRelatedBox" class="hidden"><div class="grid" id="relatedGrid" style="padding:0"></div></div>
 <div class="callRow"><a href="#" id="callBtn" style="background:#0A2A5E;color:#fff">📞 Direct Call</a><a href="#" id="waBtn" style="background:#25D366;color:#fff">💬 Direct WhatsApp Call</a></div>
 <p style="font-size:11px;color:#888;text-align:center;margin-top:8px">No Chat - Only Direct Call / WhatsApp Call</p></div></div>
-
 <div id="adminPanel" class="modal" style="background:#0A2A5E;overflow:auto">
-<div style="padding:20px;color:#fff;overflow:auto;flex:1"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><p>Total Users: <span id="adminUsers">0</span></p><h3 style="margin-top:14px">👥 All Users</h3><div id="adminUsersList"></div><h3 style="margin-top:14px">Feedbacks</h3><div id="adminFeedback"></div><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
-
+<div style="padding:20px;color:#fff;overflow:auto;flex:1"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><p>Total Users: <span id="adminUsers">0</span></p>
+<h3 style="margin-top:14px">🚀 Top Ad Requests - Approve / Reject</h3><div id="adminTopRequests"></div>
+<h3 style="margin-top:14px">👥 All Users</h3><div id="adminUsersList"></div><h3 style="margin-top:14px">Feedbacks</h3><div id="adminFeedback"></div><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
@@ -233,6 +220,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const adsRef = db.ref('ads');
 const usersRef = db.ref('users');
+const topReqRef = db.ref('topRequests');
 let deferredPrompt=null;
 function checkInstalled(){if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true){let b=document.getElementById('installBtn');if(b)b.innerText='✅ App Already Installed';let s=document.getElementById('installStatus');if(s)s.innerText='✅ App Already Installed - You Are Using Installed App';return true}return false}
 checkInstalled();
@@ -253,6 +241,7 @@ localStorage.setItem('sm_device', myDeviceId);
 function fmt(n){return Number(n).toLocaleString('en-PK')}
 function formatSellPrice(el){let v=el.value.replace(/[^0-9]/g,'');if(!v){el.value='';return}el.value=Number(v).toLocaleString('en-PK')}
 function togglePw(id,btn){let el=document.getElementById(id);el.type=el.type==='password'?'text':'password'}
+function isTopActive(a){if(!a.top) return false; if(a.topUntil && Date.now()>a.topUntil) return false; return true}
 function fillAll(){
 let ch='<button class="active" onclick="filterCat(\'All\',this)">All</button>';cats.forEach(c=>ch+=`<button onclick="filterCat('${c}',this)">${catIcons[c]} ${c}</button>`);document.getElementById('catsBar').innerHTML=ch;
 document.getElementById('cityFilter').innerHTML=cities.map(c=>`<option>${c}</option>`).join('');
@@ -275,8 +264,8 @@ function listenAds(){
 }
 function seedDemoAds(){
   let demos=[
-    {title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",area:"City Area",phone:"03430864009",desc:"PTA Approved, Battery 90%, Full Box, No Fault, Urgent Sale",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800",imgs:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800"],featured:true,top:true,uid:"demo",owner:"demo",time:Date.now(),createdAt:Date.now(),brand:"Apple",condition:"Used",pta:"PTA Approved"},
-    {title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",area:"Gojra",phone:"03430864009",desc:"2023 Model, Total Genuine, Documents Clear, First Owner",img:"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800",imgs:["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800"],featured:true,top:true,uid:"demo",owner:"demo",time:Date.now()-1,createdAt:Date.now()-1,brand:"Honda",condition:"Used",pta:"Not Applicable"},
+    {title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",area:"City Area",phone:"03430864009",desc:"PTA Approved, Battery 90%, Full Box, No Fault, Urgent Sale",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800",imgs:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now(),createdAt:Date.now(),brand:"Apple",condition:"Used",pta:"PTA Approved"},
+    {title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",area:"Gojra",phone:"03430864009",desc:"2023 Model, Total Genuine, Documents Clear, First Owner",img:"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800",imgs:["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now()-1,createdAt:Date.now()-1,brand:"Honda",condition:"Used",pta:"Not Applicable"},
   ];
   demos.forEach(d=>adsRef.push(d));
 }
@@ -320,13 +309,13 @@ function useNearMe(){
   navigator.geolocation.getCurrentPosition(()=>{setLocation('Faisalabad','Gojra');alert("Near Me - Showing Ads Near Faisalabad / Gojra")},()=>{alert("Location Permission Denied - Please Select City Manually");openPage('location')});
 }
 function filterCat(c,el){currentCat=c;document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderAds()}
-function cardHTML(a,i){let isFav=favs.includes(a.title);let desc=a.desc||'';let imgSrc=(a.imgs&&a.imgs[0])||a.img||'';return `<div class="card" onclick="openAd(${i})">${a.top?'<span class=topBadge>⭐ TOP AD</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${a.title.replace(/'/g,"")}')">${isFav?'❤️':'♡'}</button><img src="${imgSrc}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city||''} ${a.area?', '+a.area:''} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p><p class=desc>${desc}</p></div>`}
+function cardHTML(a,i){let isFav=favs.includes(a.title);let desc=a.desc||'';let imgSrc=(a.imgs&&a.imgs[0])||a.img||'';let topNow=isTopActive(a);return `<div class="card" onclick="openAd(${i})">${topNow?'<span class=topBadge>⭐ TOP AD</span>':''}${a.topPending?'<span class=pendingBadge>⏳ PENDING TOP</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${a.title.replace(/'/g,"")}')">${isFav?'❤️':'♡'}</button><img src="${imgSrc}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city||''} ${a.area?', '+a.area:''} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p><p class=desc>${desc}</p></div>`}
 function renderAds(){
   if(!adsLoaded){document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';return}
-  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(area==='All Areas'||!a.area||a.area===area)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(b.top?1:0)-(a.top?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad!</p>';let myCount=ads.filter(a=>a.owner===myDeviceId).length;document.getElementById('pAds').innerText=myCount+" Ads";}
+  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city)&&(area==='All Areas'||!a.area||a.area===area)&&(a.title.toLowerCase().includes(q)));list.sort((a,b)=>(isTopActive(b)?1:0)-(isTopActive(a)?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad!</p>';let myCount=ads.filter(a=>a.owner===myDeviceId).length;document.getElementById('pAds').innerText=myCount+" Ads";}
 function toggleFav(title){if(favs.includes(title)){favs=favs.filter(f=>f!==title);}else{favs.push(title);alert('Added to Favourites ❤️')}saveFavs();renderAds();renderFavs()}
 function renderFavs(){let list=ads.filter(a=>favs.includes(a.title));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
-function renderMyAds(){let my=ads.filter(a=>a.owner===myDeviceId);document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${a.top?'⭐ TOP':'Normal'}</span></div><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
+function renderMyAds(){let my=ads.filter(a=>a.owner===myDeviceId);document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${isTopActive(a)?'⭐ TOP':a.topPending?'⏳ PENDING TOP':'Normal'}</span></div><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
 function editMyAd(id){let a=ads.find(x=>x._id===id);if(!a)return;document.getElementById('adTitle').value=a.title;document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCat').value=a.cat;document.getElementById('adCity').value=a.city;document.getElementById('adPhone').value=a.phone;document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('');window._editId=id;openPage('sell');alert("Edit Mode - Change Details And Tap POST AD - Old Ad Will Be Replaced");}
 async function deleteMyAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted')}};
 function showTab(t){
@@ -355,16 +344,52 @@ document.getElementById('modalImg').onclick=()=>{let imgs=currentAd.imgs;if(imgs
 function closeAd(){document.getElementById('adModal').classList.remove('open')}
 function handleFiles(inp){uploadedImages=[];let files=Array.from(inp.files).slice(0,4);if(inp.files.length>4)alert('Only 4 Photos Allowed - First 4 Selected');files.forEach(f=>{let r=new FileReader();r.onload=e=>{uploadedImages.push(e.target.result);document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('')};r.readAsDataURL(f)})}
 function selectPlan(n,p){selectedPlan=n;selectedPrice=p;document.querySelectorAll('.plan').forEach(x=>x.classList.remove('sel'));if(p===0){document.getElementById('planFree').classList.add('sel');document.getElementById('payBox').classList.add('hidden')}if(p===500){document.getElementById('plan14').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 500'}if(p===1000){document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 1000'}}
-function submitPayment(){let f=document.getElementById('payShot').files[0];if(!f){alert('Please Upload Payment Screenshot First!');return}alert('Payment Screenshot Submitted! Admin Will Verify And Set Top Ad - Easypaisa 03430864009')}
+async function submitPayment(){
+  let f=document.getElementById('payShot').files[0];if(!f){alert('Please Upload Payment Screenshot First!');return}
+  let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
+  let lastAdId=localStorage.getItem('sm_lastAdId')||'';
+  let lastAd=ads.find(a=>a._id===lastAdId);
+  await topReqRef.push({adId:lastAdId,adTitle:lastAd?lastAd.title:'Top Ad',userName:u.name||'User',userPhone:u.phone||'',plan:selectedPlan,amount:selectedPrice,screenshotName:f.name,status:'pending',time:Date.now()});
+  alert('Payment Screenshot Submitted! Admin Will Verify And Set Top Ad - Easypaisa 03430864009');
+}
+async function approveTop(reqId,adId,days){
+  let until=Date.now()+days*86400000;
+  await db.ref('ads/'+adId).update({top:true,featured:true,topUntil:until,topPending:false,topPlan:days===14?'14 Days Top':'30 Days Top'});
+  await topReqRef.child(reqId).update({status:'approved'});
+  alert('APPROVED ✅ - Ad Now On Top For '+days+' Days');
+  loadTopRequests();
+}
+async function rejectTop(reqId,adId){
+  await db.ref('ads/'+adId).update({top:false,featured:false,topPending:false,topUntil:0});
+  await topReqRef.child(reqId).update({status:'rejected'});
+  alert('REJECTED ❌ - Ad Will Stay Normal');
+  loadTopRequests();
+}
+function loadTopRequests(){
+  topReqRef.once('value',snap=>{
+    let val=snap.val()||{};
+    let keys=Object.keys(val);
+    let pend=keys.filter(k=>val[k].status==='pending');
+    document.getElementById('adminTopRequests').innerHTML=pend.length?pend.map(k=>{
+      let r=val[k];let days=r.amount===500?14:30;
+      return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0"><b>${r.adTitle}</b><br>${r.userName} - ${r.userPhone}<br>Plan: ${r.plan} - Rs ${r.amount} - Screenshot: ${r.screenshotName||''}<br><div style="display:flex;gap:8px;margin-top:8px"><button onclick="approveTop('${k}','${r.adId}',${days})" style="flex:1;background:#25D366;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900">✅ APPROVE</button><button onclick="rejectTop('${k}','${r.adId}')" style="flex:1;background:#d32f2f;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900">❌ REJECT</button></div></div>`
+    }).join(''):'<p>No Pending Top Requests</p>';
+  });
+}
 async function postAd(){
   let t=document.getElementById('adTitle').value;let pRaw=document.getElementById('adPrice').value.replace(/,/g,'');let p=parseInt(pRaw);let ph=document.getElementById('adPhone').value;
   if(!t||!p){alert('Please Enter Title And Price!');return}
   if(uploadedImages.length===0){alert('Please Upload At Least 1 Photo!');return}
   let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  let na={title:t,price:p,cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,img:uploadedImages[0],imgs:uploadedImages,featured:selectedPrice>0,top:selectedPrice>0,uid:myDeviceId,owner:myDeviceId,email:u.name||"",province:"",time:Date.now(),createdAt:Date.now()};
+  let isTopSelected=selectedPrice>0;
+  let na={title:t,price:p,cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,img:uploadedImages[0],imgs:uploadedImages,featured:false,top:false,topPending:isTopSelected,topPlan:isTopSelected?selectedPlan:'Free',topDays:isTopSelected?(selectedPrice===500?14:30):0,topUntil:0,uid:myDeviceId,owner:myDeviceId,email:u.name||"",province:"",time:Date.now(),createdAt:Date.now()};
   try{
     if(window._editId){await db.ref('ads/'+window._editId).set(na);window._editId=null;alert('Ad Updated Successfully!')}
-    else{await adsRef.push(na);if(selectedPrice>0)alert('Top Ad Selected - '+selectedPlan+' - Payment Easypaisa: Atiq Ur Rehman - 03430864009 - Rs '+selectedPrice);else alert('Ad Posted! Free Ad - Rs '+fmt(p)+' - Now Visible To All Customers!')}
+    else{
+      let ref=await adsRef.push(na);localStorage.setItem('sm_lastAdId',ref.key);
+      if(isTopSelected)alert('Ad Posted! Now Pay '+selectedPlan+' - Rs '+selectedPrice+' On Easypaisa 03430864009 And Upload Screenshot - After Admin APPROVE Your Ad Will Go On Top');
+      else alert('Ad Posted! Free Ad - Rs '+fmt(p)+' - Now Visible To All Customers!');
+    }
     openPage('home');
   }catch(e){alert('Database Error - Set Rules Read/Write True! - '+e.message)}
 }
@@ -387,11 +412,10 @@ function submitFeedback(){
 function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SM Faisalabad Market, I Need Help'),'_blank')}
 function logout(){localStorage.removeItem('sm_user');location.reload()}
 let clicks=0,clickTimer;
-document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.length;usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'} ${uu.email?'- '+uu.email:''}</div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'} ${uu.email?'- '+uu.email:''}</div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
 async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
 </script>
 <script>
-// PULL TO REFRESH - SIRF JAB PAGE TOP PE HO AUR KOI MODAL NA KHULA HO
 let ptrStartY=0,ptrPull=0,ptrActive=false;
 let ptrBar=document.getElementById('ptrBar');
 document.addEventListener('touchstart',function(e){if(window.scrollY===0 && !document.querySelector('.modal.open') && e.touches.length===1){ptrStartY=e.touches[0].clientY;ptrActive=true;ptrPull=0}}, {passive:true});
