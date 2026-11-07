@@ -318,9 +318,6 @@ function doLogin(){
   let pass=document.getElementById('loginPass').value||"sm123456@";
   let userKey=makeUserKey(n,c,ph,em);
   let userIdShow=getUserDisplayId(userKey);
-  localStorage.setItem('sm_userKey',userKey);
-  localStorage.setItem('sm_userId',userIdShow);
-  localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
   usersRef.child(userKey).once('value',snap=>{
     if(snap.exists()){
       let oldData=snap.val()||{};
@@ -328,13 +325,19 @@ function doLogin(){
         alert('Wrong Password! Ye Number Pehle Se Kisi Aur Ka Hai - Sahi Password Likhen! Agar Password Bhool Gaye To Admin Se Rabta Karen - WhatsApp 03430864009');
         return;
       }
+      localStorage.setItem('sm_userKey',userKey);
+      localStorage.setItem('sm_userId',userIdShow);
+      localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
       usersRef.child(userKey).update({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
       document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome Back "+n+"! Market Opened - Purana Account Khula Hai - Your ID: "+userIdShow);
     }else{
+      localStorage.setItem('sm_userKey',userKey);
+      localStorage.setItem('sm_userId',userIdShow);
+      localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
       usersRef.child(userKey).set({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
       document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Market Opened - You Can See All Ads - Your ID: "+userIdShow);
     }
-  });
+  },(err)=>{alert('Internet / Firebase Error - Dobara Try Karen - '+err.message)});
 }
 function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city+" - "+uidShow;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";try{usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||"",email:u.email||"",time:Date.now(),userId:uidShow});}catch(e){}}}updateUser();
 function openPage(p){
