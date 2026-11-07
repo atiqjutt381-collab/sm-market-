@@ -1,60 +1,96 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SM Faisalabad Market</title><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}body{background:#f2f4f7}
-header{background:#0A2540;color:#fff;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.logo{display:flex;align-items:center;gap:8px}.logo b{background:#fff;color:#0A2540;padding:8px 10px;border-radius:10px;font-size:22px}.logo span{font-weight:800;font-size:13px}
-.icons{display:flex;gap:14px;font-size:20px;cursor:pointer}.wrap{max-width:480px;margin:auto;padding:12px;padding-bottom:90px}
-h1{font-size:24px;color:#0A2540;text-align:center;margin-top:6px}.sub{text-align:center;font-size:13px;color:#555;margin:4px 0 12px}
-.btns{display:flex;gap:10px}.btn{flex:1;padding:12px;border-radius:10px;border:1px solid #0A2540;text-align:center;font-weight:800;cursor:pointer}.btn.fill{background:#0A2540;color:#fff}.btn.white{background:#fff;color:#0A2540}
-.boxes{display:flex;gap:10px;margin:14px 0}.box{flex:1;background:#fff;border-radius:14px;padding:14px 6px;text-align:center;box-shadow:0 2px 8px #0001;cursor:pointer}.box div{font-size:26px}.box b{font-size:12px;color:#0A2540}.box small{font-size:11px;color:#666}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0;background:#fff;font-size:14px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.filters select{flex:1;min-width:120px}.pills{display:flex;gap:8px;overflow:auto;padding:6px 0}.pill{padding:8px 16px;background:#e8ecf1;border-radius:20px;white-space:nowrap;cursor:pointer;font-weight:700;font-size:13px}.pill.active{background:#0A2540;color:#fff}
-h2{font-size:19px;color:#0A2540;margin:12px 0 8px;display:flex;justify-content:space-between}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px #0001;cursor:pointer;position:relative}.card img{width:100%;height:140px;object-fit:cover}.card .p{padding:10px}.price{font-size:17px;font-weight:900;color:#0A2540}.card small{color:#666;font-size:12px}.heart{position:absolute;right:10px;bottom:58px;font-size:20px;background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center}.feat{position:absolute;left:8px;top:8px;background:#ffcc00;color:#000;font-size:11px;font-weight:900;padding:4px 8px;border-radius:6px}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0 14px;border-top:1px solid #ddd;max-width:480px;margin:auto;z-index:15}.nav{text-align:center;font-size:12px;cursor:pointer;color:#666}.nav.active{color:#0A2540;font-weight:800}.plus{background:#0A2540;color:#fff!important;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin-top:-28px}
-.page{display:none}.page.show{display:block}
-.detail-img{width:100%;height:280px;object-fit:cover;border-radius:14px}.tabs{display:flex;gap:8px;margin:10px 0}.tab{flex:1;text-align:center;padding:10px;background:#e8ecf1;border-radius:10px;font-weight:800;cursor:pointer}.tab.active{background:#0A2540;color:#fff}
-.callbar{position:fixed;bottom:78px;left:0;right:0;max-width:480px;margin:auto;display:flex;gap:8px;padding:8px;background:#fff;border-top:1px solid #ddd;z-index:14}.callbar button{flex:1;padding:13px;border-radius:10px;border:0;font-weight:900;color:#fff;cursor:pointer}.call{background:#0A2540}.wa{background:#25D366}
-.install{display:flex;align-items:center;gap:10px;background:#000;color:#fff;padding:12px;border-radius:12px;margin:10px 0;cursor:pointer}.install small{color:#ccc}
-#preview{width:100%;height:140px;object-fit:cover;border-radius:12px;display:none;margin-top:6px}
-</style></head><body>
-<header><div class="logo"><b>SM</b><span>SM MARKET<br>FAISALABAD MARKET</span></div><div class="icons"><span onclick="alert('No New Notifications')">🔔</span><span onclick="show('profile')">👤</span></div></header>
-<div class="wrap">
-<div id="home" class="page show">
-<h1>Welcome to SM Market!</h1><p class="sub">Pakistan's Own Buy & Sell Bazaar - Buy & Sell Anything</p>
-<div class="btns"><div class="btn fill" onclick="show('sell')">+ Post Free Ad</div><div class="btn white" onclick="document.getElementById('ads').scrollIntoView()">Browse Ads</div></div>
-<div class="boxes"><div class="box" onclick="filterCat('All')"><div>☰</div><b>SM All Ads</b><br><small>All listings</small></div><div class="box" onclick="filterCat('Cars')"><div>🚗 🏍️</div><b>Motors Car - Bike</b><br><small>Cars • Bikes</small></div><div class="box" onclick="filterCat('Property')"><div>🏠</div><b>Property House - Plot - Shop</b><br><small>Homes • Plots</small></div></div>
-<input id="search" placeholder="Search cars, mobiles, homes..." oninput="render(false)">
-<div class="filters"><select id="cityF" onchange="render(true)"><option>All Pakistan</option><option>Faisalabad</option><option>Samundri</option><option>Lahore</option><option>Rawalpindi</option><option>Gojra</option></select><select id="sortF" onchange="render(true)"><option>Newest First</option><option>Price Low - High</option><option>Price High - Low</option></select><select id="priceF" onchange="render(true)"><option>All Prices</option><option>Under 50,000</option><option>50,000 - 200,000</option><option>200,000+</option></select><select id="condF" onchange="render(true)"><option>All Conditions</option><option>New</option><option>Used</option></select></div>
-<div class="pills" id="pills"></div>
-<h2><span id="ads">Fresh Ads</span><span onclick="render(true)">See all ›</span></h2>
-<div class="grid" id="grid"></div><p id="loading" style="text-align:center;padding:12px;color:#666">Loading Ads...</p>
-</div>
-<div id="sell" class="page"><h1>Post Free Ad</h1><input id="t" placeholder="Title - e.g. iPhone 6s"><select id="cat"><option>Mobiles</option><option>Cars</option><option>Bikes</option><option>Motors</option><option>Property</option><option>House</option><option>Plot</option><option>Shop</option><option>Electronics</option><option>Furniture</option><option>Jobs</option><option>Services</option><option>Pets</option><option>Sports</option><option>Books</option><option>Fashion</option></select><select id="city"><option>Faisalabad</option><option>Samundri</option><option>Lahore</option><option>Rawalpindi</option><option>Gojra</option></select><input id="pr" type="number" placeholder="Price" oninput="document.getElementById('pp').innerText='Price Preview: Rs '+Number(this.value||0).toLocaleString()"><b id="pp" style="color:#0A2540">Price Preview: Rs 0</b><select id="cond"><option>Used</option><option>New</option></select><textarea id="desc" placeholder="Description"></textarea><input id="ph" placeholder="Your Phone For Call / WhatsApp - e.g. 03430864009"><input type="file" accept="image/*" id="fileInput" onchange="previewPhoto(this)"><img id="preview"><p style="font-size:12px;color:#666">Select 1 to 4 Photos From Gallery</p>
-<p style="font-weight:800;margin-top:10px">Choose Plan:</p><label><input type="radio" name="plan" checked> FREE AD - Rs 0 - Normal Ad</label><br><label><input type="radio" name="plan"> TOP AD 14 DAYS - Rs 500 - FEATURED</label><br><label><input type="radio" name="plan"> TOP AD 30 DAYS - Rs 1000 - FEATURED</label>
-<div class="btns" style="margin-top:10px"><div class="btn fill" onclick="postAd()">Post Ad</div><div class="btn white" onclick="show('home')">Cancel</div></div></div>
-<div id="fav" class="page"><h1>Favourites</h1><div id="favGrid" class="grid"></div><p id="favEmpty" style="text-align:center;padding:20px;color:#666">No Favourites Yet</p></div>
-<div id="myads" class="page"><h1>Manage Your Ads - Edit / Delete</h1><div id="myGrid" class="grid"></div><p id="myEmpty" style="text-align:center;padding:20px;color:#666">No Ads Yet</p><h2>Top Ad Requests - Admin</h2><div style="background:#fff;padding:12px;border-radius:12px"><b>Atiq Jutt - iPhone 13 Pro - Rs 500 - 14 Days</b><p style="font-size:12px">Payment Proof: JazzCash Screenshot</p><div class="btns"><div class="btn fill" onclick="alert('APPROVED - Ad is now TOP')">APPROVE</div><div class="btn white" onclick="alert('REJECTED')">REJECT</div></div></div></div>
-<div id="profile" class="page"><h1>My Profile</h1><div style="background:#fff;padding:14px;border-radius:14px"><b>Atiq Jutt</b><br><small>atiqjutt381@gmail.com</small><br><input id="pname" value="Atiq Jutt" placeholder="Edit Name"><input id="pcity" value="Faisalabad" placeholder="Edit City"><input id="pphone" value="03430864009" placeholder="Edit Phone"><div class="btn fill" style="text-align:center" onclick="alert('Profile Saved Successfully')">Save Profile</div><p style="font-size:12px;color:#666;margin-top:8px">Ad ID: SM-108001 | Seller ID: USER-501</p><div class="install" onclick="alert('Opening Play Store...')"><span style="font-size:28px">▶️</span><div><small>GET IT ON</small><br><b>Google Play - Install App</b></div></div><p style="margin-top:10px;cursor:pointer" onclick="alert('Help & Support')">Help & Support • View FAQ</p><p style="cursor:pointer;color:red" onclick="alert('Logged Out')">Logout</p><p style="cursor:pointer;color:red" onclick="alert('Profile Deleted')">Delete My Profile</p></div></div>
-<div id="detail" class="page"><button onclick="show('home')" style="padding:8px 14px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer">← Back</button><img id="dimg" class="detail-img"><h1 id="dtitle" style="text-align:left"></h1><b id="dprice" style="font-size:22px;color:#0A2540"></b><p id="dmeta" style="color:#666;font-size:13px"></p><div class="tabs"><div class="tab active" onclick="tab(this,'Details: Brand / Model / Condition / PTA Status / Location')">Details</div><div class="tab" onclick="tab(this,'PTA Approved, Battery 90, Full Box, No Fault, Urgent Sale')">Description</div><div class="tab" onclick="tab(this,'Seller: Atiq Jutt | Member Since 2026 | Active Ads 4 | Ad ID: SM-108001 | Seller ID: USER-501 | Report This Ad')">Posted by</div><div class="tab" onclick="tab(this,'Related Ads: iPhone 6s, Honda 125, Home For Sale')">Related Ads</div></div><div id="tabBox" style="background:#fff;padding:12px;border-radius:12px">Details: Brand / Model / Condition / PTA Status / Location</div><p style="text-align:center;font-size:12px;color:#666;margin:10px">No Chat - Only Direct Call / WhatsApp Call</p><div style="height:60px"></div></div>
-<div class="callbar" id="callbar" style="display:none"><button class="call" onclick="alert('Calling 03430864009...')">Direct Call</button><button class="wa" onclick="alert('Opening WhatsApp...')">Direct WhatsApp Call</button></div>
-<div id="login" class="page"><h1>Login</h1><p class="sub">Login With Phone + Password Only</p><input id="lphone" placeholder="Phone - e.g. 03430864009"><input id="lpass" type="password" placeholder="Password - Min 4 Characters"><label style="font-size:13px"><input type="checkbox" id="terms" style="width:auto"> I Agree To Terms & Conditions</label><div class="btn fill" style="text-align:center;margin-top:10px" onclick="doLogin()">Login</div><p style="text-align:center;margin-top:10px;font-size:13px;cursor:pointer" onclick="alert('Account Created')">Create New Account</p></div>
-</div>
-<nav><div class="nav active" onclick="show('home',this)">🏠<br>Home</div><div class="nav" onclick="show('fav',this)">♡<br>Favourites</div><div class="nav"><div class="plus" onclick="show('sell')">+</div></div><div class="nav" onclick="show('myads',this)">📋<br>My Ads</div><div class="nav" onclick="show('profile',this)">👤<br>Profile</div></nav>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SM Faisalabad Market</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f2f2f2;padding-bottom:80px}
+header{background:#0a2a5e;color:#fff;padding:14px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{font-size:20px}
+header input{width:92%;padding:10px;border-radius:20px;border:none;margin-top:10px;outline:none}
+.welcome{background:#0a2a5e;color:#fff;margin:12px;border-radius:14px;padding:18px;text-align:center}
+.welcome h2{font-size:19px}.welcome p{font-size:13px;opacity:.9;margin-top:4px}
+.welcome button{background:#fff;color:#0a2a5e;border:none;padding:9px 18px;border-radius:20px;font-weight:bold;margin-top:10px}
+.filters{display:flex;gap:8px;overflow:auto;padding:0 12px}
+.filters select{padding:9px;border-radius:20px;border:1px solid #ddd;background:#fff;min-width:130px}
+h3{padding:14px 12px 8px;font-size:16px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 12px}
+.cat{background:#fff;border-radius:12px;padding:12px 4px;text-align:center;font-size:12px;cursor:pointer;box-shadow:0 1px 3px #0001}
+.cat span{font-size:22px;display:block}
+#ads{padding:0 12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ad{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px #0001}
+.ad img{width:100%;height:130px;object-fit:cover;background:#ddd}
+.ad div{padding:8px}.ad b{font-size:13px}.ad p{font-size:12px;color:#666}
+.price{color:#0a2a5e;font-weight:bold!important}
+.ad button{width:48%;padding:7px;border:none;border-radius:8px;margin-top:6px;font-size:12px;font-weight:bold}
+.call{background:#0a2a5e;color:#fff}.wa{background:#25D366;color:#fff}.fav{background:#ffe8ec}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #ddd;z-index:20}
+nav button{border:none;background:none;font-size:12px;text-align:center;color:#333}
+nav button span{font-size:22px;display:block}
+nav .sell{background:#0a2a5e;color:#fff;width:56px;height:56px;border-radius:50%;margin-top:-28px;font-size:28px;box-shadow:0 4px 10px #0003}
+#sellBox{display:none;position:fixed;inset:0;background:#fff;z-index:30;padding:16px;overflow:auto}
+#sellBox input,#sellBox select,#sellBox textarea{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
+#sellBox button{width:100%;padding:12px;background:#0a2a5e;color:#fff;border:none;border-radius:10px;font-weight:bold}
+#loginGate{position:fixed;inset:0;background:#0a2a5e;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.loginCard{background:#fff;width:100%;max-width:380px;border-radius:16px;padding:22px;text-align:center}
+.loginCard h1{color:#0a2a5e;font-size:22px}.loginCard p{font-size:13px;color:#666;margin:8px 0 14px}
+.loginCard input,.loginCard select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
+.loginCard button{width:100%;padding:12px;background:#0a2a5e;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px}
+</style>
+</head>
+<body>
+<div id="loginGate"><div class="loginCard"><h1>SM Faisalabad Market</h1><p>Login to Continue - Buy and Sell in Faisalabad</p><input id="uName" placeholder="Your Full Name"><input id="uPhone" placeholder="Mobile Number - 0300xxxxxxx"><select id="uCity"><option>Faisalabad</option><option>Gojra</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Multan</option><option>Hyderabad</option><option>Peshawar</option><option>Quetta</option></select><button onclick="doLogin()">Login and Continue</button><p style="font-size:11px">By continuing, you agree to our Terms.</p></div></div>
+<header><h1>SM Faisalabad Market</h1><input id="search" placeholder="Search - Bike, Mobile, Car..." oninput="loadAds()"></header>
+<div class="welcome"><h2>Welcome to SM Faisalabad Market</h2><p>Faisalabad - Gojra - Pakistan - Everything Here</p><button onclick="openSell()">+ Post Ad - Totally Free</button></div>
+<div class="filters"><select id="city" onchange="loadAreas();loadAds()"><option value="">All Cities</option></select><select id="area" onchange="loadAds()"><option value="">All Areas</option></select><select id="price" onchange="loadAds()"><option value="">All Prices</option><option value="low">Low to High</option><option value="high">High to Low</option></select><select id="cond" onchange="loadAds()"><option value="">New / Used</option><option>New</option><option>Used</option></select></div>
+<h3>Categories - 22</h3><div class="cats" id="cats"></div>
+<h3>Fresh Ads - Live</h3><div id="ads"></div>
+<nav><button onclick="showAll()">🏠<br>Home</button><button onclick="showFav()">❤️<br>Favorite</button><button class="sell" onclick="openSell()">+</button><button onclick="showMy()">📋<br>My Ads</button><button onclick="logout()">👤<br>Profile</button></nav>
+<div id="sellBox"><h2>Post Ad - SM Faisalabad Market</h2><input id="t" placeholder="Title - Example Honda 125 2022"><input id="p" type="number" placeholder="Price - Rs"><select id="c"></select><select id="cc" onchange="loadAreas()"></select><select id="aa"></select><select id="co"><option>New</option><option>Used</option></select><input id="ph" placeholder="Mobile Number - 0300xxxxxxx"><input id="img" placeholder="Photo Link (Optional)"><textarea id="d" placeholder="Write Details..."></textarea><button onclick="saveAd()">Publish Ad</button><button style="background:#eee;color:#000;margin-top:8px" onclick="document.getElementById('sellBox').style.display='none'">Close</button></div>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
-let ads=[{id:'SM-108001',title:'iPhone 6s',price:10000,city:'Samundri',cat:'Mobiles',cond:'Used',time:'2h ago',views:121,img:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400',feat:false,seller:'USER-501'},{id:'SM-108002',title:'Honda 125',price:220000,city:'Faisalabad',cat:'Bikes',cond:'Used',time:'5h ago',views:200,img:'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400',feat:true,seller:'USER-502'},{id:'SM-108003',title:'Home For Sale',price:2000000,city:'Samundri',cat:'Property',cond:'New',time:'3h ago',views:90,img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400',feat:false,seller:'USER-503'},{id:'SM-108004',title:'Home For Sale',price:7200000,city:'Rawalpindi',cat:'House',cond:'New',time:'1d ago',views:46,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400',feat:false,seller:'USER-504'},{id:'SM-108005',title:'iPhone 13 Pro - PTA Approved',price:185000,city:'Lahore',cat:'Mobiles',cond:'Used',time:'1h ago',views:310,img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400',feat:true,seller:'USER-501'}];
-let favs=new Set();let curCat='All';let cats=['All','Motors','Cars','Bikes','Mobiles','Property','House','Plot','Shop','Electronics','Laptops','Furniture','Home Appliances','Fashion','Jobs','Services','Pets','Sports','Books'];let uploadedImg='';
-function show(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));document.getElementById(id).classList.add('show');document.getElementById('callbar').style.display=id==='detail'?'flex':'none';document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');if(id!=='home'||el)window.scrollTo(0,0)}
-function tab(el,txt){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('tabBox').innerText=txt}
-function filterCat(c){curCat=c;render(true)}
-function card(a){return `<div class="card" onclick="openDetail('${a.id}')">${a.feat?'<span class="feat">FEATURED</span>':''}<img src="${a.img}"><div class="p"><div class="price">Rs ${a.price.toLocaleString()}</div><div style="display:flex;justify-content:space-between"><b style="font-size:13px">${a.title}</b><span class="heart" onclick="event.stopPropagation();toggleFav('${a.id}')"> ${favs.has(a.id)?'❤️':'♡'}</span></div><small>${a.views} views • ${a.city} • ${a.time}</small><br><small>Ad ID: ${a.id} | Seller: ${a.seller}</small></div></div>`}
-function render(scroll){let q=document.getElementById('search').value.toLowerCase();let city=document.getElementById('cityF').value;let sort=document.getElementById('sortF').value;let pf=document.getElementById('priceF').value;let cf=document.getElementById('condF').value;let list=ads.filter(a=>(curCat==='All'||a.cat===curCat||(curCat==='Motors'&&(a.cat==='Cars'||a.cat==='Bikes')))&&a.title.toLowerCase().includes(q)&&(city==='All Pakistan'||a.city===city)&&(cf==='All Conditions'||a.cond===cf));if(pf==='Under 50,000')list=list.filter(a=>a.price<50000);if(pf==='50,000 - 200,000')list=list.filter(a=>a.price>=50000&&a.price<=200000);if(pf==='200,000+')list=list.filter(a=>a.price>200000);if(sort==='Price Low - High')list.sort((a,b)=>a.price-b.price);else if(sort==='Price High - Low')list.sort((a,b)=>b.price-a.price);else list.sort((a,b)=>(b.feat-a.feat));document.getElementById('grid').innerHTML=list.length?list.map(card).join(''):'<p>No Ads Found</p>';document.getElementById('loading').style.display='none';document.getElementById('pills').innerHTML=cats.map(c=>`<div class="pill ${c===curCat?'active':''}" onclick="filterCat('${c}')">${c}</div>`).join('');let f=ads.filter(a=>favs.has(a.id));document.getElementById('favGrid').innerHTML=f.map(card).join('');document.getElementById('favEmpty').style.display=f.length?'none':'block';let mine=ads.filter(a=>a.seller==='USER-501');document.getElementById('myGrid').innerHTML=mine.map(a=>card(a)+`<div style="display:flex;gap:6px;padding:0 10px 10px"><button style="flex:1;padding:8px;border-radius:8px;border:1px solid #0A2540;background:#fff;cursor:pointer" onclick="alert('Edit Ad')">Edit</button><button style="flex:1;padding:8px;border-radius:8px;border:0;background:#ff4444;color:#fff;cursor:pointer" onclick="deleteAd('${a.id}')">Delete</button></div>`).join('');document.getElementById('myEmpty').style.display=mine.length?'none':'block';if(scroll)window.scrollTo(0,0)}
-function toggleFav(id){favs.has(id)?favs.delete(id):favs.add(id);render(false)}
-function deleteAd(id){if(confirm('Delete This Ad?')){ads=ads.filter(a=>a.id!==id);render(false);alert('Ad Deleted')}}
-function openDetail(id){let a=ads.find(x=>x.id===id);document.getElementById('dimg').src=a.img;document.getElementById('dtitle').innerText=a.title;document.getElementById('dprice').innerText='Rs '+a.price.toLocaleString();document.getElementById('dmeta').innerText=a.city+' • '+a.cat+' • 1 Pics • Ad ID: '+a.id+' • Seller ID: '+a.seller;show('detail')}
-function previewPhoto(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{uploadedImg=e.target.result;let p=document.getElementById('preview');p.src=uploadedImg;p.style.display='block'};r.readAsDataURL(f)}
-function postAd(){let t=document.getElementById('t').value;if(!t)return alert('Please Enter Title');let p=Number(document.getElementById('pr').value||0);let img=uploadedImg||'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400';ads.unshift({id:'SM-10800'+(ads.length+1),title:t,price:p,city:document.getElementById('city').value,cat:document.getElementById('cat').value,cond:document.getElementById('cond').value,time:'Just now',views:0,img:img,feat:false,seller:'USER-501'});alert('Ad Posted Successfully - Free Ad Live');render(true);show('home')}
-function doLogin(){let ph=document.getElementById('lphone').value;let pw=document.getElementById('lpass').value;if(!ph)return alert('Enter Phone');if(pw.length<4)return alert('Password Min 4 Characters');if(!document.getElementById('terms').checked)return alert('Please Tick Terms & Conditions');alert('Login Successful');show('home')}
-render(false);setTimeout(()=>{document.getElementById('loading').style.display='none'},800);
-</script></body></html>
+const firebaseConfig={apiKey:"AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",authDomain:"sm-market-f7283.firebaseapp.com",databaseURL:"https://sm-market-f7283-default-rtdb.firebaseio.com",projectId:"sm-market-f7283",storageBucket:"sm-market-f7283.firebasestorage.app",messagingSenderId:"467902826161",appId:"1:467902826161:web:3a95a176f7b57d15050490"};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database().ref('ads');
+function getUser(){try{return JSON.parse(localStorage.getItem('sm_user')||'null')}catch(e){return null}}
+if(getUser()){document.getElementById('loginGate').style.display='none'}
+function cleanPhone(p){p=(p||'').replace(/\D/g,'');if(p.startsWith('92'))return p;if(p.startsWith('0'))return '92'+p.slice(1);return p}
+function doLogin(){let n=document.getElementById('uName').value.trim(),p=document.getElementById('uPhone').value.trim(),c=document.getElementById('uCity').value;if(!n||cleanPhone(p).length<12){alert('Please Enter Name and Valid Mobile Number');return}localStorage.setItem('sm_user',JSON.stringify({name:n,phone:p,city:c}));document.getElementById('loginGate').style.display='none';document.getElementById('ph').value=p;document.getElementById('cc').value=c;loadAreas()}
+function logout(){if(confirm('Do you want to Logout?')){localStorage.removeItem('sm_user');location.reload()}}
+const cats=["🏍️ Bikes","🚗 Cars","📱 Mobiles","💻 Laptops / Computers","🏠 Home / Property","📐 Plots","🛋️ Furniture","🔌 Electronics","👕 Fashion / Clothes","⌚ Watches","👟 Shoes","👜 Bags","💄 Beauty / Cosmetics","⚽ Sports","🧸 Toys","📚 Books","🍳 Kitchen Items","🐶 Animals / Pets","🐦 Birds","💼 Jobs","🛠️ Services","📦 Others"];
+const citiesData={"Faisalabad":["Madina Town","Peoples Colony","Gulberg","Jinnah Colony","Satiana Road","Susan Road","D Ground","Jaranwala Road"],"Gojra":["Main Bazar","Station Road","Civil Lines","Mohalla Islam Pura","Toba Road","Jhang Road"],"Lahore":["Gulberg","Model Town","DHA","Johar Town"],"Karachi":["Gulshan","Clifton","DHA","North Nazimabad"],"Islamabad":["F-6","G-9","I-8","Bahria Town"],"Rawalpindi":["Saddar","Bahria Town","Satellite Town"],"Multan":["Cantt","Gulgasht","Bosan Road"],"Hyderabad":["Latifabad","Qasimabad"],"Peshawar":["University Road","Hayatabad"],"Quetta":["Jinnah Road","Cantt"]};
+let allAds=[],favOnly=false,myOnly=false,selectedCat="";
+const catsDiv=document.getElementById('cats');
+cats.forEach(c=>{let d=document.createElement('div');d.className='cat';d.innerHTML=`<span>${c.split(' ')[0]}</span>${c.split(' ').slice(1).join(' ')}`;d.onclick=()=>{selectedCat=c;loadAds()};catsDiv.appendChild(d)});
+let citySel=document.getElementById('city'),catSel=document.getElementById('c'),ccSel=document.getElementById('cc');
+Object.keys(citiesData).forEach(c=>{citySel.innerHTML+=`<option>${c}</option>`;ccSel.innerHTML+=`<option>${c}</option>`});
+cats.forEach(c=>catSel.innerHTML+=`<option>${c}</option>`);
+function loadAreas(){let city=document.getElementById('cc').value;let a=document.getElementById('aa');a.innerHTML='';(citiesData[city]||[]).forEach(x=>a.innerHTML+=`<option>${x}</option>`);let city2=document.getElementById('city').value;let ar=document.getElementById('area');ar.innerHTML='<option value="">All Areas</option>';(citiesData[city2]||[]).forEach(x=>ar.innerHTML+=`<option>${x}</option>`)}
+loadAreas();
+function openSell(){if(!getUser()){alert('Please Login First');return}document.getElementById('sellBox').style.display='block';let u=getUser();document.getElementById('ph').value=u.phone;document.getElementById('cc').value=u.city;loadAreas()}
+function saveAd(){
+let u=getUser()||{};let ad={title:document.getElementById('t').value.trim(),price:Number(document.getElementById('p').value)||0,cat:document.getElementById('c').value,city:document.getElementById('cc').value,area:document.getElementById('aa').value,cond:document.getElementById('co').value,phone:document.getElementById('ph').value.trim(),ownerPhone:cleanPhone(document.getElementById('ph').value),img:document.getElementById('img').value.trim()||'https://picsum.photos/400/300',desc:document.getElementById('d').value,time:Date.now(),owner:u.phone||''};
+if(!ad.title||!ad.price||cleanPhone(ad.phone).length<12){alert('Title, Price and Valid Phone are Required');return}
+db.push(ad);alert('Ad is Live Now');document.getElementById('sellBox').style.display='none';
+}
+function showFav(){favOnly=true;myOnly=false;loadAds()} function showMy(){myOnly=true;favOnly=false;loadAds()} function showAll(){favOnly=false;myOnly=false;selectedCat="";loadAds()}
+function toggleFav(id){let f=JSON.parse(localStorage.getItem('fav')||'[]');f.includes(id)?f=f.filter(x=>x!==id):f.push(id);localStorage.setItem('fav',JSON.stringify(f));loadAds()}
+function openWA(p){window.open('https://wa.me/'+cleanPhone(p))}
+db.on('value',snap=>{allAds=[];snap.forEach(s=>{let v=s.val();v.id=s.key;allAds.push(v)});allAds.sort((a,b)=>b.time-a.time);loadAds()});
+function loadAds(){
+let q=document.getElementById('search').value.toLowerCase(),city=document.getElementById('city').value,area=document.getElementById('area').value,pr=document.getElementById('price').value,co=document.getElementById('cond').value;
+let list=[...allAds];let fav=JSON.parse(localStorage.getItem('fav')||'[]');let u=getUser();
+if(favOnly)list=list.filter(a=>fav.includes(a.id));
+if(myOnly)list=list.filter(a=>u && cleanPhone(a.ownerPhone||a.phone)===cleanPhone(u.phone));
+if(selectedCat)list=list.filter(a=>a.cat===selectedCat);
+if(q)list=list.filter(a=>(a.title||'').toLowerCase().includes(q));
+if(city)list=list.filter(a=>a.city===city); if(area)list=list.filter(a=>a.area===area); if(co)list=list.filter(a=>a.cond===co);
+if(pr==='low')list.sort((a,b)=>a.price-b.price); if(pr==='high')list.sort((a,b)=>b.price-a.price);
+document.getElementById('ads').innerHTML=list.length?list.map(a=>`<div class="ad"><img src="${a.img}" onerror="this.src='https://picsum.photos/400/300'"><div><b>${a.title}</b><p class="price">Rs ${a.price.toLocaleString()}</p><p>${a.city} - ${a.area} - ${a.cond} - ${a.cat}</p><button class="call" onclick="location.href='tel:${a.phone}'">Call</button><button class="wa" onclick="openWA('${a.phone}')">WhatsApp</button><button class="fav" onclick="toggleFav('${a.id}')">Fav</button></div></div>`).join(''):'<p style="padding:20px">No Ads Yet - Post First Ad!</p>';
+}
+</script>
+</body>
+</html>
