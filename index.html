@@ -38,6 +38,9 @@ nav .sell{background:#0a2a5e;color:#fff;width:56px;height:56px;border-radius:50%
 .loginCard h1{color:#0a2a5e;font-size:22px}.loginCard p{font-size:13px;color:#666;margin:8px 0 14px}
 .loginCard input,.loginCard select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
 .loginCard button{width:100%;padding:12px;background:#0a2a5e;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px}
+.uploadBox{border:2px dashed #0a2a5e;border-radius:12px;padding:14px;text-align:center;background:#f8f9ff;cursor:pointer;margin:7px 0}
+.uploadBox img{width:100%;max-height:180px;object-fit:cover;border-radius:10px;display:none;margin-top:8px}
+.uploadBox span{color:#0a2a5e;font-weight:bold;font-size:14px}
 </style>
 </head>
 <body>
@@ -48,13 +51,18 @@ nav .sell{background:#0a2a5e;color:#fff;width:56px;height:56px;border-radius:50%
 <h3>Categories - 22</h3><div class="cats" id="cats"></div>
 <h3>Fresh Ads - Live</h3><div id="ads"></div>
 <nav><button onclick="showAll()">🏠<br>Home</button><button onclick="showFav()">❤️<br>Favorite</button><button class="sell" onclick="openSell()">+</button><button onclick="showMy()">📋<br>My Ads</button><button onclick="logout()">👤<br>Profile</button></nav>
-<div id="sellBox"><h2>Post Ad - SM Faisalabad Market</h2><input id="t" placeholder="Title - Example Honda 125 2022"><input id="p" type="number" placeholder="Price - Rs"><select id="c"></select><select id="cc" onchange="loadAreas()"></select><select id="aa"></select><select id="co"><option>New</option><option>Used</option></select><input id="ph" placeholder="Mobile Number - 0300xxxxxxx"><input id="img" placeholder="Photo Link (Optional)"><textarea id="d" placeholder="Write Details..."></textarea><button onclick="saveAd()">Publish Ad</button><button style="background:#eee;color:#000;margin-top:8px" onclick="document.getElementById('sellBox').style.display='none'">Close</button></div>
+<div id="sellBox"><h2>Post Ad - SM Faisalabad Market</h2><input id="t" placeholder="Title - Example Honda 125 2022"><input id="p" type="number" placeholder="Price - Rs"><select id="c"></select><select id="cc" onchange="loadAreas()"></select><select id="aa"></select><select id="co"><option>New</option><option>Used</option></select><input id="ph" placeholder="Mobile Number - 0300xxxxxxx">
+<div class="uploadBox" onclick="document.getElementById('fileInput').click()"><span>📷 Tap to Upload Photo from Gallery</span><img id="previewImg"><p style="font-size:11px;color:#888;margin-top:6px">Photo will be shown in your Ad</p></div>
+<input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+<textarea id="d" placeholder="Write Details..."></textarea><button onclick="saveAd()">Publish Ad</button><button style="background:#eee;color:#000;margin-top:8px" onclick="document.getElementById('sellBox').style.display='none'">Close</button></div>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 const firebaseConfig={apiKey:"AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",authDomain:"sm-market-f7283.firebaseapp.com",databaseURL:"https://sm-market-f7283-default-rtdb.firebaseio.com",projectId:"sm-market-f7283",storageBucket:"sm-market-f7283.firebasestorage.app",messagingSenderId:"467902826161",appId:"1:467902826161:web:3a95a176f7b57d15050490"};
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database().ref('ads');
+let uploadedImg="";
+function handlePhoto(input){let f=input.files[0];if(!f)return;let r=new FileReader();r.onload=function(e){let img=new Image();img.onload=function(){let c=document.createElement('canvas');let max=800;let w=img.width,h=img.height;if(w>max){h=h*max/w;w=max}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);uploadedImg=c.toDataURL('image/jpeg',0.7);let pv=document.getElementById('previewImg');pv.src=uploadedImg;pv.style.display='block'};img.src=e.target.result};r.readAsDataURL(f)}
 function getUser(){try{return JSON.parse(localStorage.getItem('sm_user')||'null')}catch(e){return null}}
 if(getUser()){document.getElementById('loginGate').style.display='none'}
 function cleanPhone(p){p=(p||'').replace(/\D/g,'');if(p.startsWith('92'))return p;if(p.startsWith('0'))return '92'+p.slice(1);return p}
@@ -72,9 +80,9 @@ function loadAreas(){let city=document.getElementById('cc').value;let a=document
 loadAreas();
 function openSell(){if(!getUser()){alert('Please Login First');return}document.getElementById('sellBox').style.display='block';let u=getUser();document.getElementById('ph').value=u.phone;document.getElementById('cc').value=u.city;loadAreas()}
 function saveAd(){
-let u=getUser()||{};let ad={title:document.getElementById('t').value.trim(),price:Number(document.getElementById('p').value)||0,cat:document.getElementById('c').value,city:document.getElementById('cc').value,area:document.getElementById('aa').value,cond:document.getElementById('co').value,phone:document.getElementById('ph').value.trim(),ownerPhone:cleanPhone(document.getElementById('ph').value),img:document.getElementById('img').value.trim()||'https://picsum.photos/400/300',desc:document.getElementById('d').value,time:Date.now(),owner:u.phone||''};
+let u=getUser()||{};let ad={title:document.getElementById('t').value.trim(),price:Number(document.getElementById('p').value)||0,cat:document.getElementById('c').value,city:document.getElementById('cc').value,area:document.getElementById('aa').value,cond:document.getElementById('co').value,phone:document.getElementById('ph').value.trim(),ownerPhone:cleanPhone(document.getElementById('ph').value),img:uploadedImg||'https://picsum.photos/400/300',desc:document.getElementById('d').value,time:Date.now(),owner:u.phone||''};
 if(!ad.title||!ad.price||cleanPhone(ad.phone).length<12){alert('Title, Price and Valid Phone are Required');return}
-db.push(ad);alert('Ad is Live Now');document.getElementById('sellBox').style.display='none';
+db.push(ad);alert('Ad is Live Now');uploadedImg="";document.getElementById('previewImg').style.display='none';document.getElementById('sellBox').style.display='none';
 }
 function showFav(){favOnly=true;myOnly=false;loadAds()} function showMy(){myOnly=true;favOnly=false;loadAds()} function showAll(){favOnly=false;myOnly=false;selectedCat="";loadAds()}
 function toggleFav(id){let f=JSON.parse(localStorage.getItem('fav')||'[]');f.includes(id)?f=f.filter(x=>x!==id):f.push(id);localStorage.setItem('fav',JSON.stringify(f));loadAds()}
