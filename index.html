@@ -91,14 +91,13 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <h1 style="font-size:30px">SM Faisalabad Market</h1>
 <p style="margin:10px 0 20px">Buy and Sell in Faisalabad and across Pakistan</p>
 <div style="background:#fff;color:#000;border-radius:12px;padding:16px;text-align:left">
-<h3 style="text-align:center">Login / Sign Up</h3><p style="font-size:13px;color:#666;margin:6px 0;text-align:center">Login is required to view the market</p>
-<p style="font-size:13px;color:#0A2A5E;text-align:center;font-weight:800">No OTP - No Code - Just Enter Name and Phone</p>
-<input id="gName" placeholder="Your Full Name - Required" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
+<h3 style="text-align:center">Login / Sign Up</h3>
+<p style="font-size:14px;color:#0A2A5E;text-align:center;font-weight:800;margin:8px 0 12px">Just Enter Phone and Password</p>
 <input id="loginPhone" placeholder="Phone - 03xx-xxxxxxx - Required" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
-<div class="pwWrap"><input id="loginPass" type="password" placeholder="Password - Keep One You Remember" autocomplete="new-password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button onclick="togglePw('loginPass',this)">👁️</button></div>
-<p style="font-size:12px;color:#666;text-align:center">If you forget your password, enter the same Phone and Name again - Your old account will open</p>
+<div class="pwWrap"><input id="loginPass" type="password" placeholder="Password - Keep One You Remember" autocomplete="new-password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button type="button" onclick="togglePw('loginPass',this)">👁️</button></div>
+<p style="font-size:12px;color:#666;text-align:center">If you forget your password, enter the same Phone again with a new password - Your account will open</p>
 <div class="termsBox"><label><input type="checkbox" id="termsCheck"><span>I agree to the <b style="color:#0A2A5E;text-decoration:underline" onclick="event.stopPropagation();openTerms()">Terms and Conditions</b>. Login will not work without agreeing.</span></label></div>
-<button class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
+<button type="button" class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
 </div></div>
 <div id="termsModal" class="modal" style="background:rgba(0,0,0,.7);justify-content:center;padding:12px">
 <div style="background:#fff;color:#000;border-radius:12px;padding:16px;max-height:85vh;overflow:auto">
@@ -189,7 +188,7 @@ Number: <b>03430864009</b> - Name: SM Market<br>
 </div>
 
 <div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><input id="locSearch" placeholder="Search City - Lahore, Gojra..." oninput="renderLocList()"><button class="bigBtn" onclick="useNearMe()">📍 Use Near Me</button><button class="bigBtn" style="background:#eee;color:#000" onclick="setLocation('All Pakistan','All Areas')">🌍 All Pakistan - See All Ads</button><div id="locList"></div></div></div>
-<div id="faqPage" class="page"><div class="box faq"><h2>❓ Help / FAQ</h2><p><b>How To Post Ad?</b><br>Press SELL - Add Detail + Photo - POST AD</p><p><b>What Is Top Ad?</b><br>Top Ad stays on top - Rs 500 / 14 Days, Rs 1000 / 30 Days - Easypaisa 03430864009</p><p><b>Forgot Password?</b><br>Enter same Phone + Name - Enter new password - Account will open</p><p><b>How To Delete Ad?</b><br>My Ads > Press Delete</p><p><b>Need Help?</b><br>WhatsApp 03430864009</p></div></div>
+<div id="faqPage" class="page"><div class="box faq"><h2>❓ Help / FAQ</h2><p><b>How To Post Ad?</b><br>Press SELL - Add Detail + Photo - POST AD</p><p><b>What Is Top Ad?</b><br>Top Ad stays on top - Rs 500 / 14 Days, Rs 1000 / 30 Days - Easypaisa 03430864009</p><p><b>Forgot Password?</b><br>Enter same Phone - Enter new password - Account will open</p><p><b>How To Delete Ad?</b><br>My Ads > Press Delete</p><p><b>Need Help?</b><br>WhatsApp 03430864009</p></div></div>
 <div id="changePassPage" class="page"><div class="box"><h2>🔑 Change Password</h2><input type="password" id="oldPass" placeholder="Old Password"><input type="password" id="newPass" placeholder="New Password - 8+ , 1 Capital, 1 Number, 1 Special"><input type="password" id="confirmPass" placeholder="Confirm New Password"><button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
 <div id="feedbackPage" class="page"><div class="box"><h2>⭐ Give Feedback</h2><div class="starRow" id="starRow"><span onclick="setStars(1)">☆</span><span onclick="setStars(2)">☆</span><span onclick="setStars(3)">☆</span><span onclick="setStars(4)">☆</span><span onclick="setStars(5)">☆</span></div><p id="starLabel" style="text-align:center;margin:6px 0">Tap Stars</p><textarea id="fbMsg" placeholder="Write Your Feedback..." rows="3"></textarea><button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
 
@@ -263,10 +262,9 @@ function getAdId(a){ if(!a) return ''; if(a.adId) return a.adId; let h=0; let s=
 function getUserDisplayId(key){ if(!key) return 'SM-USER-108000'; let h=0; let s=String(key); for(let i=0;i<s.length;i++){h=(h*31 + s.charCodeAt(i))>>>0} let num=108000 + (h % 8999); return 'SM-USER-'+num; }
 function copyUserId(){ let t=document.getElementById('pUserId').innerText; if(!t||t==='-') return; if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>alert('User ID Copied: '+t)); else alert('User ID: '+t); }
 function cleanKey(s){return (s||'').toLowerCase().trim().replace(/[^a-z0-9]/g,'')}
-function makeUserKey(n,ph){
+function makeUserKey(ph){
   let p=(ph||'').replace(/\D/g,'');
   if(p) return 'phone_'+p;
-  if(n && cleanKey(n)) return 'user_'+cleanKey(n);
   return myDeviceId;
 }
 function getMyUserKey(){
@@ -274,7 +272,7 @@ function getMyUserKey(){
   if(saved) return saved;
   let u=JSON.parse(localStorage.getItem('sm_user')||'null');
   if(u && u.userKey) return u.userKey;
-  if(u) return makeUserKey(u.name,u.phone);
+  if(u) return makeUserKey(u.phone);
   return myDeviceId;
 }
 function fmt(n){let v=Number(n);if(isNaN(v))return '0';return v.toLocaleString('en-PK')}
@@ -314,29 +312,35 @@ function saveFavs(){localStorage.setItem('sm_favs',JSON.stringify(favs))}
 function openTerms(){document.getElementById('termsModal').classList.add('open')}
 function acceptTerms(){document.getElementById('termsCheck').checked=true;document.getElementById('termsModal').classList.remove('open')}
 
-// FIXED LOGIN - ONLY NAME, PHONE, PASSWORD - NO CITY, NO EMAIL
+// FINAL LOGIN - ONLY PHONE + PASSWORD - NO NAME, NO CITY, NO EMAIL
 function doLogin(){
-  let n=document.getElementById('gName').value.trim();
-  let ph=document.getElementById('loginPhone').value.trim();
-  let c="Faisalabad";
-  let em="";
-  if(!document.getElementById('termsCheck').checked){alert('Please Accept Terms and Conditions First - Tick The Checkbox');openTerms();return}
-  if(!n){alert("Please Enter Your Name - Name is Required");return}
-  if(!ph || ph.replace(/\D/g,'').length<10){alert('Please Enter Correct Phone Number - 03xx-xxxxxxx');return}
-  let pass=document.getElementById('loginPass').value||"sm123456@";
-  let userKey=makeUserKey(n,ph);
-  let userIdShow=getUserDisplayId(userKey);
-  localStorage.setItem('sm_userKey',userKey);
-  localStorage.setItem('sm_userId',userIdShow);
-  localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
-  document.getElementById('gate').classList.add('hidden');
-  updateUser();
-  alert("Welcome "+n+" - Market Opened - Your ID: "+userIdShow);
   try{
-    usersRef.child(userKey).set({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
-  }catch(e){ console.log("Firebase save fail - but market opened", e); }
+    var ph=(document.getElementById('loginPhone').value||'').trim();
+    var pass=(document.getElementById('loginPass').value||'').trim();
+    if(!document.getElementById('termsCheck').checked){alert('Please Accept Terms and Conditions First - Tick The Checkbox');openTerms();return;}
+    if(!ph || ph.replace(/\D/g,'').length<10){alert('Please Enter Correct Phone Number - 03xx-xxxxxxx');return;}
+    if(!pass){alert('Please Enter Password');return;}
+    var oldUser=null;
+    try{ oldUser=JSON.parse(localStorage.getItem('sm_user')||'null'); }catch(e){}
+    var n=(oldUser && oldUser.name && oldUser.name!=='User') ? oldUser.name : 'User';
+    var c=(oldUser && oldUser.city) ? oldUser.city : 'Faisalabad';
+    var userKey=makeUserKey(ph);
+    var userIdShow=getUserDisplayId(userKey);
+    // FIRST OPEN MARKET - THEN SAVE IN BACKGROUND, NO BLOCKING
+    localStorage.setItem('sm_userKey',userKey);
+    localStorage.setItem('sm_userId',userIdShow);
+    localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph,password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
+    var gate=document.getElementById('gate');
+    if(gate){gate.style.display='none';gate.classList.add('hidden');}
+    updateUser();
+    alert('Welcome - Market Opened - Your ID: '+userIdShow);
+    try{
+      usersRef.child(userKey).set({name:n,city:c,phone:ph,password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
+    }catch(e){ console.log('Firebase save fail - but market opened',e); }
+  }catch(e){ alert('Login Error: '+e.message); }
 }
-function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+uidShow;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city||'Faisalabad';document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city||'Faisalabad';document.getElementById('editPhone').value=u.phone||"";try{usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||"",email:u.email||"",time:Date.now(),userId:uidShow});}catch(e){}}}updateUser();
+window.doLogin=doLogin;
+function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText='Hi, '+(u.name||'User')+' - '+uidShow;document.getElementById('pName').innerText=u.name||'User';document.getElementById('pCity').innerText=u.city||'Faisalabad';document.getElementById('pPhone').innerText=u.phone||'-';document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name||'';document.getElementById('editCity').value=u.city||'Faisalabad';document.getElementById('editPhone').value=u.phone||'';try{usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||'',time:Date.now(),userId:uidShow});}catch(e){}}}updateUser();
 function openPage(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
 document.querySelectorAll('.bottomNav button').forEach(x=>x.classList.remove('active'));
@@ -356,18 +360,18 @@ function renderLocList(){let q=(document.getElementById('locSearch').value||'').
 function filterLocList(){renderLocList()}
 function setLocation(city,area){selectedCity=city;selectedArea=area;document.getElementById('cityFilter').value=city;document.getElementById('headerLoc').innerText=city;document.getElementById('areaFilter').value=area;renderAds();openPage('home')}
 function useNearMe(){
-  if(!navigator.geolocation){alert("Location Not Supported - Please Select City Manually");return}
-  navigator.geolocation.getCurrentPosition(()=>{setLocation('Faisalabad','Gojra');alert("Near Me - Showing Ads Near Faisalabad / Gojra")},()=>{alert("Location Permission Denied - Please Select City Manually");openPage('location')});
+  if(!navigator.geolocation){alert('Location Not Supported - Please Select City Manually');return}
+  navigator.geolocation.getCurrentPosition(()=>{setLocation('Faisalabad','Gojra');alert('Near Me - Showing Ads Near Faisalabad / Gojra')},()=>{alert('Location Permission Denied - Please Select City Manually');openPage('location')});
 }
 function filterCat(c,el){currentCat=c;document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderAds();openPage('home')}
 function cardHTML(a,i){if(!a||!a.title)return '';let isFav=favs.includes(a.title);let desc=a.desc||'';let imgSrc=(a.imgs&&a.imgs[0])||a.img||'';let topNow=isTopActive(a);return `<div class="card" onclick="openAd(${i})">${topNow?'<span class=topBadge>⭐ TOP AD</span>':''}${a.topPending?'<span class=pendingBadge>⏳ PENDING TOP</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${(a.title||'').replace(/'/g,"")}')">${isFav?'❤️':'♡'}</button><img src="${imgSrc}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city||''} ${a.area?', '+a.area:''} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p><p class=desc>${desc}</p><p style="font-size:11px;color:#0A2A5E;font-weight:800">Ad ID: ${getAdId(a)}</p></div>`}
 function renderAds(){
   if(!adsLoaded){document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';return}
-  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>a&&a.title&&(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city||!a.city)&&(area==='All Areas'||!a.area||a.area===area)&&((a.title||'').toLowerCase().includes(q)));list.sort((a,b)=>(isTopActive(b)?1:0)-(isTopActive(a)?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad</p>';let myCount=ads.filter(a=>a&&a.owner&&(a.owner===getMyUserKey()||a.owner===myDeviceId)).length;document.getElementById('pAds').innerText=myCount+" Ads";}
+  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>a&&a.title&&(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city||!a.city)&&(area==='All Areas'||!a.area||a.area===area)&&((a.title||'').toLowerCase().includes(q)));list.sort((a,b)=>(isTopActive(b)?1:0)-(isTopActive(a)?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad</p>';let myCount=ads.filter(a=>a&&a.owner&&(a.owner===getMyUserKey()||a.owner===myDeviceId)).length;document.getElementById('pAds').innerText=myCount+' Ads';}
 function toggleFav(title){if(favs.includes(title)){favs=favs.filter(f=>f!==title);}else{favs.push(title);alert('Added to Favourites ❤️')}saveFavs();renderAds();renderFavs()}
 function renderFavs(){let list=ads.filter(a=>a&&favs.includes(a.title));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
 function renderMyAds(){let my=ads.filter(a=>a&&a.title&&(a.owner===getMyUserKey()||a.owner===myDeviceId));document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between;cursor:pointer" onclick="openAd(${ads.indexOf(a)})"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${isTopActive(a)?'⭐ TOP':a.topPending?'⏳ PENDING TOP':'Normal'}</span></div><p style="font-size:12px;color:#666">Ad ID: ${getAdId(a)} - Tap title to view detail</p><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
-function editMyAd(id){let a=ads.find(x=>x._id===id);if(!a)return;document.getElementById('adTitle').value=a.title;document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCat').value=a.cat;document.getElementById('adCity').value=a.city;document.getElementById('adPhone').value=a.phone;document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('');window._editId=id;openPage('sell');alert("Edit Mode - Change Details And Tap POST AD - Old Ad Will Be Replaced");}
+function editMyAd(id){let a=ads.find(x=>x._id===id);if(!a)return;document.getElementById('adTitle').value=a.title;document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCat').value=a.cat;document.getElementById('adCity').value=a.city;document.getElementById('adPhone').value=a.phone;document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('');window._editId=id;openPage('sell');alert('Edit Mode - Change Details And Tap POST AD - Old Ad Will Be Replaced');}
 async function deleteMyAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted')}};
 function openAd(idx){
   currentAd=ads[idx];if(!currentAd)return;currentImgIdx=0;showImg();
@@ -439,7 +443,7 @@ async function postAd(){
   let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
   let isTopSelected=selectedPrice>0;
   let myKey=getMyUserKey();
-  let na={title:t,price:p,cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,img:uploadedImages[0],imgs:uploadedImages,featured:false,top:false,topPending:isTopSelected,topPlan:isTopSelected?selectedPlan:'Free',topDays:isTopSelected?(selectedPrice===500?14:30):0,topUntil:0,uid:myKey,owner:myKey,ownerUserId:u.userId||getUserDisplayId(myKey),email:u.name||"",province:"",time:Date.now(),createdAt:Date.now()};
+  let na={title:t,price:p,cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,img:uploadedImages[0],imgs:uploadedImages,featured:false,top:false,topPending:isTopSelected,topPlan:isTopSelected?selectedPlan:'Free',topDays:isTopSelected?(selectedPrice===500?14:30):0,topUntil:0,uid:myKey,owner:myKey,ownerUserId:u.userId||getUserDisplayId(myKey),email:u.name||'',province:'',time:Date.now(),createdAt:Date.now()};
   try{
     if(window._editId){await db.ref('ads/'+window._editId).set(na);window._editId=null;alert('Ad Updated Successfully')}
     else{
@@ -471,7 +475,7 @@ function submitFeedback(){
 function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SM Faisalabad Market, I Need Help'),'_blank')}
 function logout(){localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');localStorage.removeItem('sm_userId');location.reload()}
 let clicks=0,clickTimer;
-document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'} ${uu.email?'- '+uu.email:''}<br><b style="color:#0A2A5E">ID: ${uu.userId||getUserDisplayId(k)}</b></div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password')}});
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'}<br><b style="color:#0A2A5E">ID: ${uu.userId||getUserDisplayId(k)}</b></div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password')}});
 async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
 </script>
 <script>
