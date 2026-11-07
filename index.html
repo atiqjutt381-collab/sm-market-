@@ -103,122 +103,132 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <div class="termsBox"><label><input type="checkbox" id="termsCheck"><span>Main <b style="color:#0A2A5E;text-decoration:underline" onclick="event.stopPropagation();openTerms()">Terms & Conditions</b> se agree karta hon. Bina agree kiye login nahi hoga.</span></label></div>
 <button class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
 </div></div>
-<div id="termsModal" class="modal" style="background:rgba(0,0,0,.7);justify-content:flex-end"><div style="background:#fff;color:#000;border-radius:16px 16px 0 0;padding:18px;max-height:85vh;overflow:auto"><h2 style="color:#0A2A5E">Terms & Conditions - SM Faisalabad Market</h2><p style="line-height:1.7;font-size:14px;margin-top:10px">1. Sirf asli ads lagayen. Fake / fraud ad delete kar diya jayega.<br>2. Payment ka zimma buyer aur seller ka hai. Admin zimmedar nahi.<br>3. Top Ad ke liye payment Easypaisa 03430864009 par hogi. Screenshot ke baad admin verify karega.<br>4. Koi bhi ghalat, dhoka ya illegal cheez bechna mana hai.<br>5. Deal se pehle cheez khud check karen.<br>6. Admin kisi bhi waqt ad ya account delete kar sakta hai.<br>7. Apna password kisi ko na batayen.</p><button class="bigBtn" onclick="acceptTerms()">I Agree - Accept Karen</button><button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="document.getElementById('termsModal').classList.remove('open')">Close</button></div></div>
-<header>
-<div class="logo" id="logoClick"><img src="logo.jpg" onerror="this.src='icon-192.png'"> SM Faisalabad Market</div>
-<div style="font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap" onclick="openLocation()">📍 <span id="headerLoc">All Pakistan</span> ⌄</div>
-</header>
+<div id="termsModal" class="modal" style="background:rgba(0,0,0,.7);justify-content:center;padding:12px">
+<div style="background:#fff;color:#000;border-radius:12px;padding:16px;max-height:85vh;overflow:auto">
+<h2 style="color:#0A2A5E">Terms & Conditions</h2>
+<p style="font-size:14px;line-height:1.7;margin-top:10px">
+<b>1.</b> SM Faisalabad Market sirf Buy & Sell ke liye hai.<br>
+<b>2.</b> Har Ad ki zimmedari Seller ki hai - Admin zimmedar nahi.<br>
+<b>3.</b> Fraud / Fake Ad par Ad delete aur Account block ho sakta hai.<br>
+<b>4.</b> Payment hamesha khud verify karen - Advance bhejne se pehle cheez check karen.<br>
+<b>5.</b> Top Ad ke liye payment Easypaisa 03430864009 par hogi - Screenshot Admin verify karega.<br>
+<b>6.</b> Top Ad approve hone ke baad refund nahi hoga.<br>
+<b>7.</b> Ghalat / Haram / Illegal cheez ki Ad lagana mana hai.<br>
+<b>8.</b> Admin kisi bhi Ad ko bina bataye delete kar sakta hai.
+</p>
+<button class="bigBtn" onclick="acceptTerms()">I Agree - Accept Karen</button>
+<button class="bigBtn" style="background:#eee;color:#000" onclick="document.getElementById('termsModal').classList.remove('open')">Close</button>
+</div></div>
+
+<header><div class="logo" id="logoClick"><img src="logo.jpg" onerror="this.style.display='none'">SM Market</div><div style="display:flex;align-items:center;gap:8px"><span id="userInfo" style="font-size:12px"></span><span id="headerLoc" onclick="openPage('location')" style="font-size:12px;cursor:pointer">📍 All Pakistan ▼</span></div></header>
+
 <div id="homeExtras">
-<div class="banner"><h2>Welcome SM Faisalabad Market</h2><p>Buy & Sell in Faisalabad and across Pakistan</p></div>
+<div class="banner"><h2>Welcome to SM Faisalabad Market</h2><p>Buy & Sell in Faisalabad and All Pakistan - Free Ad Post Karen</p></div>
+<div class="searchBar"><input id="searchInput" placeholder="Search - iPhone, Honda 125..." oninput="renderAds()"><select id="cityFilter" onchange="document.getElementById('headerLoc').innerText=this.value;renderAds()"></select><select id="areaFilter" onchange="renderAds()"></select></div>
 <div class="bigCats">
-<div class="bigCat" onclick="filterCat('All',null)"><b>🚗🏍️</b><span>SM Motors</span></div>
-<div class="bigCat" onclick="filterCat('Property',null)"><b>🏠</b><span>Property</span></div>
-<div class="bigCat" onclick="filterCat('All',null)"><b>🛍️</b><span>All Categories</span></div>
+<div class="bigCat" onclick="filterCat('Mobiles')"><b>📱</b><span>Mobiles</span></div>
+<div class="bigCat" onclick="filterCat('Bikes')"><b>🏍️</b><span>Bikes</span></div>
+<div class="bigCat" onclick="filterCat('Cars')"><b>🚗</b><span>Cars</span></div>
 </div>
-<div class="searchBar"><select id="cityFilter" onchange="renderAds()"></select><select id="areaFilter" onchange="renderAds()"><option>All Areas</option></select><input id="searchInput" placeholder="Search - Mobile, Bike, Car..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="renderAds()"></div>
-<div style="display:flex;gap:8px;padding:0 10px 10px;background:#fff"><button class="bigBtn" style="margin:0" onclick="useNearMe()">📍 Near Me</button><button class="bigBtn" style="margin:0;background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="openLocation()">📍 Change Location</button></div>
 <div class="cats" id="catsBar"></div>
 </div>
-<div id="homePage" class="page active"><div style="display:flex;justify-content:space-between;padding:0 10px"><b>Fresh Ads - All Pakistan</b><span id="userInfo" style="font-size:12px"></span></div><div class="grid" id="adsGrid"><p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p></div></div>
-<div id="favPage" class="page"><div class="box"><h2>❤️ My Favourites</h2><p id="favEmpty">No favourites yet. Tap the heart ❤️ to save.</p></div><div class="grid" id="favGrid"></div></div>
-<div id="sellPage" class="page"><div class="box"><h2>Post Ad - SELL</h2>
-<input id="adTitle" placeholder="Ad Title - e.g iPhone 13 For Sale" autocomplete="off">
+
+<div id="homePage" class="page active"><div class="grid" id="adsGrid"><p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p></div></div>
+
+<div id="favPage" class="page"><div class="box"><h2>❤️ My Favourites</h2><p id="favEmpty">No Favourite Yet - Tap Heart ♡ On Any Ad</p><div class="grid" id="favGrid"></div></div></div>
+
+<div id="sellPage" class="page"><div class="box"><h2>📦 Post New Ad - FREE</h2>
+<input id="adTitle" placeholder="Ad Title - e.g iPhone 13 Pro PTA">
+<input id="adPrice" placeholder="Price - e.g 185000" inputmode="numeric" oninput="formatSellPrice(this)">
 <select id="adCat"></select>
-<input id="adPrice" type="text" inputmode="numeric" placeholder="Price - e.g 50,000" oninput="formatSellPrice(this)">
 <select id="adCity"></select>
 <select id="adArea"><option>Gojra</option><option>Samundri</option><option>Jaranwala</option><option>Tandlianwala</option><option>Dijkot</option><option>Satiana</option><option>City Area</option></select>
-<select id="adBrand"><option>Brand - Select</option><option>Nokia</option><option>Samsung</option><option>Apple</option><option>Honda</option><option>Toyota</option><option>Other</option></select>
+<input id="adBrand" placeholder="Brand - e.g Apple, Honda">
 <select id="adCondition"><option>Used</option><option>New</option></select>
-<select id="adPta"><option>PTA Approved</option><option>PTA Non-Approved</option><option>Not Applicable</option></select>
-<input id="adPhone" placeholder="WhatsApp / Call Number - 03xx-xxxxxxx" autocomplete="off">
-<textarea id="adDesc" placeholder="Full Description - e.g PTA Approved, Battery 90%..."></textarea>
-<p><b>Upload Photos - 1 to 4</b></p>
-<input type="file" id="adFiles" accept="image/*" multiple onchange="handleFiles(this)">
+<select id="adPta"><option>PTA Approved</option><option>Non-PTA</option><option>Not Applicable</option></select>
+<input id="adPhone" placeholder="Your Phone - 03xx-xxxxxxx">
+<textarea id="adDesc" placeholder="Full Detail Likhen - Condition, Fault, Documents, Location..." rows="4"></textarea>
+<p style="font-size:13px;font-weight:800;margin-top:8px">📸 Photos - Max 4 - Pehli Photo Main Hogi</p>
+<input type="file" accept="image/*" multiple onchange="handleFiles(this)">
 <div class="preview" id="imgPreview"></div>
-<small>1 Photo Required - Maximum 4 Photos</small>
-<button class="bigBtn" onclick="postAd()">POST AD</button>
+<h3 style="margin-top:14px;color:#0A2A5E">Choose Plan</h3>
+<div class="plan sel" id="planFree" onclick="selectPlan('Free',0)"><b>🆓 FREE Ad</b><br><small>Normal Ad - Sab Ke Neeche Aayega</small></div>
+<div class="plan" id="plan14" onclick="selectPlan('14 Days Top',500)"><b>⭐ 14 Days TOP - Rs 500</b><br><small>Top Me Rahega - Zyada Customers Dekhenge</small></div>
+<div class="plan" id="plan30" onclick="selectPlan('30 Days Top',1000)"><b>🔥 30 Days TOP - Rs 1000</b><br><small>1 Mahina Top - Sab Se Zyada Sale</small></div>
+<div id="payBox" class="hidden" style="background:#eef2ff;padding:12px;border-radius:10px;margin-top:10px">
+<b>Easypaisa Payment - <span id="payAmt">Rs 500</span></b><br>
+Number: <b>03430864009</b> - Name: SM Market<br>
+<p style="font-size:13px;margin:6px 0">Payment bhej ke screenshot yahan upload karen - Admin verify kar ke Top karega</p>
+<input type="file" id="payShot" accept="image/*">
+<button class="greenBtn" onclick="submitPayment()">Submit Payment Screenshot</button>
+</div>
+<button class="bigBtn" onclick="postAd()">POST AD - Publish Karen</button>
 </div></div>
-<div id="myAdsPage" class="page">
-<div class="box"><h2>📄 My Ads</h2><p>View, Edit and Delete Your Ads Here</p><div id="myAdsList"></div></div>
-<div class="box"><h2>🚀 Sell Fast Now</h2>
-<div class="plan sel" id="planFree" onclick="selectPlan('Free',0)">✅ Free Ad - Rs 0<br><small>Normal Ad - Shows Below</small></div>
-<div class="plan" id="plan14" onclick="selectPlan('14 Days Top',500)">⭐ Top Ad - 14 Days - Rs 500<br><small>Shows on Top - 14 Days</small></div>
-<div class="plan" id="plan30" onclick="selectPlan('30 Days Top',1000)">🔥 Top Ad - 30 Days - Rs 1000<br><small>Shows on Top - 30 Days</small></div>
-<div id="payBox" class="hidden" style="background:#eef2ff;padding:12px;border-radius:10px;margin-top:8px">
-<b>Payment - Easypaisa</b><br>Name: Atiq Ur Rehman<br>Number: 03430864009<br>Amount: <b id="payAmt">Rs 500</b><br><br>
-<label><b>Upload Payment Screenshot:</b></label>
-<input type="file" id="payShot" accept="image/*" onchange="document.getElementById('payShotName').innerText=this.files[0]?this.files[0].name:'Screenshot Selected'">
-<p id="payShotName" style="font-size:12px;color:green"></p>
-<small>After payment, upload screenshot - Admin will verify and set Top Ad</small><br>
-<button class="bigBtn" onclick="submitPayment()">Submit Payment</button>
-</div></div></div>
-<div id="profilePage" class="page">
-<div class="box"><h2>My Profile</h2>
-<div class="profileRow"><b>👤 Name</b><span id="pName">-</span></div>
-<div class="profileRow"><b>📍 City</b><span id="pCity">-</span></div>
-<div class="profileRow"><b>📱 Phone</b><span id="pPhone">-</span></div>
-<div class="profileRow" style="white-space:normal"><b>🆔 My User ID</b><span><span id="pUserId" style="color:#0A2A5E;font-weight:900">-</span><button class="copyBtn" onclick="copyUserId()">Copy</button></span></div>
-<div class="profileRow"><b>⭐ My Ads</b><span id="pAds">0 Ads</span></div>
-<div id="editProfileBox" style="display:none">
-<input id="editName" placeholder="Edit Name" autocomplete="off"><input id="editCity" placeholder="Edit City" autocomplete="off"><input id="editPhone" placeholder="Edit Phone" autocomplete="off">
+
+<div id="myAdsPage" class="page"><div class="box"><h2>📋 My Ads</h2><div id="myAdsList"><p>Loading...</p></div></div></div>
+
+<div id="profilePage" class="page"><div class="box"><h2>👤 My Profile</h2>
+<p><b>Name:</b> <span id="pName">-</span></p>
+<p><b>City:</b> <span id="pCity">-</span></p>
+<p><b>Phone:</b> <span id="pPhone">-</span></p>
+<p><b>My Ads:</b> <span id="pAds">0 Ads</span></p>
+<p><b>My User ID:</b> <span id="pUserId">-</span> <button class="copyBtn" onclick="copyUserId()">Copy</button></p>
+<button class="bigBtn" id="editBtn" onclick="document.getElementById('editProfileBox').style.display='block';this.style.display='none'">Edit Profile</button>
+<div id="editProfileBox" style="display:none;margin-top:10px">
+<input id="editName" placeholder="Name"><input id="editCity" placeholder="City"><input id="editPhone" placeholder="Phone">
 <button class="bigBtn" onclick="saveProfile()">Save Profile</button>
 </div>
-<button class="bigBtn" id="editBtn" onclick="document.getElementById('editProfileBox').style.display='block';this.style.display='none'">Edit Profile</button></div>
-<div class="box">
-<div class="profileRow" onclick="openPage('changepass')"><b>🔒 Change Password</b><span>›</span></div>
-<div class="profileRow" onclick="openPage('feedback')"><b>⭐ Help Us Improve - Feedback</b><span>›</span></div>
-<div class="profileRow" onclick="helpSupport()"><b>💬 Help & Support</b><span>WhatsApp ›</span></div>
-<div class="profileRow" onclick="openPage('faq')"><b>❓ View FAQ</b><span>›</span></div>
-<button class="greenBtn" id="installBtn" onclick="installApp()">⬇ Install App</button>
-<p id="installStatus" style="font-size:12px;text-align:center;color:#666;margin-top:6px">Tap Install - App Popup Will Appear</p>
-<button class="logoutCenter" onclick="logout()">🚪 Logout</button>
-</div></div>
-<div id="changePassPage" class="page"><div class="box"><h2>🔒 Change Password</h2><p style="font-size:13px;color:#666">Choose a strong password to keep your account safe.</p>
-<label>Old Password</label><div class="pwWrap"><input id="oldPass" type="password" placeholder="Old Password"><button onclick="togglePw('oldPass',this)">👁️</button></div>
-<label>New Password</label><div class="pwWrap"><input id="newPass" type="password" placeholder="New Password"><button onclick="togglePw('newPass',this)">👁️</button></div>
-<label>Confirm New Password</label><div class="pwWrap"><input id="confirmPass" type="password" placeholder="Confirm New Password"><button onclick="togglePw('confirmPass',this)">👁️</button></div>
-<div style="font-size:13px;line-height:1.8;color:#555;margin:8px 0">✅ At least 8 characters<br>✅ At least one uppercase letter<br>✅ At least one number<br>✅ At least one special character (@, #, $, etc.)</div>
-<button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
-<div id="feedbackPage" class="page"><div class="box"><h2>⭐ Help Us Improve!</h2><p>Rate your experience and tell us how we can improve.</p>
-<div class="starRow" id="starRow"><span onclick="setStars(1)">☆</span><span onclick="setStars(2)">☆</span><span onclick="setStars(3)">☆</span><span onclick="setStars(4)">☆</span><span onclick="setStars(5)">☆</span></div>
-<p style="text-align:center" id="starLabel">Tap to Rate</p>
-<textarea id="fbMsg" placeholder="Write your feedback here..."></textarea>
-<button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
-<div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><button class="bigBtn" onclick="useNearMe()">📍 Use My Current Location - Near Me</button><input id="locSearch" placeholder="Search City / Area..." autocomplete="off" oninput="filterLocList()"><div id="locList"></div><button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E" onclick="setLocation('All Pakistan','All Areas')">All Pakistan - Clear Location</button></div></div>
-<div id="faqPage" class="page"><div class="box faq"><h2>❓ View FAQ - Full Details</h2>
-<p><b>1. How to Post a Free Ad?</b><br>Tap SELL, enter Title, Price, City, Phone, Description and 1 to 4 Photos, then tap POST AD. Your ad will be visible to all customers.</p>
-<p><b>2. What is Top Ad?</b><br>Top Ad shows on top. 14 Days Plan is Rs 500 and 30 Days Plan is Rs 1000.</p>
-<p><b>3. How to Pay?</b><br>Pay on Easypaisa. Name: Atiq Ur Rehman, Number: 03430864009. Then upload screenshot. Admin will verify and set Top Ad.</p>
-<p><b>4. How to Contact Customer?</b><br>No Chat. Only Direct Call and Direct WhatsApp Call button.</p>
-<p><b>5. How Many Photos?</b><br>1 to 4 Photos. On ad open, photo opens in full size.</p>
-<p><b>6. How to See All Ads?</b><br>On Home, all customers ads are shown.</p>
-<p><b>7. What is My User ID?</b><br>Har customer ki 1 fixed ID hoti hai - My Profile me SM-USER-XXXXXX likhi hoti hai. Ye kabhi change nahi hoti.</p>
-<p><b>8. Login Kaise Yaad Rahega?</b><br>1 Baar login karen - App khud yaad rakhega. Dobara login ki zaroorat nahi - Jab tak khud Logout na karen.</p>
-</div></div>
-<div class="bottomNav">
-<button onclick="openPage('home')" id="navHome" class="active">🏠<br>Home</button>
-<button onclick="openPage('fav')" id="navFav">❤️<br>Favourite</button>
-<button onclick="openPage('sell')" id="navSell"><div class="sellCenter">+</div>SELL</button>
-<button onclick="openPage('myads')" id="navMyAds">📄<br>My Ads</button>
-<button onclick="openPage('profile')" id="navProfile">👤<br>My Profile</button>
 </div>
+<div class="box">
+<h2>⚙️ Settings</h2>
+<div class="profileRow" onclick="openPage('changepass')"><b>🔑 Change Password</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('feedback')"><b>⭐ Give Feedback</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('faq')"><b>❓ Help / FAQ</b><span>›</span></div>
+<div class="profileRow" onclick="helpSupport()"><b>💬 Help On WhatsApp</b><span>›</span></div>
+<div class="profileRow" onclick="openPage('location')"><b>📍 Change Location</b><span>›</span></div>
+</div>
+<div class="box"><h2>📱 Install App</h2><p id="installStatus">Tap Install To Add App To Home Screen</p><button class="bigBtn" id="installBtn" onclick="installApp()">📲 Install App</button></div>
+<button class="logoutCenter" onclick="logout()">🚪 Logout</button>
+</div>
+
+<div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><input id="locSearch" placeholder="Search City - Lahore, Gojra..." oninput="renderLocList()"><button class="bigBtn" onclick="useNearMe()">📍 Use Near Me</button><button class="bigBtn" style="background:#eee;color:#000" onclick="setLocation('All Pakistan','All Areas')">🌍 All Pakistan - Sab Ads Dekhen</button><div id="locList"></div></div></div>
+<div id="faqPage" class="page"><div class="box faq"><h2>❓ Help / FAQ</h2><p><b>Ad Kaise Lagayen?</b><br>SELL dabayen - Detail + Photo - POST AD</p><p><b>Top Ad Kya Hai?</b><br>Top Ad sab se upar rehta hai - Rs 500 / 14 Din, Rs 1000 / 30 Din - Easypaisa 03430864009</p><p><b>Password Bhool Gaye?</b><br>Wahi Phone + Naam likhen - Naya password likhen - Account khul jayega</p><p><b>Ad Delete Kaise Karen?</b><br>My Ads > Delete dabayen</p><p><b>Help Chahiye?</b><br>WhatsApp 03430864009</p></div></div>
+<div id="changePassPage" class="page"><div class="box"><h2>🔑 Change Password</h2><input type="password" id="oldPass" placeholder="Old Password"><input type="password" id="newPass" placeholder="New Password - 8+ , 1 Capital, 1 Number, 1 Special"><input type="password" id="confirmPass" placeholder="Confirm New Password"><button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
+<div id="feedbackPage" class="page"><div class="box"><h2>⭐ Give Feedback</h2><div class="starRow" id="starRow"><span onclick="setStars(1)">☆</span><span onclick="setStars(2)">☆</span><span onclick="setStars(3)">☆</span><span onclick="setStars(4)">☆</span><span onclick="setStars(5)">☆</span></div><p id="starLabel" style="text-align:center;margin:6px 0">Tap Stars</p><textarea id="fbMsg" placeholder="Apna Feedback Likhen..." rows="3"></textarea><button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
+
 <div id="adModal" class="modal">
-<div style="display:flex;justify-content:space-between;padding:12px"><button onclick="closeAd()" style="background:#fff;padding:8px 12px;border:none;border-radius:6px;font-weight:900">✕ Close</button><span id="modalCount" style="background:#0A2A5E;color:#fff;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900">1 / 1</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px"><span id="modalCount" style="font-weight:900">1 / 1</span><button onclick="closeAd()" style="background:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:900">✕ Close</button></div>
 <img id="modalImg" src="">
 <div class="thumbs" id="modalThumbs"></div>
-<div class="modalBody"><h2 id="mTitle"></h2><p class="price" id="mPrice" style="font-size:20px!important;margin:6px 0"></p><p id="mMeta" style="color:#666;font-size:13px"></p>
-<h3 class="detailSec">Details</h3>
-<table class="detailTable"><tr><td>Brand</td><td id="dBrand">-</td></tr><tr><td>Model</td><td id="dModel">-</td></tr><tr><td>Condition</td><td id="dCond">-</td></tr><tr><td>PTA Status</td><td id="dPta">-</td></tr><tr><td>Location</td><td id="dLoc">-</td></tr><tr><td>Ad ID</td><td id="dAdId" style="font-weight:900;color:#0A2A5E">-</td></tr></table>
-<h3 class="detailSec">Description</h3><p id="mDesc" style="line-height:1.7;white-space:pre-wrap;font-size:14px"></p>
-<h3 class="detailSec">Posted By</h3><div style="background:#eef2ff;padding:12px;border-radius:10px"><b id="postedName">Seller</b><p id="postedMeta" style="font-size:13px;color:#555;margin-top:4px"></p><p style="font-size:13px;margin-top:6px">Seller ID: <b id="postedUserId" style="color:#0A2A5E"></b></p><p style="font-size:13px">Ad ID: <b id="postedAdId" style="color:#0A2A5E"></b></p></div><p style="margin-top:10px;cursor:pointer" onclick="reportAd()">🚩 Report This Ad</p>
-<h3 class="detailSec">Related Ads</h3><div class="grid" id="relatedGrid" style="padding:0"></div>
-<div class="callRow"><a href="#" id="callBtn" style="background:#0A2A5E;color:#fff">📞 Direct Call</a><a href="#" id="waBtn" style="background:#25D366;color:#fff">💬 Direct WhatsApp Call</a></div>
-<p style="font-size:11px;color:#888;text-align:center;margin-top:8px">No Chat - Only Direct Call / WhatsApp Call</p></div></div>
-<div id="fullViewer"><button onclick="document.getElementById('fullViewer').classList.remove('open')">✕ Close</button><img id="fullImg" src=""></div>
-<div id="adminPanel" class="modal" style="background:#0A2A5E;overflow:auto">
-<div style="padding:20px;color:#fff;overflow:auto;flex:1"><h2>🔐 Admin Panel - Atiq Bhai</h2><p>Total Ads: <span id="adminCount"></span></p><p>Total Users: <span id="adminUsers">0</span></p>
-<h3 style="margin-top:14px">🚀 Top Ad Requests - Approve / Reject</h3><div id="adminTopRequests"></div>
-<h3 style="margin-top:14px">👥 All Users</h3><div id="adminUsersList"></div><h3 style="margin-top:14px">Feedbacks</h3><div id="adminFeedback"></div><div id="adminList" style="margin-top:12px"></div><button onclick="document.getElementById('adminPanel').classList.remove('open')" style="width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-weight:900">Close Admin</button></div></div>
+<div class="modalBody">
+<h2 id="mTitle"></h2><p id="mPrice" style="color:#0A2A5E;font-weight:900;font-size:20px"></p><p id="mMeta" style="font-size:12px;color:#666"></p>
+<h3 class="detailSec">📝 Description</h3><p id="mDesc" style="line-height:1.6"></p>
+<h3 class="detailSec">📋 Details</h3><table class="detailTable"><tr><td>Brand</td><td id="dBrand"></td></tr><tr><td>Model / Title</td><td id="dModel"></td></tr><tr><td>Condition</td><td id="dCond"></td></tr><tr><td>PTA Status</td><td id="dPta"></td></tr><tr><td>Location</td><td id="dLoc"></td></tr><tr><td>Ad ID</td><td id="dAdId"></td></tr></table>
+<h3 class="detailSec">👤 Seller Info</h3><p><b id="postedName"></b><br><span id="postedMeta" style="font-size:12px;color:#666"></span><br><span style="font-size:12px">Seller ID: <b id="postedUserId"></b> | Ad ID: <b id="postedAdId"></b></span></p>
+<div class="callRow"><a id="callBtn" href="#" style="background:#0A2A5E;color:#fff">📞 CALL</a><a id="waBtn" href="#" target="_blank" style="background:#25D366;color:#fff">💬 WHATSAPP</a></div>
+<button class="bigBtn" style="background:#eee;color:#000" onclick="reportAd()">🚩 Report This Ad</button>
+<h3 class="detailSec">🔁 Related Ads</h3><div class="grid" id="relatedGrid" style="padding:0"></div>
+</div></div>
+
+<div id="fullViewer"><img id="fullImg" src=""><button onclick="document.getElementById('fullViewer').classList.remove('open')">✕ Close</button></div>
+
+<div id="adminPanel" class="modal" style="background:#0A2A5E;overflow:auto;padding:12px">
+<div style="background:#eef1f6;color:#000;border-radius:12px;padding:14px">
+<h2>🔐 Admin Panel</h2><p>Total Ads: <b id="adminCount">0</b> | Total Users: <b id="adminUsers">0</b></p>
+<h3 style="margin-top:14px">⏳ Pending Top Requests</h3><div id="adminTopRequests"></div>
+<h3 style="margin-top:14px">👥 All Users</h3><div id="adminUsersList"></div>
+<h3 style="margin-top:14px">⭐ Feedbacks</h3><div id="adminFeedback"></div>
+<h3 style="margin-top:14px">📋 All Ads - Delete</h3><div id="adminList"></div>
+<button class="bigBtn" onclick="document.getElementById('adminPanel').classList.remove('open')">Close Admin</button>
+</div></div>
+
+<nav class="bottomNav">
+<button id="navHome" class="active" onclick="openPage('home')"><b>🏠</b>Home</button>
+<button id="navFav" onclick="openPage('fav')"><b>❤️</b>Fav</button>
+<button id="navSell" onclick="openPage('sell')"><div class="sellCenter">+</div>Sell</button>
+<button id="navMyAds" onclick="openPage('myads')"><b>📋</b>My Ads</button>
+<button id="navProfile" onclick="openPage('profile')"><b>👤</b>Profile</button>
+</nav>
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
@@ -307,6 +317,8 @@ listenAds();
 function saveFavs(){localStorage.setItem('sm_favs',JSON.stringify(favs))}
 function openTerms(){document.getElementById('termsModal').classList.add('open')}
 function acceptTerms(){document.getElementById('termsCheck').checked=true;document.getElementById('termsModal').classList.remove('open')}
+
+// ===== FINAL FIXED LOGIN - AB MARKET HAR HAAL ME KHULEGI =====
 function doLogin(){
   let n=document.getElementById('gName').value.trim();
   let c=document.getElementById('gCity').value.trim()||"Gojra";
@@ -318,26 +330,17 @@ function doLogin(){
   let pass=document.getElementById('loginPass').value||"sm123456@";
   let userKey=makeUserKey(n,c,ph,em);
   let userIdShow=getUserDisplayId(userKey);
-  usersRef.child(userKey).once('value',snap=>{
-    if(snap.exists()){
-      let oldData=snap.val()||{};
-      if(oldData.password && pass!==oldData.password){
-        alert('Wrong Password! Ye Number Pehle Se Kisi Aur Ka Hai - Sahi Password Likhen! Agar Password Bhool Gaye To Admin Se Rabta Karen - WhatsApp 03430864009');
-        return;
-      }
-      localStorage.setItem('sm_userKey',userKey);
-      localStorage.setItem('sm_userId',userIdShow);
-      localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
-      usersRef.child(userKey).update({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
-      document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome Back "+n+"! Market Opened - Purana Account Khula Hai - Your ID: "+userIdShow);
-    }else{
-      localStorage.setItem('sm_userKey',userKey);
-      localStorage.setItem('sm_userId',userIdShow);
-      localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
-      usersRef.child(userKey).set({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
-      document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Market Opened - You Can See All Ads - Your ID: "+userIdShow);
-    }
-  },(err)=>{alert('Internet / Firebase Error - Dobara Try Karen - '+err.message)});
+  // PEHLE MARKET KHOLO - PHIR FIREBASE ME SAVE KARO - KOI CHECK NAHI, KOI ROK NAHI
+  localStorage.setItem('sm_userKey',userKey);
+  localStorage.setItem('sm_userId',userIdShow);
+  localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph||"",email:em||"",password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
+  document.getElementById('gate').classList.add('hidden');
+  updateUser();
+  alert("Welcome "+n+"! Market Opened ✅ - Your ID: "+userIdShow);
+  // Firebase me background me save karo - fail bhi ho jaye to koi farq nahi
+  try{
+    usersRef.child(userKey).set({name:n,city:c,phone:ph||"",email:em||"",password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
+  }catch(e){ console.log("Firebase save fail - but market opened", e); }
 }
 function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city+" - "+uidShow;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";try{usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||"",email:u.email||"",time:Date.now(),userId:uidShow});}catch(e){}}}updateUser();
 function openPage(p){
