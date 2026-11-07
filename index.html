@@ -94,11 +94,55 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <h3 style="text-align:center">Login / Sign Up</h3>
 <p style="font-size:14px;color:#0A2A5E;text-align:center;font-weight:800;margin:8px 0 12px">Just Enter Phone and Password</p>
 <input id="loginPhone" placeholder="Phone - 03xx-xxxxxxx - Required" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
-<div class="pwWrap"><input id="loginPass" type="password" placeholder="Password - Keep One You Remember" autocomplete="new-password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button type="button" onclick="togglePw('loginPass',this)">👁️</button></div>
+<div class="pwWrap"><input id="loginPass" type="password" placeholder="Password - Min 4 Characters" autocomplete="new-password" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px"><button type="button" onclick="togglePw('loginPass',this)">👁️</button></div>
+<p style="font-size:12px;color:#0A2A5E;text-align:center;font-weight:700">Password must be at least 4 characters - e.g 1234, 2026, atiq123</p>
 <p style="font-size:12px;color:#666;text-align:center">If you forget your password, enter the same Phone again with a new password - Your account will open</p>
 <div class="termsBox"><label><input type="checkbox" id="termsCheck"><span>I agree to the <b style="color:#0A2A5E;text-decoration:underline" onclick="event.stopPropagation();openTerms()">Terms and Conditions</b>. Login will not work without agreeing.</span></label></div>
 <button type="button" class="bigBtn" onclick="doLogin()">Login / Sign Up</button>
 </div></div>
+
+<script>
+// LOGIN SCRIPT - FIREBASE SE ALAG - YE HAMESHA CHALEGA, NET SLOW HO TAB BHI
+function togglePw(id,btn){try{var el=document.getElementById(id);el.type=el.type==='password'?'text':'password';}catch(e){}}
+function openTerms(){document.getElementById('termsModal').classList.add('open')}
+function acceptTerms(){document.getElementById('termsCheck').checked=true;document.getElementById('termsModal').classList.remove('open')}
+function getUserDisplayId(key){if(!key) return 'SM-USER-108000';var h=0;var s=String(key);for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0}var num=108000+(h%8999);return 'SM-USER-'+num;}
+function makeUserKey(ph){var p=(ph||'').replace(/\D/g,'');if(p) return 'phone_'+p;return 'dev_'+Date.now();}
+function doLogin(){
+  try{
+    var phEl=document.getElementById('loginPhone');
+    var passEl=document.getElementById('loginPass');
+    var ph=(phEl?phEl.value:'').trim();
+    var pass=(passEl?passEl.value:'').trim();
+    var terms=document.getElementById('termsCheck');
+    if(!terms || !terms.checked){alert('Please Tick Terms and Conditions First - Tick The Checkbox');openTerms();return;}
+    if(!ph || ph.replace(/\D/g,'').length<10){alert('Please Enter Correct Phone Number - 03xx-xxxxxxx - 11 Digits');return;}
+    if(!pass){alert('Please Enter Password');return;}
+    if(pass.length<4){alert('Password must be at least 4 characters - e.g 1234, 2026');return;}
+    var oldUser=null;
+    try{oldUser=JSON.parse(localStorage.getItem('sm_user')||'null');}catch(e){}
+    var n=(oldUser && oldUser.name && oldUser.name!=='User')?oldUser.name:'User';
+    var c=(oldUser && oldUser.city)?oldUser.city:'Faisalabad';
+    var userKey=makeUserKey(ph);
+    var userIdShow=getUserDisplayId(userKey);
+    localStorage.setItem('sm_userKey',userKey);
+    localStorage.setItem('sm_userId',userIdShow);
+    localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph,password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
+    var gate=document.getElementById('gate');
+    if(gate){gate.style.display='none';gate.classList.add('hidden');}
+    alert('Welcome - Market Opened - Your ID: '+userIdShow);
+    if(window.updateUserAfterLogin){window.updateUserAfterLogin();}
+    try{
+      if(window._usersRef){window._usersRef.child(userKey).set({name:n,city:c,phone:ph,password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});}
+    }catch(e){}
+  }catch(e){alert('Login Error: '+e.message);}
+}
+window.doLogin=doLogin;
+window.togglePw=togglePw;
+window.openTerms=openTerms;
+window.acceptTerms=acceptTerms;
+</script>
+
 <div id="termsModal" class="modal" style="background:rgba(0,0,0,.7);justify-content:center;padding:12px">
 <div style="background:#fff;color:#000;border-radius:12px;padding:16px;max-height:85vh;overflow:auto">
 <h2 style="color:#0A2A5E">Terms and Conditions</h2>
@@ -188,8 +232,8 @@ Number: <b>03430864009</b> - Name: SM Market<br>
 </div>
 
 <div id="locationPage" class="page"><div class="box"><h2>📍 Select Location</h2><input id="locSearch" placeholder="Search City - Lahore, Gojra..." oninput="renderLocList()"><button class="bigBtn" onclick="useNearMe()">📍 Use Near Me</button><button class="bigBtn" style="background:#eee;color:#000" onclick="setLocation('All Pakistan','All Areas')">🌍 All Pakistan - See All Ads</button><div id="locList"></div></div></div>
-<div id="faqPage" class="page"><div class="box faq"><h2>❓ Help / FAQ</h2><p><b>How To Post Ad?</b><br>Press SELL - Add Detail + Photo - POST AD</p><p><b>What Is Top Ad?</b><br>Top Ad stays on top - Rs 500 / 14 Days, Rs 1000 / 30 Days - Easypaisa 03430864009</p><p><b>Forgot Password?</b><br>Enter same Phone - Enter new password - Account will open</p><p><b>How To Delete Ad?</b><br>My Ads > Press Delete</p><p><b>Need Help?</b><br>WhatsApp 03430864009</p></div></div>
-<div id="changePassPage" class="page"><div class="box"><h2>🔑 Change Password</h2><input type="password" id="oldPass" placeholder="Old Password"><input type="password" id="newPass" placeholder="New Password - 8+ , 1 Capital, 1 Number, 1 Special"><input type="password" id="confirmPass" placeholder="Confirm New Password"><button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
+<div id="faqPage" class="page"><div class="box faq"><h2>❓ Help / FAQ</h2><p><b>How To Post Ad?</b><br>Press SELL - Add Detail + Photo - POST AD</p><p><b>What Is Top Ad?</b><br>Top Ad stays on top - Rs 500 / 14 Days, Rs 1000 / 30 Days - Easypaisa 03430864009</p><p><b>Forgot Password?</b><br>Enter same Phone - Enter new password (Min 4 Characters) - Account will open</p><p><b>How To Delete Ad?</b><br>My Ads > Press Delete</p><p><b>Need Help?</b><br>WhatsApp 03430864009</p></div></div>
+<div id="changePassPage" class="page"><div class="box"><h2>🔑 Change Password</h2><input type="password" id="oldPass" placeholder="Old Password"><input type="password" id="newPass" placeholder="New Password - Min 4 Characters"><input type="password" id="confirmPass" placeholder="Confirm New Password"><button class="bigBtn" onclick="changePassword()">Change Password</button></div></div>
 <div id="feedbackPage" class="page"><div class="box"><h2>⭐ Give Feedback</h2><div class="starRow" id="starRow"><span onclick="setStars(1)">☆</span><span onclick="setStars(2)">☆</span><span onclick="setStars(3)">☆</span><span onclick="setStars(4)">☆</span><span onclick="setStars(5)">☆</span></div><p id="starLabel" style="text-align:center;margin:6px 0">Tap Stars</p><textarea id="fbMsg" placeholder="Write Your Feedback..." rows="3"></textarea><button class="bigBtn" onclick="submitFeedback()">Submit Feedback</button></div></div>
 
 <div id="adModal" class="modal">
@@ -226,6 +270,7 @@ Number: <b>03430864009</b> - Name: SM Market<br>
 <button id="navProfile" onclick="openPage('profile')"><b>👤</b>Profile</button>
 </nav>
 <script>
+try{
 const firebaseConfig = {
   apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
   authDomain: "sm-market-f7283.firebaseapp.com",
@@ -236,18 +281,19 @@ const firebaseConfig = {
   measurementId: "G-V4P837LMVS",
   databaseURL: "https://sm-market-f7283-default-rtdb.firebaseio.com"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const adsRef = db.ref('ads');
-const usersRef = db.ref('users');
-const topReqRef = db.ref('topRequests');
+if(window.firebase){firebase.initializeApp(firebaseConfig);window._db=firebase.database();window._adsRef=window._db.ref('ads');window._usersRef=window._db.ref('users');window._topReqRef=window._db.ref('topRequests');}else{window._db=null;window._adsRef=null;window._usersRef=null;window._topReqRef=null;}
+}catch(e){console.log('Firebase init fail - app will work in offline mode',e);window._db=null;window._adsRef=null;window._usersRef=null;window._topReqRef=null;}
+const db = window._db;
+const adsRef = window._adsRef;
+const usersRef = window._usersRef;
+const topReqRef = window._topReqRef;
 let deferredPrompt=null;
 function checkInstalled(){if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true){let b=document.getElementById('installBtn');if(b)b.innerText='App Already Installed';let s=document.getElementById('installStatus');if(s)s.innerText='App Already Installed - You Are Using Installed App';return true}return false}
 checkInstalled();
 window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;if(!checkInstalled()){document.getElementById('installStatus').innerText='Install Ready - Tap Button to Install';}});
 window.addEventListener('appinstalled',()=>{checkInstalled();});
 function installApp(){if(checkInstalled()){alert('App Already Installed - You Are Using Installed App');return}if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){document.getElementById('installStatus').innerText='App Installing...';}else{document.getElementById('installStatus').innerText='Install Cancelled - Try Again';}deferredPrompt=null;});}else{alert('Install App - If popup does not appear, use Browser Menu (3 Dots) > Add To Home Screen / Install App');}}
-if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>{rs.forEach(r=>r.unregister())});if('caches' in window){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k)))}}
+if('serviceWorker' in navigator){try{navigator.serviceWorker.getRegistrations().then(rs=>{rs.forEach(r=>r.unregister())});}catch(e){} if('caches' in window){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k)))}}
 const cats=["Mobiles","Bikes","Cars","Fashion","Sports","Home","Electronics","Jobs","Property","Furniture","Animals","Books","Beauty","Toys","Kitchen","Grocery","Services","Education","Medical","Agriculture","Others"];
 const catIcons={Mobiles:"📱",Bikes:"🏍️",Cars:"🚗",Fashion:"👕",Sports:"⚽",Home:"🏠",Electronics:"💻",Jobs:"💼",Property:"🏢",Furniture:"🛋️",Animals:"🐄",Books:"📚",Beauty:"💄",Toys:"🧸",Kitchen:"🍳",Grocery:"🛒",Services:"🔧",Education:"🎓",Medical:"💊",Agriculture:"🌾",Others:"📦"};
 const cities=["All Pakistan","Karachi","Lahore","Islamabad","Rawalpindi","Faisalabad","Multan","Hyderabad","Peshawar","Quetta","Sialkot","Gujranwala","Bahawalpur","Sargodha","Abbottabad","Samundri","Gojra","Jhang","Toba Tek Singh","Chiniot","Kasur","Okara","Sahiwal","Mardan","Swat","Gujrat","Jhelum","Attock","Chakwal","Mirpur","Muzaffarabad","Larkana","Sukkur","Nawabshah","Khairpur","Dera Ghazi Khan","Rahim Yar Khan","Vehari","Khanewal","Narowal","Hafizabad","Mandi Bahauddin","Nowshera","Kohat","Dera Ismail Khan","Turbat","Gwadar","Chaman","Loralai","Zhob"];
@@ -259,25 +305,18 @@ let favs=JSON.parse(localStorage.getItem('sm_favs')||'[]');
 let myDeviceId = localStorage.getItem('sm_device') || ('dev_'+Date.now()+'_'+Math.floor(Math.random()*9999));
 localStorage.setItem('sm_device', myDeviceId);
 function getAdId(a){ if(!a) return ''; if(a.adId) return a.adId; let h=0; let s=String(a._id||a.title||''); for(let i=0;i<s.length;i++){h=(h*31 + s.charCodeAt(i))>>>0} let num=108000 + (h % 8999); return 'SM-'+num; }
-function getUserDisplayId(key){ if(!key) return 'SM-USER-108000'; let h=0; let s=String(key); for(let i=0;i<s.length;i++){h=(h*31 + s.charCodeAt(i))>>>0} let num=108000 + (h % 8999); return 'SM-USER-'+num; }
 function copyUserId(){ let t=document.getElementById('pUserId').innerText; if(!t||t==='-') return; if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>alert('User ID Copied: '+t)); else alert('User ID: '+t); }
 function cleanKey(s){return (s||'').toLowerCase().trim().replace(/[^a-z0-9]/g,'')}
-function makeUserKey(ph){
-  let p=(ph||'').replace(/\D/g,'');
-  if(p) return 'phone_'+p;
-  return myDeviceId;
-}
 function getMyUserKey(){
   let saved=localStorage.getItem('sm_userKey');
   if(saved) return saved;
   let u=JSON.parse(localStorage.getItem('sm_user')||'null');
   if(u && u.userKey) return u.userKey;
-  if(u) return makeUserKey(u.phone);
+  if(u && u.phone) return 'phone_'+u.phone.replace(/\D/g,'');
   return myDeviceId;
 }
 function fmt(n){let v=Number(n);if(isNaN(v))return '0';return v.toLocaleString('en-PK')}
 function formatSellPrice(el){let v=el.value.replace(/[^0-9]/g,'');if(!v){el.value='';return}el.value=Number(v).toLocaleString('en-PK')}
-function togglePw(id,btn){let el=document.getElementById(id);el.type=el.type==='password'?'text':'password'}
 function isTopActive(a){if(!a||!a.top) return false; if(a.topUntil && Date.now()>a.topUntil) return false; return true}
 function timeAgo(t){if(!t)return '';let d=Date.now()-t;if(d<3600000)return 'Just now';if(d<86400000)return Math.floor(d/3600000)+' hours ago';return Math.floor(d/86400000)+' days ago'}
 function fillAll(){
@@ -292,6 +331,7 @@ document.getElementById('headerLoc').innerText='All Pakistan';
 document.getElementById('searchInput').value='';
 }fillAll();
 function listenAds(){
+  if(!adsRef){document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">No Internet - Ads will load when internet is back</p>';adsLoaded=true;return;}
   document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';
   adsRef.on('value',(snap)=>{
     ads=[];let val=snap.val();
@@ -301,6 +341,7 @@ function listenAds(){
   },(err)=>{console.log(err);document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads... Please Wait</p>';});
 }
 function seedDemoAds(){
+  if(!adsRef) return;
   let demos=[
     {title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",area:"City Area",phone:"03430864009",desc:"PTA Approved, Battery 90%, Full Box, No Fault, Urgent Sale",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800",imgs:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now(),createdAt:Date.now(),brand:"Apple",condition:"Used",pta:"PTA Approved"},
     {title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",area:"Gojra",phone:"03430864009",desc:"2023 Model, Total Genuine, Documents Clear, First Owner",img:"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800",imgs:["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now()-1,createdAt:Date.now()-1,brand:"Honda",condition:"Used",pta:"Not Applicable"},
@@ -309,38 +350,9 @@ function seedDemoAds(){
 }
 listenAds();
 function saveFavs(){localStorage.setItem('sm_favs',JSON.stringify(favs))}
-function openTerms(){document.getElementById('termsModal').classList.add('open')}
-function acceptTerms(){document.getElementById('termsCheck').checked=true;document.getElementById('termsModal').classList.remove('open')}
-
-// FINAL LOGIN - ONLY PHONE + PASSWORD - NO NAME, NO CITY, NO EMAIL
-function doLogin(){
-  try{
-    var ph=(document.getElementById('loginPhone').value||'').trim();
-    var pass=(document.getElementById('loginPass').value||'').trim();
-    if(!document.getElementById('termsCheck').checked){alert('Please Accept Terms and Conditions First - Tick The Checkbox');openTerms();return;}
-    if(!ph || ph.replace(/\D/g,'').length<10){alert('Please Enter Correct Phone Number - 03xx-xxxxxxx');return;}
-    if(!pass){alert('Please Enter Password');return;}
-    var oldUser=null;
-    try{ oldUser=JSON.parse(localStorage.getItem('sm_user')||'null'); }catch(e){}
-    var n=(oldUser && oldUser.name && oldUser.name!=='User') ? oldUser.name : 'User';
-    var c=(oldUser && oldUser.city) ? oldUser.city : 'Faisalabad';
-    var userKey=makeUserKey(ph);
-    var userIdShow=getUserDisplayId(userKey);
-    // FIRST OPEN MARKET - THEN SAVE IN BACKGROUND, NO BLOCKING
-    localStorage.setItem('sm_userKey',userKey);
-    localStorage.setItem('sm_userId',userIdShow);
-    localStorage.setItem('sm_user',JSON.stringify({name:n,city:c,phone:ph,password:pass,userKey:userKey,userId:userIdShow,termsAccepted:true}));
-    var gate=document.getElementById('gate');
-    if(gate){gate.style.display='none';gate.classList.add('hidden');}
-    updateUser();
-    alert('Welcome - Market Opened - Your ID: '+userIdShow);
-    try{
-      usersRef.child(userKey).set({name:n,city:c,phone:ph,password:pass,time:Date.now(),termsAccepted:true,userId:userIdShow});
-    }catch(e){ console.log('Firebase save fail - but market opened',e); }
-  }catch(e){ alert('Login Error: '+e.message); }
-}
-window.doLogin=doLogin;
-function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText='Hi, '+(u.name||'User')+' - '+uidShow;document.getElementById('pName').innerText=u.name||'User';document.getElementById('pCity').innerText=u.city||'Faisalabad';document.getElementById('pPhone').innerText=u.phone||'-';document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name||'';document.getElementById('editCity').value=u.city||'Faisalabad';document.getElementById('editPhone').value=u.phone||'';try{usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||'',time:Date.now(),userId:uidShow});}catch(e){}}}updateUser();
+function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();let uidShow=u.userId||getUserDisplayId(uk);localStorage.setItem('sm_userKey',uk);localStorage.setItem('sm_userId',uidShow);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText='Hi, '+(u.name||'User')+' - '+uidShow;document.getElementById('pName').innerText=u.name||'User';document.getElementById('pCity').innerText=u.city||'Faisalabad';document.getElementById('pPhone').innerText=u.phone||'-';document.getElementById('pUserId').innerText=uidShow;document.getElementById('editName').value=u.name||'';document.getElementById('editCity').value=u.city||'Faisalabad';document.getElementById('editPhone').value=u.phone||'';try{if(usersRef) usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||'',time:Date.now(),userId:uidShow});}catch(e){}}}
+window.updateUserAfterLogin=updateUser;
+updateUser();
 function openPage(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
 document.querySelectorAll('.bottomNav button').forEach(x=>x.classList.remove('active'));
@@ -372,7 +384,7 @@ function toggleFav(title){if(favs.includes(title)){favs=favs.filter(f=>f!==title
 function renderFavs(){let list=ads.filter(a=>a&&favs.includes(a.title));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
 function renderMyAds(){let my=ads.filter(a=>a&&a.title&&(a.owner===getMyUserKey()||a.owner===myDeviceId));document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between;cursor:pointer" onclick="openAd(${ads.indexOf(a)})"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${isTopActive(a)?'⭐ TOP':a.topPending?'⏳ PENDING TOP':'Normal'}</span></div><p style="font-size:12px;color:#666">Ad ID: ${getAdId(a)} - Tap title to view detail</p><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
 function editMyAd(id){let a=ads.find(x=>x._id===id);if(!a)return;document.getElementById('adTitle').value=a.title;document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCat').value=a.cat;document.getElementById('adCity').value=a.city;document.getElementById('adPhone').value=a.phone;document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('');window._editId=id;openPage('sell');alert('Edit Mode - Change Details And Tap POST AD - Old Ad Will Be Replaced');}
-async function deleteMyAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted')}};
+async function deleteMyAd(id){if(!db){alert('No Internet - Try Again Later');return;} if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted')}};
 function openAd(idx){
   currentAd=ads[idx];if(!currentAd)return;currentImgIdx=0;showImg();
   document.getElementById('mTitle').innerText=currentAd.title;document.getElementById('mPrice').innerText='Rs '+fmt(currentAd.price);
@@ -396,6 +408,7 @@ function closeAd(){document.getElementById('adModal').classList.remove('open')}
 function handleFiles(inp){uploadedImages=[];let files=Array.from(inp.files).slice(0,4);if(inp.files.length>4)alert('Only 4 Photos Allowed - First 4 Selected');files.forEach(f=>{let r=new FileReader();r.onload=e=>{uploadedImages.push(e.target.result);document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('')};r.readAsDataURL(f)})}
 function selectPlan(n,p){selectedPlan=n;selectedPrice=p;document.querySelectorAll('.plan').forEach(x=>x.classList.remove('sel'));if(p===0){document.getElementById('planFree').classList.add('sel');document.getElementById('payBox').classList.add('hidden')}if(p===500){document.getElementById('plan14').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 500'}if(p===1000){document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 1000'}}
 async function submitPayment(){
+  if(!topReqRef){alert('No Internet - Try Again Later');return;}
   let f=document.getElementById('payShot').files[0];if(!f){alert('Please Upload Payment Screenshot First');return}
   let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
   let lastAdId=localStorage.getItem('sm_lastAdId')||'';
@@ -426,6 +439,7 @@ async function rejectTop(reqId,adId){
   loadTopRequests();
 }
 function loadTopRequests(){
+  if(!topReqRef) return;
   topReqRef.once('value',snap=>{
     let val=snap.val()||{};
     let keys=Object.keys(val);
@@ -437,6 +451,7 @@ function loadTopRequests(){
   });
 }
 async function postAd(){
+  if(!db){alert('No Internet - Ad needs internet to post');return;}
   let t=document.getElementById('adTitle').value;let pRaw=document.getElementById('adPrice').value.replace(/,/g,'');let p=parseInt(pRaw);let ph=document.getElementById('adPhone').value;
   if(!t||!p){alert('Please Enter Title And Price');return}
   if(uploadedImages.length===0){alert('Please Upload At Least 1 Photo');return}
@@ -454,15 +469,15 @@ async function postAd(){
     openPage('home');
   }catch(e){alert('Database Error - Set Rules Read / Write True - '+e.message)}
 }
-function saveProfile(){let u=JSON.parse(localStorage.getItem('sm_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sm_user',JSON.stringify(u));updateUser();document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';alert('Profile Saved');openPage('profile')}
+function saveProfile(){let u=JSON.parse(localStorage.getItem('sm_user')||'{}');u.name=document.getElementById('editName').value||u.name;u.city=document.getElementById('editCity').value||u.city;u.phone=document.getElementById('editPhone').value||u.phone;localStorage.setItem('sm_user',JSON.stringify(u));updateUser();document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';alert('Profile Saved - Name Updated');openPage('profile')}
 function changePassword(){
   let oldP=document.getElementById('oldPass').value;let newP=document.getElementById('newPass').value;let conf=document.getElementById('confirmPass').value;
   let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
   if(oldP!==u.password){alert('Old Password Is Wrong');return}
-  if(newP.length<8||!/[A-Z]/.test(newP)||!/[0-9]/.test(newP)||!/[!@#$%^&*]/.test(newP)){alert('New Password Must Be 8+ Characters, 1 Uppercase, 1 Number, 1 Special Character');return}
+  if(newP.length<4){alert('New Password Must Be At Least 4 Characters');return}
   if(newP!==conf){alert('New Password And Confirm Password Do Not Match');return}
   u.password=newP;localStorage.setItem('sm_user',JSON.stringify(u));
-  try{ usersRef.child(getMyUserKey()).update({password:newP}); }catch(e){}
+  try{ if(usersRef) usersRef.child(getMyUserKey()).update({password:newP}); }catch(e){}
   alert('Password Changed Successfully');openPage('profile');
 }
 function setStars(n){currentStars=n;let stars=document.querySelectorAll('#starRow span');stars.forEach((s,i)=>{s.innerText=i<n?'★':'☆'});document.getElementById('starLabel').innerText=n+' Star'+(n>1?'s':'')+' - Thank You'}
@@ -475,8 +490,8 @@ function submitFeedback(){
 function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SM Faisalabad Market, I Need Help'),'_blank')}
 function logout(){localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');localStorage.removeItem('sm_userId');location.reload()}
 let clicks=0,clickTimer;
-document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'}<br><b style="color:#0A2A5E">ID: ${uu.userId||getUserDisplayId(k)}</b></div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password')}});
-async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();if(usersRef) usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${uu.name||'-'} - ${uu.city||'-'} - ${uu.phone||'-'}<br><b style="color:#0A2A5E">ID: ${uu.userId||getUserDisplayId(k)}</b></div>`}).join(''):'<p>No Users Yet</p>';});let fbs=JSON.parse(localStorage.getItem('sm_feedbacks')||'[]');document.getElementById('adminFeedback').innerHTML=fbs.length?fbs.map(f=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0">${f.name} - ${f.stars} Stars - ${f.msg||''}</div>`).join(''):'<p>No Feedback Yet</p>';document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div style="background:#fff;color:#000;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><span>${a.title} - Rs ${fmt(a.price)}</span><button onclick="deleteAd('${a._id}')" style="background:red;color:#fff;border:none;padding:6px 10px;border-radius:6px">Delete</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password')}});
+async function deleteAd(id){if(!db){alert('No Internet');return;} if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
 </script>
 <script>
 let ptrStartY=0,ptrPull=0,ptrActive=false;
