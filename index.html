@@ -626,5 +626,51 @@ document.addEventListener('touchstart',function(e){if(window.scrollY===0 && !doc
 document.addEventListener('touchmove',function(e){if(!ptrActive)return;if(window.scrollY!==0)return;let dy=e.touches[0].clientY-ptrStartY;if(dy>0){ptrPull=dy;if(dy>10){ptrBar.style.height=Math.min(dy,70)+'px';ptrBar.innerText=dy>60?'Release To Refresh!':'Pull Down To Refresh';}}}, {passive:true});
 document.addEventListener('touchend',function(){if(!ptrActive)return;ptrActive=false;ptrBar.style.height='0px';if(ptrPull>60){ptrBar.style.height='45px';ptrBar.innerText='Refreshing...';setTimeout(()=>{location.reload()},250)}} , {passive:true});
 </script>
+<!-- SM MARKET - OLX STYLE NOTIFICATION - FINAL -->
+<style>
+.sm-notif-wrap{position:fixed;top:0;left:0;right:0;z-index:99999;background:rgba(0,0,0,0.85);padding:10px 10px 20px 10px;border-radius:0 0 20px 20px;display:none;font-family:Arial,sans-serif}
+.sm-notif-top{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:6px 6px 12px 6px}
+.sm-notif-top b{font-size:20px}
+.sm-notif-card{background:#fff;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start}
+.sm-logo{width:58px;height:58px;min-width:58px;border:3px solid #0A4A6B;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#0A4A6B;font-weight:900;font-size:24px}
+.sm-notif-card small{color:#555;font-size:13px}
+.sm-notif-card h3{margin:6px 0 6px 0;font-size:21px;color:#000}
+.sm-notif-card p{margin:0;font-size:15px;color:#222;line-height:1.4}
+</style>
+
+<div class="sm-notif-wrap" id="smNotif">
+  <div class="sm-notif-top">
+    <b>Notifications</b>
+    <span onclick="closeSMNotif()" style="cursor:pointer;font-size:18px;">⚙️</span>
+  </div>
+  <div class="sm-notif-card">
+    <div class="sm-logo">SM</div>
+    <div>
+      <small>SM Faisalabad Market • now</small>
+      <h3>Your Ad is live!</h3>
+      <p>Get the top spot on SM Market ⭐ Feature your Ad now and sell fast!</p>
+    </div>
+  </div>
+  <div style="text-align:center;color:#aaa;font-size:12px;margin-top:10px;" onclick="closeSMNotif()">Tap to close</div>
+</div>
+
+<script>
+function showSMNotif(){
+  document.getElementById('smNotif').style.display='block';
+}
+function closeSMNotif(){
+  document.getElementById('smNotif').style.display='none';
+}
+// Page khulte hi 2 second baad dikhao
+setTimeout(showSMNotif, 2000);
+// 8 second baad khud band
+setTimeout(closeSMNotif, 10000);
+
+// Jab Ad Live ho to ye chalao
+function smAdLive(){
+  showSMNotif();
+}
+</script>
+<!-- SM MARKET - END -->  
 </body>
 </html>
