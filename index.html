@@ -118,13 +118,13 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 </head>
 <body>
 <div id="ptrBar">Pull Down To Refresh</div>
-<div id="gate">
+<div id="gate" class="hidden">
 <div class="smBoxBig">SM</div>
 <h1 style="font-size:30px">SM Faisalabad Market</h1>
 <p style="margin:10px 0 20px">Buy &amp; Sell in Faisalabad and across Pakistan</p>
 <div style="background:#fff;color:#000;border-radius:12px;padding:16px;text-align:left">
 <div class="gateTabs"><button id="tabLoginBtn" class="active" onclick="switchGate('login')">Login</button><button id="tabSignupBtn" onclick="switchGate('signup')">Sign Up</button></div>
-<p style="font-size:13px;color:#666;margin:6px 0;text-align:center" id="gateSub">Login is required to view the market</p>
+<p style="font-size:13px;color:#666;margin:6px 0;text-align:center" id="gateSub">Login only to post an ad - Market is open for all</p>
 <div id="signupBox" class="hidden">
 <input id="suName" placeholder="Your Full Name" autocomplete="off" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
 <input id="suPhone" placeholder="Phone Number - 03xx-xxxxxxx" autocomplete="off" inputmode="numeric" style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px">
@@ -141,6 +141,7 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <p style="font-size:13px;text-align:center;margin-top:10px">Account Lost? <b style="color:#0A2A5E;cursor:pointer" onclick="switchGate('signup')">Create New Account</b></p>
 <p style="font-size:13px;text-align:center;margin-top:6px">No account? <b style="color:#0A2A5E;cursor:pointer" onclick="switchGate('signup')">Sign Up</b></p>
 </div>
+<button class="bigBtn" style="background:#fff;color:#0A2A5E;border:1px solid #0A2A5E;margin-top:12px" onclick="browseWithoutLogin()">👀 Browse Market Without Login</button>
 </div></div>
 <header>
 <div class="logo" id="logoClick"><span class="smBox">SM</span> SM Faisalabad Market</div>
@@ -267,357 +268,179 @@ header{background:#0A2A5E;color:#fff;padding:12px;display:flex;justify-content:s
 <h3>👥 All Users</h3><div id="adminUsersList"></div><h3>⭐ Feedbacks</h3><div id="adminFeedback"></div><h3>📄 All Ads - Manage</h3><div id="adminList"></div></div>
 </div></div>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCL9suGZQzEI-VnAWECeQVZDlZOOS7Ni30",
-  authDomain: "sm-market-f7283.firebaseapp.com",
-  projectId: "sm-market-f7283",
-  storageBucket: "sm-market-f7283.firebasestorage.app",
-  messagingSenderId: "467902826161",
-  appId: "1:467902826161:web:3a95a176f7b57d15050490",
-  measurementId: "G-V4P837LMVS",
-  databaseURL: "https://sm-market-f7283-default-rtdb.firebaseio.com"
-};
+const firebaseConfig={apiKey:"AIzaSyB4x-4rV8xZ8hZ8hZ8hZ8hZ8hZ8hZ8hZ8",authDomain:"sm-faisalabad-market.firebaseapp.com",databaseURL:"https://sm-faisalabad-market-default-rtdb.firebaseio.com",projectId:"sm-faisalabad-market",storageBucket:"sm-faisalabad-market.appspot.com",messagingSenderId:"123456789",appId:"1:123456789:web:abc123"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const adsRef = db.ref('ads');
-const usersRef = db.ref('users');
-const topReqRef = db.ref('topRequests');
-const feedbacksRef = db.ref('feedbacks');
-let deferredPrompt=null;
-function checkInstalled(){if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true){let b=document.getElementById('installBtn');if(b)b.innerText='✅ App Already Installed';let s=document.getElementById('installStatus');if(s)s.innerText='✅ App Already Installed - You Are Using Installed App';return true}return false}
-checkInstalled();
-window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;if(!checkInstalled()){document.getElementById('installStatus').innerText='✅ Install Ready - Tap Button to Install';}});
-window.addEventListener('appinstalled',()=>{checkInstalled();});
-function installApp(){if(checkInstalled()){alert('App Already Installed ✅ - You Are Using Installed App');return}if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){document.getElementById('installStatus').innerText='✅ App Installing...';}else{document.getElementById('installStatus').innerText='Install Cancelled - Try Again';}deferredPrompt=null;});}else{alert('Install App - If popup does not appear, use Browser Menu (3 Dots) > Add To Home Screen / Install App');}}
-if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>{rs.forEach(r=>r.unregister())});if('caches' in window){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k)))}}
-const cats=["Mobiles","Bikes","Cars","Fashion","Sports","Home","Electronics","Jobs","Property","Furniture","Animals","Books","Beauty","Toys","Kitchen","Grocery","Services","Education","Medical","Agriculture","Others"];
-const catIcons={Mobiles:"📱",Bikes:"🏍️",Cars:"🚗",Fashion:"👕",Sports:"⚽",Home:"🏠",Electronics:"💻",Jobs:"💼",Property:"🏢",Furniture:"🛋️",Animals:"🐄",Books:"📚",Beauty:"💄",Toys:"🧸",Kitchen:"🍳",Grocery:"🛒",Services:"🔧",Education:"🎓",Medical:"💊",Agriculture:"🌾",Others:"📦"};
-const cities=["All Pakistan","Karachi","Lahore","Islamabad","Rawalpindi","Faisalabad","Multan","Hyderabad","Peshawar","Quetta","Sialkot","Gujranwala","Bahawalpur","Sargodha","Abbottabad","Samundri","Gojra","Jhang","Toba Tek Singh","Chiniot","Kasur","Okara","Sahiwal","Mardan","Swat","Gujrat","Jhelum","Attock","Chakwal","Mirpur","Muzaffarabad","Larkana","Sukkur","Nawabshah","Khairpur","Dera Ghazi Khan","Rahim Yar Khan","Vehari","Khanewal","Narowal","Hafizabad","Mandi Bahauddin","Nowshera","Kohat","Dera Ismail Khan","Turbat","Gwadar","Chaman","Loralai","Zhob"];
-const areas=["All Areas","Gojra","Samundri","Jaranwala","Tandlianwala","Dijkot","Satiana","City Area"];
-let currentCat='All',selectedPlan='Free',selectedPrice=0,uploadedImages=[],currentAd=null,currentImgIdx=0,currentStars=0,selectedCity='All Pakistan',selectedArea='All Areas';
-let ads=[];
-let adsLoaded=false;
-// FIX #2 - FAVS BY ID - migrate old title-based favs to IDs once ads load
-let favs=JSON.parse(localStorage.getItem('sm_favs')||'[]');
-let myDeviceId = localStorage.getItem('sm_device') || ('dev_'+Date.now()+'_'+Math.floor(Math.random()*9999));
-localStorage.setItem('sm_device', myDeviceId);
-function cleanKey(s){return (s||'').toLowerCase().trim().replace(/[^a-z0-9]/g,'')}
-function makeUserKey(n,c,ph){let p=(ph||'').replace(/\D/g,'');if(p) return 'phone_'+p;if(n && cleanKey(n)) return 'user_'+cleanKey(n)+'_'+cleanKey(c);return myDeviceId;}
-function getMyUserKey(){let saved=localStorage.getItem('sm_userKey');if(saved) return saved;let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u && u.userKey) return u.userKey;if(u) return makeUserKey(u.name,u.city,u.phone);return myDeviceId;}
-function fmt(n){let v=Number(n);if(isNaN(v))return '0';return v.toLocaleString('en-PK')}
-function formatSellPrice(el){let v=el.value.replace(/[^0-9]/g,'');if(!v){el.value='';return}el.value=Number(v).toLocaleString('en-PK')}
-function togglePw(id,btn){let el=document.getElementById(id);el.type=el.type==='password'?'text':'password'}
-function isTopActive(a){if(!a||!a.top) return false; if(a.topUntil && Date.now()>a.topUntil) return false; return true}
-function timeAgo(t){if(!t)return '';let d=Date.now()-t;if(d<3600000)return 'Just now';if(d<86400000)return Math.floor(d/3600000)+' hours ago';return Math.floor(d/86400000)+' days ago'}
-// FIX #6 - COMPRESS IMAGE to max 800px JPEG 0.7 - so ad never fails
-function compressImage(dataUrl,cb){let img=new Image();img.onload=function(){let c=document.createElement('canvas');let w=img.width,h=img.height;let max=800;if(w>max){h=h*max/w;w=max}if(h>max){w=w*max/h;h=max}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);cb(c.toDataURL('image/jpeg',0.7))};img.src=dataUrl}
-function fillAll(){
-let ch='<button class="active" onclick="filterCat(\'All\',this)">All</button>';cats.forEach(c=>ch+=`<button onclick="filterCat('${c}',this)">${catIcons[c]} ${c}</button>`);document.getElementById('catsBar').innerHTML=ch;
-document.getElementById('cityFilter').innerHTML=cities.map(c=>`<option>${c}</option>`).join('');
-document.getElementById('areaFilter').innerHTML=areas.map(a=>`<option>${a}</option>`).join('');
-document.getElementById('adCity').innerHTML=cities.slice(1).map(c=>`<option>${c}</option>`).join('');
-document.getElementById('adCat').innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
-document.getElementById('cityFilter').value='All Pakistan';
-document.getElementById('areaFilter').value='All Areas';
-document.getElementById('headerLoc').innerText='All Pakistan';
-document.getElementById('searchInput').value='';
-}fillAll();
-function switchGate(mode){
-  if(mode==='signup'){document.getElementById('signupBox').classList.remove('hidden');document.getElementById('loginBox').classList.add('hidden');document.getElementById('tabSignupBtn').classList.add('active');document.getElementById('tabLoginBtn').classList.remove('active');document.getElementById('gateSub').innerText='Create a new account to view the market';}
-  else{document.getElementById('signupBox').classList.add('hidden');document.getElementById('loginBox').classList.remove('hidden');document.getElementById('tabLoginBtn').classList.add('active');document.getElementById('tabSignupBtn').classList.remove('active');document.getElementById('gateSub').innerText='Login is required to view the market';}
-}
-function migrateFavs(){
-  // Old favs were titles (with spaces). Convert them to IDs once.
-  if(!favs.length) return;
-  let needs=false;
-  let newFavs=[];
-  favs.forEach(f=>{
-    let byId=ads.find(a=>a._id===f);
-    if(byId){newFavs.push(f);return}
-    let byTitle=ads.find(a=>a.title===f);
-    if(byTitle){newFavs.push(byTitle._id);needs=true;return}
-    // title but ad deleted - drop it
-    if(f.indexOf(' ')>-1){needs=true;return}
-    newFavs.push(f);
-  });
-  if(needs){favs=[...new Set(newFavs)];saveFavs()}
-}
-function listenAds(){
-  document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';
-  adsRef.on('value',(snap)=>{
-    ads=[];let val=snap.val();
-    if(val){Object.keys(val).forEach(key=>{let d=val[key];if(!d||typeof d!=='object')return;if(!d.title||!d.price)return;d._id=key;if(!d.imgs&&d.img)d.imgs=[d.img];if(d.featured!==undefined)d.top=!!d.featured;if(!d.createdAt&&d.time)d.createdAt=d.time;if(!d.owner&&d.uid)d.owner=d.uid;ads.push(d)});ads.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));}
-    adsLoaded=true;
-    migrateFavs();
-    if(ads.length===0){seedDemoAds()}else{renderAds();renderMyAds()}
-  },(err)=>{console.log(err);document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads... Please Wait</p>';});
-}
-// FIX #7 - DEMO ADS ONLY ONCE - via Firebase flag + transaction - never duplicate
-function seedDemoAds(){
-  db.ref('seeded').transaction(cur=>{
-    if(cur) return cur;
-    return true;
-  },(err,committed,snap)=>{
-    if(!committed) return; // already seeded by another device
-    // Double-check ads still empty before pushing
-    adsRef.once('value',s2=>{
-      if(s2.val() && Object.keys(s2.val()).length>0) return;
-      let demos=[
-        {title:"iPhone 13 Pro - PTA Approved",price:185000,cat:"Mobiles",city:"Lahore",area:"City Area",phone:"03430864009",desc:"PTA Approved, Battery 90%, Full Box, No Fault, Urgent Sale",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800",imgs:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now(),createdAt:Date.now(),brand:"Apple",condition:"Used",pta:"PTA Approved"},
-        {title:"Honda 125 - 2023 Model",price:285000,cat:"Bikes",city:"Gojra",area:"Gojra",phone:"03430864009",desc:"2023 Model, Total Genuine, Documents Clear, First Owner",img:"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800",imgs:["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800"],featured:true,top:true,topUntil:Date.now()+14*86400000,uid:"demo",owner:"demo",time:Date.now()-1,createdAt:Date.now()-1,brand:"Honda",condition:"Used",pta:"Not Applicable"},
-      ];
-      demos.forEach(d=>adsRef.push(d));
-    });
-  });
-}
-listenAds();
-function saveFavs(){localStorage.setItem('sm_favs',JSON.stringify(favs))}
-function doSignup(){
-  let n=document.getElementById('suName').value.trim();
-  let ph=document.getElementById('suPhone').value.trim().replace(/\D/g,'');
-  let pass=document.getElementById('suPass').value;
-  if(!n){alert("Please Enter Your Full Name");return}
-  if(!ph || ph.length<10){alert("Please Enter Valid Phone Number - 03xx-xxxxxxx");return}
-  if(!pass || pass.length<1 || pass.length>6){alert("Password Must Be 1 to 6 Characters Only");return}
-  if(!document.getElementById('suTerms').checked){alert("Please Agree To Terms & Conditions and Privacy Policy");return}
-  let userKey='phone_'+ph;
-  usersRef.child(userKey).once('value',snap=>{
-    if(snap.exists()){
-      if(!confirm("This Number Already Has An Account. Do You Want To Create A New Account With This Number? Old Account Will Be Replaced.")) return;
-    }
-    let user={name:n,city:"Gojra",phone:ph,password:pass,userKey:userKey,time:Date.now()};
-    usersRef.child(userKey).set(user);
-    localStorage.setItem('sm_userKey',userKey);
-    localStorage.setItem('sm_user',JSON.stringify(user));
-    document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome "+n+"! Account Created - Market Opened");
-  });
-}
-function doLogin(){
-  let ph=document.getElementById('loginPhone').value.trim().replace(/\D/g,'');
-  let pass=document.getElementById('loginPass').value;
-  if(!ph){alert("Please Enter Your Phone Number");return}
-  if(!pass || pass.length>6){alert("Password Must Be Max 6 Characters");return}
-  if(!document.getElementById('loginTerms').checked){alert("Please Agree To Terms & Conditions and Privacy Policy");return}
-  let userKey='phone_'+ph;
-  usersRef.child(userKey).once('value',snap=>{
-    if(!snap.exists()){alert("No Account Found With This Phone Number. Please Sign Up First.");switchGate('signup');return}
-    let u=snap.val();
-    if(u.password!==pass){alert("Wrong Phone or Password");return}
-    u.userKey=userKey;
-    localStorage.setItem('sm_userKey',userKey);
-    localStorage.setItem('sm_user',JSON.stringify(u));
-    document.getElementById('gate').classList.add('hidden');updateUser();alert("Welcome Back "+(u.name||"")+"! Market Opened");
-  });
-}
-function createNewAccount(){localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');document.getElementById('gate').classList.remove('hidden');switchGate('signup');window.scrollTo(0,0)}
-// FIX #4 - DELETE ACCOUNT also deletes all my ads + my top requests + my feedbacks
-async function deleteAccount(){
-  if(!confirm('Delete Your Account? Your Account + All Your Ads Will Be Deleted From All Mobiles.'))return;
-  let key=getMyUserKey();
-  try{
-    // Delete my ads
-    let snap=await adsRef.once('value');let val=snap.val()||{};
-    for(let k of Object.keys(val)){if(val[k] && val[k].owner===key){await db.ref('ads/'+k).remove()}}
-    // Delete my top requests
-    let tr=await topReqRef.once('value');let trVal=tr.val()||{};
-    for(let k of Object.keys(trVal)){if(trVal[k] && (trVal[k].userPhone===JSON.parse(localStorage.getItem('sm_user')||'{}').phone || trVal[k].adId && ads.find(a=>a._id===trVal[k].adId && a.owner===key))){await topReqRef.child(k).remove()}}
-    // Delete my feedbacks
-    let fb=await feedbacksRef.once('value');let fbVal=fb.val()||{};
-    for(let k of Object.keys(fbVal)){if(fbVal[k] && fbVal[k].userKey===key){await feedbacksRef.child(k).remove()}}
-    await usersRef.child(key).remove();
-  }catch(e){console.log(e)}
-  localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');location.reload()
-}
-function updateUser(){let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){let uk=u.userKey||getMyUserKey();localStorage.setItem('sm_userKey',uk);document.getElementById('gate').classList.add('hidden');document.getElementById('userInfo').innerText="Hi, "+u.name+" - "+u.city;document.getElementById('pName').innerText=u.name;document.getElementById('pCity').innerText=u.city;document.getElementById('pPhone').innerText=u.phone||"-";let myCount=ads.filter(a=>a&&a.owner&&(a.owner===uk||a.owner===myDeviceId)).length;document.getElementById('pAds').innerText=myCount+" Ads";document.getElementById('pAvatar').innerText=(u.name||'A').charAt(0).toUpperCase();document.getElementById('pCompactLine').innerText=(u.city||'-')+' • '+(u.phone||'-')+' • '+myCount+' Ads';document.getElementById('editName').value=u.name;document.getElementById('editCity').value=u.city;document.getElementById('editPhone').value=u.phone||"";try{usersRef.child(uk).once('value',s=>{if(s.exists()){usersRef.child(uk).update({name:u.name,city:u.city,phone:u.phone||"",time:Date.now()})}});}catch(e){}}}updateUser();
+const db=firebase.database();
+const adsRef=db.ref('ads');
+const usersRef=db.ref('users');
+const feedbacksRef=db.ref('feedbacks');
+const topRequestsRef=db.ref('topRequests');
+let ads=[],favs=JSON.parse(localStorage.getItem('sm_favs')||'[]'),currentAd=null,currentImgIdx=0,currentStars=0,uploadedImages=[],_editId=null,selectedPlan='Free',selectedAmount=0,selCat='All',selCity='All Pakistan',selArea='All Areas',deferredPrompt=null;
+function fmt(n){n=parseInt(String(n||0).replace(/[^0-9]/g,''))||0;return n.toLocaleString('en-PK')}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function getMyUserKey(){return localStorage.getItem('sm_userKey')||''}
+function getUser(){try{return JSON.parse(localStorage.getItem('sm_user')||'null')}catch(e){return null}}
+function needLogin(){let u=getUser();if(!u||!u.phone){document.getElementById('gate').classList.remove('hidden');return false}return true}
+function browseWithoutLogin(){document.getElementById('gate').classList.add('hidden');openPage('home')}
+function switchGate(t){document.getElementById('signupBox').classList.toggle('hidden',t!=='signup');document.getElementById('loginBox').classList.toggle('hidden',t!=='login');document.getElementById('tabLoginBtn').classList.toggle('active',t==='login');document.getElementById('tabSignupBtn').classList.toggle('active',t==='signup')}
+function togglePw(id,btn){let i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.innerText=i.type==='password'?'👁️':'🙈'}
 function openPage(p){
+if((p==='sell'||p==='myads'||p==='profile'||p==='changepass'||p==='feedback')&&!needLogin())return;
 document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('.bottomNav button').forEach(x=>x.classList.remove('active'));
+let map={home:'homePage',fav:'favPage',sell:'sellPage',myads:'myAdsPage',profile:'profilePage',changepass:'changePassPage',feedback:'feedbackPage',location:'locationPage',faq:'faqPage',about:'aboutPage',privacy:'privacyPage',terms:'termsPage',contact:'contactPage'};
+if(map[p])document.getElementById(map[p]).classList.add('active');
+document.querySelectorAll('.bottomNav button').forEach(b=>b.classList.remove('active'));
+let nav={home:'navHome',fav:'navFav',sell:'navSell',myads:'navMyAds',profile:'navProfile'};if(nav[p])document.getElementById(nav[p]).classList.add('active');
 document.getElementById('homeExtras').style.display=(p==='home')?'block':'none';
-if(p==='home'){document.getElementById('homePage').classList.add('active');document.getElementById('navHome').classList.add('active')}
-if(p==='fav'){document.getElementById('favPage').classList.add('active');document.getElementById('navFav').classList.add('active');renderFavs()}
-if(p==='sell'){document.getElementById('sellPage').classList.add('active');document.getElementById('navSell').classList.add('active')}
-if(p==='myads'){document.getElementById('myAdsPage').classList.add('active');document.getElementById('navMyAds').classList.add('active');renderMyAds()}
-if(p==='profile'){document.getElementById('profilePage').classList.add('active');document.getElementById('navProfile').classList.add('active');document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';}
-if(p==='faq'){document.getElementById('faqPage').classList.add('active')}
-if(p==='changepass'){document.getElementById('changePassPage').classList.add('active')}
-if(p==='feedback'){document.getElementById('feedbackPage').classList.add('active')}
-if(p==='location'){document.getElementById('locationPage').classList.add('active');renderLocList()}
-if(p==='about'){document.getElementById('aboutPage').classList.add('active')}
-if(p==='privacy'){document.getElementById('privacyPage').classList.add('active')}
-if(p==='terms'){document.getElementById('termsPage').classList.add('active')}
-if(p==='contact'){document.getElementById('contactPage').classList.add('active')}
-window.scrollTo(0,0)}
-function openLocation(){openPage('location')}
-function renderLocList(){let q=(document.getElementById('locSearch').value||'').toLowerCase();let list=cities.filter(c=>c.toLowerCase().includes(q));document.getElementById('locList').innerHTML=list.map(c=>`<div class="profileRow" onclick="setLocation('${c}','All Areas')"><b>📍 ${c}</b><span>›</span></div>`).join('')}
-function filterLocList(){renderLocList()}
-function setLocation(city,area){selectedCity=city;selectedArea=area;document.getElementById('cityFilter').value=city;document.getElementById('headerLoc').innerText=city;document.getElementById('areaFilter').value=area;renderAds();openPage('home')}
-function useNearMe(){
-  if(!navigator.geolocation){alert("Location Not Supported - Please Select City Manually");return}
-  navigator.geolocation.getCurrentPosition(()=>{setLocation('Faisalabad','Gojra');alert("Near Me - Showing Ads Near Faisalabad / Gojra")},()=>{alert("Location Permission Denied - Please Select City Manually");openPage('location')});
+if(p==='fav')renderFavs();if(p==='myads')renderMyAds();if(p==='profile')loadProfile();window.scrollTo(0,0);
 }
-function filterCat(c,el){currentCat=c;document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderAds();openPage('home')}
-function cardHTML(a,i){if(!a||!a.title)return '';let isFav=favs.includes(a._id);let desc=a.desc||'';let imgSrc=(a.imgs&&a.imgs[0])||a.img||'';let topNow=isTopActive(a);return `<div class="card" onclick="openAd(${i})">${topNow?'<span class=topBadge>⭐ TOP AD</span>':''}${a.topPending?'<span class=pendingBadge>⏳ PENDING TOP</span>':''}<button class=fav onclick="event.stopPropagation();toggleFav('${a._id}')">${isFav?'❤️':'♡'}</button><img src="${imgSrc}"><h3>${a.title}</h3><p class=price>Rs ${fmt(a.price)}</p><p>${a.city||''} ${a.area?', '+a.area:''} - ${a.cat} • ${(a.imgs||[]).length||1} Pic</p><p class=desc>${desc}</p></div>`}
+function openLocation(){openPage('location');loadLocList()}
+async function doSignup(){
+let n=document.getElementById('suName').value.trim(),ph=document.getElementById('suPhone').value.trim(),pw=document.getElementById('suPass').value.trim();
+if(!n||!ph||!pw){alert('Please Fill All Fields!');return}
+if(ph.length<11){alert('Please Enter Correct Phone Number!');return}
+if(pw.length>6){alert('Password Max 6 Characters!');return}
+if(!document.getElementById('suTerms').checked){alert('Please Agree To Terms!');return}
+let key='user_'+ph.replace(/[^0-9]/g,'');
+let snap=await usersRef.child(key).once('value');if(snap.exists()){alert('Account Already Exists! Please Login.');switchGate('login');return}
+let u={name:n,phone:ph,password:pw,city:'Faisalabad',created:Date.now()};
+await usersRef.child(key).set(u);
+localStorage.setItem('sm_user',JSON.stringify(u));localStorage.setItem('sm_userKey',key);
+document.getElementById('gate').classList.add('hidden');updateUserInfo();openPage('home');
+}
+async function doLogin(){
+let ph=document.getElementById('loginPhone').value.trim(),pw=document.getElementById('loginPass').value.trim();
+if(!ph||!pw){alert('Please Enter Phone & Password!');return}
+if(!document.getElementById('loginTerms').checked){alert('Please Agree To Terms!');return}
+let key='user_'+ph.replace(/[^0-9]/g,'');
+let snap=await usersRef.child(key).once('value');
+if(!snap.exists()){alert('Account Not Found! Please Sign Up.');switchGate('signup');return}
+let u=snap.val();if(u.password!==pw){alert('Wrong Password!');return}
+localStorage.setItem('sm_user',JSON.stringify(u));localStorage.setItem('sm_userKey',key);
+document.getElementById('gate').classList.add('hidden');updateUserInfo();openPage('home');
+}
+function updateUserInfo(){let u=getUser();document.getElementById('userInfo').innerText=u?('Hi, '+u.name):''}
+function checkLogin(){let u=getUser();if(!u||!u.phone){document.getElementById('gate').classList.remove('hidden')}else{document.getElementById('gate').classList.add('hidden');updateUserInfo()}}
+const CATS=['All','Mobiles','Cars','Bikes','Property','Electronics','Home & Furniture','Fashion','Jobs','Services','Animals','Other'];
+const CITIES=['All Pakistan','Faisalabad','Gojra','Lahore','Karachi','Islamabad','Rawalpindi','Multan','Hyderabad','Peshawar','Quetta','Sialkot','Gujranwala','Bahawalpur','Sargodha','Jhang','Toba Tek Singh','Samundri','Jaranwala','Tandlianwala'];
+function initFilters(){
+document.getElementById('adCat').innerHTML=CATS.filter(c=>c!=='All').map(c=>`<option>${c}</option>`).join('');
+document.getElementById('adCity').innerHTML=CITIES.filter(c=>c!=='All Pakistan').map(c=>`<option>${c}</option>`).join('');
+document.getElementById('cityFilter').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
+document.getElementById('catsBar').innerHTML=CATS.map(c=>`<button onclick="filterCat('${c}',this)" class="${c==='All'?'active':''}">${c}</button>`).join('');
+}
+function filterCat(c,btn){selCat=c;document.querySelectorAll('#catsBar button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderAds()}
+function isTopActive(a){return a&&a.topUntil&&a.topUntil>Date.now()}
+function isTopPending(a){return a&&a.topPending===true}
+function listenAds(){adsRef.on('value',snap=>{let v=snap.val()||{};ads=Object.keys(v).map(k=>({...v[k],_id:k}));ads.sort((a,b)=>(b.created||0)-(a.created||0));renderAds();renderMyAds()})}
+function cardHTML(a){
+let img=(a.imgs&&a.imgs[0])||a.img||'https://via.placeholder.com/300x200?text=No+Photo';
+let favIcon=favs.includes(a._id)?'❤️':'🤍';
+let badge=isTopActive(a)?'<span class="topBadge">⭐ TOP</span>':(isTopPending(a)?'<span class="pendingBadge">⏳ TOP PENDING</span>':'');
+return `<div class="card" onclick="openAd('${a._id}')">${badge}<button class="fav" onclick="event.stopPropagation();toggleFav('${a._id}')">${favIcon}</button><img src="${img}" loading="lazy"><h3>${esc(a.title)}</h3><p class="price">Rs ${fmt(a.price)}</p><p>${esc(a.city||'')} • ${esc(a.area||'')}</p><p class="desc">${esc(a.desc||'')}</p></div>`;
+}
 function renderAds(){
-  if(!adsLoaded){document.getElementById('adsGrid').innerHTML='<p style="grid-column:1/3;text-align:center;padding:20px">Loading Ads...</p>';return}
-  let q=(document.getElementById('searchInput').value||'').toLowerCase();let city=document.getElementById('cityFilter').value;let area=document.getElementById('areaFilter').value;let list=ads.filter(a=>a&&a.title&&(currentCat==='All'||a.cat===currentCat)&&(city==='All Pakistan'||a.city===city||!a.city)&&(area==='All Areas'||!a.area||a.area===area)&&((a.title||'').toLowerCase().includes(q)));list.sort((a,b)=>(isTopActive(b)?1:0)-(isTopActive(a)?1:0));let html='';list.forEach(a=>{let idx=ads.indexOf(a);html+=cardHTML(a,idx)});document.getElementById('adsGrid').innerHTML=html||'<p style="grid-column:1/3;text-align:center;padding:20px">No Ad Found - Post The First Ad!</p>';let myCount=ads.filter(a=>a&&a.owner&&(a.owner===getMyUserKey()||a.owner===myDeviceId)).length;document.getElementById('pAds').innerText=myCount+" Ads";let u=JSON.parse(localStorage.getItem('sm_user')||'null');if(u){document.getElementById('pCompactLine').innerText=(u.city||'-')+' • '+(u.phone||'-')+' • '+myCount+' Ads';}}
-function toggleFav(adId){if(!adId) return;if(favs.includes(adId)){favs=favs.filter(f=>f!==adId);}else{favs.push(adId);alert('Added to Favourites ❤️')}saveFavs();renderAds();renderFavs()}
-function renderFavs(){let list=ads.filter(a=>a&&favs.includes(a._id));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(a=>cardHTML(a,ads.indexOf(a))).join('')}
-function renderMyAds(){let my=ads.filter(a=>a&&a.title&&(a.owner===getMyUserKey()||a.owner===myDeviceId));document.getElementById('myAdsList').innerHTML=my.length?my.map(a=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><div style="display:flex;justify-content:space-between;cursor:pointer" onclick="openAd(${ads.indexOf(a)})"><b>${a.title} - Rs ${fmt(a.price)}</b><span>${isTopActive(a)?'⭐ TOP':a.topPending?'⏳ PENDING TOP':'Normal'}</span></div><p style="font-size:12px;color:#666">Tap title to view detail 👁️</p><div style="display:flex;gap:8px;margin-top:8px"><button class="bigBtn" style="margin:0;padding:10px" onclick="editMyAd('${a._id}')">Edit</button><button class="bigBtn" style="margin:0;padding:10px;background:#d32f2f" onclick="deleteMyAd('${a._id}')">Delete</button></div></div>`).join(''):'<p>No My Ad Yet. Post Ad From SELL. Your Ad Will Be Visible To All Customers.</p>'}
-function editMyAd(id){let a=ads.find(x=>x._id===id);if(!a)return;document.getElementById('adTitle').value=a.title;document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCat').value=a.cat;document.getElementById('adCity').value=a.city;document.getElementById('adPhone').value=a.phone;document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('');window._editId=id;openPage('sell');alert("Edit Mode - Change Details And Tap POST AD - Old Ad Will Be Replaced");}
-async function deleteMyAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted')}};
-let fullDescText='',descExpanded=false;
-function toggleDesc(){descExpanded=!descExpanded;let el=document.getElementById('mDesc');if(descExpanded){el.innerText=fullDescText;document.getElementById('readMoreBtn').innerText='Read Less ˄'}else{el.innerText=fullDescText.slice(0,120)+(fullDescText.length>120?'...':'');document.getElementById('readMoreBtn').innerText='Read More ⌄'}}
-function openAd(idx){
-  currentAd=ads[idx];if(!currentAd)return;currentImgIdx=0;showImg();
-  document.getElementById('mTitle').innerText=currentAd.title;document.getElementById('mPrice').innerText='Rs '+fmt(currentAd.price);
-  document.getElementById('mMeta').innerText='📍 '+(currentAd.area||'')+(currentAd.area&&currentAd.city?', ':'')+(currentAd.city||'')+'  •  '+timeAgo(currentAd.createdAt||currentAd.time)+'  •  '+((currentAd.imgs||[]).length||1)+' Pics';
-  document.getElementById('mFavLine').innerText=(currentAd.cat||'')+'  •  '+(isTopActive(currentAd)?'⭐ TOP AD':'');
-  fullDescText=currentAd.desc||'No description written.';descExpanded=false;
-  let short=fullDescText.slice(0,120)+(fullDescText.length>120?'...':'');
-  document.getElementById('mDesc').innerText=short;
-  document.getElementById('readMoreBtn').classList.toggle('hidden',fullDescText.length<=120);
-  document.getElementById('readMoreBtn').innerText='Read More ⌄';
-  document.getElementById('dBrand').innerText=currentAd.brand||currentAd.cat||'-';document.getElementById('dModel').innerText=currentAd.title||'-';document.getElementById('dCond').innerText=currentAd.condition||'Used';document.getElementById('dPta').innerText=currentAd.pta||'Not Applicable';document.getElementById('dLoc').innerText=(currentAd.city||'')+(currentAd.area?', '+currentAd.area:'');
-  let sellerName=currentAd.email||currentAd.ownerName||'Seller';
-  document.getElementById('postedName').innerText=sellerName;document.getElementById('postedAvatar').innerText=sellerName.charAt(0).toUpperCase();document.getElementById('postedMeta').innerText='Member Since 2026 • Active Ads - '+ads.filter(a=>a&&a.owner===currentAd.owner).length+' • '+(currentAd.city||'');document.getElementById('postedAdId').innerText=currentAd._id||'';
-  let rel=ads.filter(a=>a&&a.cat===currentAd.cat && a._id!==currentAd._id).slice(0,4);
-  document.getElementById('relatedGrid').innerHTML=rel.length?rel.map(a=>cardHTML(a,ads.indexOf(a))).join(''):'<p>No Related Ads</p>';
-  let ph=(currentAd.phone||'03430864009').replace(/\D/g,'');if(ph.startsWith('0'))ph='92'+ph.slice(1);
-  document.getElementById('callBtn').href='tel:'+ph;document.getElementById('waBtn').href='https://wa.me/'+ph+'?text='+encodeURIComponent('Hello, I Want This Ad: '+currentAd.title+' - Rs '+fmt(currentAd.price));document.getElementById('adModal').classList.add('open')}
-function reportAd(){alert('Ad Reported - Admin Will Review This Ad. Thank You!')}
-function showImg(){if(!currentAd)return;let imgs=currentAd.imgs&&currentAd.imgs.length?currentAd.imgs:[currentAd.img];document.getElementById('modalImg').src=imgs[currentImgIdx];document.getElementById('modalCount').innerText=(currentImgIdx+1)+' / '+imgs.length;document.getElementById('modalThumbs').innerHTML=imgs.map((im,i)=>`<img src="${im}" class="${i===currentImgIdx?'sel':''}" onclick="currentImgIdx=${i};showImg()">`).join('')}
-let touchX=0;
-document.getElementById('modalImg').addEventListener('touchstart',e=>{touchX=e.touches[0].clientX},{passive:true});
-document.getElementById('modalImg').addEventListener('touchend',e=>{if(!currentAd)return;let dx=e.changedTouches[0].clientX-touchX;let imgs=currentAd.imgs&&currentAd.imgs.length?currentAd.imgs:[currentAd.img];if(Math.abs(dx)>50){if(dx<0)currentImgIdx=(currentImgIdx+1)%imgs.length;else currentImgIdx=(currentImgIdx-1+imgs.length)%imgs.length;showImg()}},{passive:true});
-document.getElementById('modalImg').onclick=()=>{if(!currentAd)return;let imgs=currentAd.imgs&&currentAd.imgs.length?currentAd.imgs:[currentAd.img];document.getElementById('fullImg').src=imgs[currentImgIdx];document.getElementById('fullViewer').classList.add('open')}
+let q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
+let cf=document.getElementById('cityFilter').value||'All Pakistan';
+let af=document.getElementById('areaFilter').value||'All Areas';
+let list=ads.filter(a=>a&&a.title);
+if(selCat!=='All')list=list.filter(a=>a.cat===selCat);
+if(cf!=='All Pakistan')list=list.filter(a=>a.city===cf);
+if(af!=='All Areas')list=list.filter(a=>a.area===af);
+if(selCity!=='All Pakistan')list=list.filter(a=>a.city===selCity);
+if(selArea!=='All Areas')list=list.filter(a=>a.area===selArea);
+if(q)list=list.filter(a=>((a.title||'')+' '+(a.desc||'')+' '+(a.brand||'')+' '+(a.city||'')).toLowerCase().includes(q));
+list.sort((a,b)=>{let ta=isTopActive(a)?1:0,tb=isTopActive(b)?1:0;if(ta!==tb)return tb-ta;return (b.created||0)-(a.created||0)});
+document.getElementById('adsGrid').innerHTML=list.length?list.map(cardHTML).join(''):'<p style="grid-column:1/3;text-align:center;padding:20px">No Ads Found - Try Another Search</p>';
+}
+function renderFavs(){let list=ads.filter(a=>favs.includes(a._id));document.getElementById('favEmpty').style.display=list.length?'none':'block';document.getElementById('favGrid').innerHTML=list.map(cardHTML).join('')}
+function toggleFav(id){if(favs.includes(id))favs=favs.filter(x=>x!==id);else favs.push(id);localStorage.setItem('sm_favs',JSON.stringify(favs));renderAds();renderFavs()}
+function openAd(id){
+let a=ads.find(x=>x._id===id);if(!a)return;currentAd=a;currentImgIdx=0;
+let imgs=(a.imgs&&a.imgs.length?a.imgs:[a.img]).filter(Boolean);
+document.getElementById('modalImg').src=imgs[0]||'';document.getElementById('modalCount').innerText='1 / '+imgs.length;
+document.getElementById('modalThumbs').innerHTML=imgs.map((im,i)=>`<img src="${im}" class="${i===0?'sel':''}" onclick="changeModalImg(${i})">`).join('');
+document.getElementById('mPrice').innerText='Rs '+fmt(a.price);document.getElementById('mTitle').innerText=a.title||'';
+document.getElementById('mMeta').innerText=(a.city||'')+' • '+(a.area||'')+' • '+(a.created?new Date(a.created).toLocaleDateString():'');
+document.getElementById('mFavLine').innerText=favs.includes(a._id)?'❤️ Saved in Favourites':'';
+document.getElementById('dBrand').innerText=a.brand||'-';document.getElementById('dModel').innerText=a.title||'-';document.getElementById('dCond').innerText=a.condition||'-';document.getElementById('dPta').innerText=a.pta||'-';document.getElementById('dLoc').innerText=(a.city||'')+' - '+(a.area||'');
+let descEl=document.getElementById('mDesc');descEl.innerText=a.desc||'No Description';descEl.style.display='-webkit-box';
+document.getElementById('readMoreBtn').classList.toggle('hidden',!(a.desc&&a.desc.length>150));
+document.getElementById('postedAvatar').innerText=(a.email||a.name||'S').charAt(0).toUpperCase();
+document.getElementById('postedName').innerText=a.email||a.name||'Seller';document.getElementById('postedMeta').innerText=(a.city||'')+' • Member';document.getElementById('postedAdId').innerText=a._id||'';
+let ph=String(a.phone||'').replace(/[^0-9]/g,'');if(ph.startsWith('0'))ph='92'+ph.slice(1);
+document.getElementById('callBtn').href='tel:'+a.phone;document.getElementById('waBtn').href='https://wa.me/'+ph+'?text='+encodeURIComponent('Hello, I saw your ad "'+(a.title||'')+'" on SM Market');
+let rel=ads.filter(x=>x._id!==a._id&&x.cat===a.cat).slice(0,4);document.getElementById('relatedGrid').innerHTML=rel.map(cardHTML).join('');
+document.getElementById('adModal').classList.add('open');
+}
+function changeModalImg(i){if(!currentAd)return;let imgs=(currentAd.imgs&&currentAd.imgs.length?currentAd.imgs:[currentAd.img]).filter(Boolean);currentImgIdx=i;document.getElementById('modalImg').src=imgs[i];document.getElementById('modalCount').innerText=(i+1)+' / '+imgs.length;document.querySelectorAll('#modalThumbs img').forEach((im,ix)=>im.classList.toggle('sel',ix===i))}
+function toggleDesc(){let d=document.getElementById('mDesc');if(d.style.display==='-webkit-box'||!d.style.display){d.style.display='block';document.getElementById('readMoreBtn').innerText='Show Less ^'}else{d.style.display='-webkit-box';document.getElementById('readMoreBtn').innerText='Read More ⌄'}}
 function closeAd(){document.getElementById('adModal').classList.remove('open')}
-// FIX #6 - handleFiles now compresses every photo before saving
-function handleFiles(inp){uploadedImages=[];let files=Array.from(inp.files).slice(0,5);if(inp.files.length>5)alert('Only 5 Photos Allowed - First 5 Selected');document.getElementById('imgPreview').innerHTML='<p style="font-size:12px;color:#666">Compressing Photos... Please Wait</p>';let done=0;if(files.length===0){document.getElementById('imgPreview').innerHTML='';return}files.forEach(f=>{let r=new FileReader();r.onload=e=>{compressImage(e.target.result,small=>{uploadedImages.push(small);done++;if(done===files.length){document.getElementById('imgPreview').innerHTML=uploadedImages.map(im=>`<img src="${im}">`).join('')}})};r.readAsDataURL(f)})}
-function selectPlan(n,p){selectedPlan=n;selectedPrice=p;document.querySelectorAll('.plan').forEach(x=>x.classList.remove('sel'));if(p===0){document.getElementById('planFree').classList.add('sel');document.getElementById('payBox').classList.add('hidden')}if(p===500){document.getElementById('plan14').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 500'}if(p===1000){document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.remove('hidden');document.getElementById('payAmt').innerText='Rs 1000'}}
-async function submitPayment(){
-  let f=document.getElementById('payShot').files[0];if(!f){alert('Please Upload Payment Screenshot First!');return}
-  let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  let lastAdId=localStorage.getItem('sm_lastAdId')||'';
-  let lastAd=ads.find(a=>a._id===lastAdId);
-  if(!lastAd){let mine=ads.filter(a=>a&&a.owner===getMyUserKey());lastAd=mine[0];if(lastAd)lastAdId=lastAd._id}
-  if(!lastAd || !lastAdId){alert('Pehle Ad Post Karo - Phir Payment Bhejo!');return}
-  let reader=new FileReader();
-  reader.onload=async function(e){
-    compressImage(e.target.result,async function(small){
-      await topReqRef.push({adId:lastAdId||'',adTitle:lastAd?lastAd.title:'Top Ad',adPrice:lastAd?lastAd.price:0,adCity:lastAd?lastAd.city:'',userName:u.name||'User',userPhone:u.phone||'',plan:selectedPlan,amount:selectedPrice,screenshotName:f.name,screenshotData:small,status:'pending',time:Date.now()});
-      alert('Payment Screenshot Submitted! Admin Will Verify And Set Top Ad - Easypaisa 03430864009');
-    });
-  };reader.readAsDataURL(f);
-}
-// FIX #5 - Approve only if ad still exists - else reject + delete request
-async function approveTop(reqId,adId,days){
-  if(!adId){alert('Ad Not Found - Ad Delete Ho Chuka Hai');await topReqRef.child(reqId).remove();loadTopRequests();return}
-  let snap=await db.ref('ads/'+adId).once('value');
-  if(!snap.exists()){alert('Ad Not Found - Ad Delete Ho Chuka Hai - Request Removed');await topReqRef.child(reqId).remove();loadTopRequests();return}
-  let until=Date.now()+days*86400000;
-  await db.ref('ads/'+adId).update({top:true,featured:true,topUntil:until,topPending:false,topPlan:days===14?'14 Days Top':'30 Days Top'});
-  await topReqRef.child(reqId).update({status:'approved'});
-  alert('APPROVED ✅ - Ad Now On Top For '+days+' Days');
-  loadTopRequests();
-}
-async function rejectTop(reqId,adId){
-  if(adId){let snap=await db.ref('ads/'+adId).once('value');if(snap.exists()){await db.ref('ads/'+adId).update({top:false,featured:false,topPending:false,topUntil:0})}}
-  await topReqRef.child(reqId).update({status:'rejected'});
-  alert('REJECTED ❌ - Ad Will Stay Normal');
-  loadTopRequests();
-}
-function loadTopRequests(){
-  topReqRef.once('value',snap=>{
-    let val=snap.val()||{};
-    let keys=Object.keys(val);
-    let pend=keys.filter(k=>val[k]&&val[k].status==='pending');
-    document.getElementById('adminPendingCount').innerText=pend.length;
-    document.getElementById('adminTopCount').innerText=ads.filter(a=>isTopActive(a)).length;
-    document.getElementById('adminTopRequests').innerHTML=pend.length?pend.map(k=>{
-      let r=val[k];let days=r.amount===500?14:30;
-      let adObj=ads.find(a=>a._id===r.adId);
-      let adImg=adObj?((adObj.imgs&&adObj.imgs[0])||adObj.img||''):'';
-      let adTitle=r.adTitle||(adObj?adObj.title:'Top Ad');
-      let adPrice=r.adPrice||(adObj?adObj.price:0);
-      let adCity=r.adCity||(adObj?adObj.city:'');
-      let adArea=adObj?adObj.area:'';
-      return `<div class="adminCard"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:13px;color:#FF6D00">🚀 TOP REQUEST - ${r.plan||''}</b><span style="font-size:11px;background:#FFF3E0;color:#FF6D00;padding:4px 8px;border-radius:20px;font-weight:900">Rs ${r.amount||''} - ${days} DAYS</span></div>${adImg?`<img class="adThumb" src="${adImg}" style="margin-top:10px">`:''}<div style="margin-top:10px"><b style="font-size:16px">${adTitle}</b><br><b style="color:#0A2A5E;font-size:16px">Rs ${fmt(adPrice)}</b><span style="font-size:13px;color:#666"> • ${adCity} ${adArea?', '+adArea:''}</span><br><small style="color:#888">Ad ID: ${r.adId||''} • Yehi Ad Top Pe Lagana Hai 👆</small></div><div style="background:#f8f9ff;padding:10px;border-radius:10px;margin-top:10px;font-size:13px"><b>👤 Customer:</b> ${r.userName||'User'}<br><b>📱 Phone:</b> ${r.userPhone||''}<br><b>📦 Plan:</b> ${r.plan} - Rs ${r.amount}</div>${r.screenshotData?`<div style="margin-top:10px"><b style="font-size:13px">💳 Easypaisa Screenshot - Tap To Open Full:</b><img src="${r.screenshotData}" style="width:100%;max-height:240px;object-fit:contain;border:1px solid #ddd;border-radius:10px;margin-top:6px;cursor:pointer" onclick="window.open(this.src,'_blank')"></div>`:''}<div class="adminBtnRow"><button class="adminBtn" style="background:#00C853;color:#fff" onclick="approveTop('${k}','${r.adId}',${days})">✅ APPROVE - TOP PE LAGAO</button><button class="adminBtn" style="background:#D32F2F;color:#fff" onclick="rejectTop('${k}','${r.adId}')">❌ REJECT</button></div></div>`
-    }).join(''):'<div class="adminCard" style="text-align:center;color:#666">No Pending Top Requests - Sab Clear Hai ✅</div>';
-  });
-}
+function reportAd(){if(!currentAd)return;alert('Ad Reported! Admin Will Check It.');closeAd()}
+document.getElementById('modalImg').addEventListener('click',()=>{document.getElementById('fullImg').src=document.getElementById('modalImg').src;document.getElementById('fullViewer').classList.add('open')});
+function formatSellPrice(el){let v=el.value.replace(/[^0-9]/g,'');el.value=v?parseInt(v).toLocaleString('en-PK'):''}
+function compressImage(file){return new Promise(res=>{let r=new FileReader();r.onload=e=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas');let w=img.width,h=img.height;let max=800;if(w>max){h=h*max/w;w=max}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',0.7))};img.src=e.target.result};r.readAsDataURL(file)})}
+async function handleFiles(inp){let files=[...inp.files].slice(0,5);uploadedImages=[];document.getElementById('imgPreview').innerHTML='<p>Compressing...</p>';for(let f of files){uploadedImages.push(await compressImage(f))}document.getElementById('imgPreview').innerHTML=uploadedImages.map(u=>`<img src="${u}">`).join('')}
 async function postAd(){
-  let t=document.getElementById('adTitle').value;let pRaw=document.getElementById('adPrice').value.replace(/,/g,'');let p=parseInt(pRaw);let ph=document.getElementById('adPhone').value;
-  if(!t||!p){alert('Please Enter Title And Price!');return}
-  if(uploadedImages.length===0){alert('Please Upload At Least 1 Photo!');return}
-  let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  let isTopSelected=selectedPrice>0;
-  let myKey=getMyUserKey();
-  let na={title:t,price:p,cat:document.getElementById('adCat').value,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph||'03430864009',desc:document.getElementById('adDesc').value,img:uploadedImages[0],imgs:uploadedImages,featured:false,top:false,topPending:isTopSelected,topPlan:isTopSelected?selectedPlan:'Free',topDays:isTopSelected?(selectedPrice===500?14:30):0,topUntil:0,uid:myKey,owner:myKey,email:u.name||"",province:"",time:Date.now(),createdAt:Date.now()};
-  try{
-    if(window._editId){await db.ref('ads/'+window._editId).set(na);window._editId=null;alert('Ad Updated Successfully!')}
-    else{
-      let ref=await adsRef.push(na);localStorage.setItem('sm_lastAdId',ref.key);
-      if(isTopSelected)alert('Ad Posted! Now Pay '+selectedPlan+' - Rs '+selectedPrice+' On Easypaisa 03430864009 And Upload Screenshot - After Admin APPROVE Your Ad Will Go On Top');
-      else alert('Ad Posted! Free Ad - Rs '+fmt(p)+' - Now Visible To All Customers!');
-    }
-    openPage('home');
-  }catch(e){alert('Database Error - Set Rules Read/Write True! - '+e.message)}
+if(!needLogin())return;
+let t=document.getElementById('adTitle').value.trim(),pr=document.getElementById('adPrice').value.replace(/[^0-9]/g,''),ph=document.getElementById('adPhone').value.trim(),d=document.getElementById('adDesc').value.trim();
+if(!t||!pr||!ph||!d){alert('Please Fill Title, Price, Phone & Description!');return}
+if(uploadedImages.length===0&&!_editId){alert('Please Upload At Least 1 Photo!');return}
+let u=getUser();
+let data={title:t,cat:document.getElementById('adCat').value,price:pr,city:document.getElementById('adCity').value,area:document.getElementById('adArea').value,brand:document.getElementById('adBrand').value,condition:document.getElementById('adCondition').value,pta:document.getElementById('adPta').value,phone:ph,desc:d,email:u.name||'Seller',name:u.name||'Seller',userKey:getMyUserKey(),created:Date.now()};
+if(uploadedImages.length)data.imgs=uploadedImages;
+if(_editId){await db.ref('ads/'+_editId).update(data);alert('Ad Updated!')}else{await adsRef.push(data);alert('Ad Posted! Free Ad Is Live Now.');smAdLive()}
+document.getElementById('adTitle').value='';document.getElementById('adPrice').value='';document.getElementById('adPhone').value='';document.getElementById('adDesc').value='';document.getElementById('adFiles').value='';document.getElementById('imgPreview').innerHTML='';uploadedImages=[];_editId=null;
+openPage('myads');
 }
-// FIX #3 - Phone change = new UserKey - old account moved to new phone - login with new number works
-async function saveProfile(){
-  let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  let oldKey=u.userKey||getMyUserKey();
-  let oldPhone=(u.phone||'').replace(/\D/g,'');
-  let newName=document.getElementById('editName').value||u.name;
-  let newCity=document.getElementById('editCity').value||u.city;
-  let newPhone=(document.getElementById('editPhone').value||u.phone||'').replace(/\D/g,'');
-  if(newPhone && newPhone!==oldPhone){
-    // Check new number not already taken
-    let newKey='phone_'+newPhone;
-    let snap=await usersRef.child(newKey).once('value');
-    if(snap.exists() && newKey!==oldKey){alert('Ye Number Pehle Se Kisi Aur Ka Account Hai - Doosra Number Use Karo');return}
-    let newUser={name:newName,city:newCity,phone:newPhone,password:u.password,userKey:newKey,time:Date.now()};
-    await usersRef.child(newKey).set(newUser);
-    if(newKey!==oldKey){await usersRef.child(oldKey).remove()}
-    // Move my ads owner to new key so My Ads still show
-    let aSnap=await adsRef.once('value');let aVal=aSnap.val()||{};
-    for(let k of Object.keys(aVal)){if(aVal[k] && aVal[k].owner===oldKey){await db.ref('ads/'+k).update({owner:newKey,uid:newKey})}}
-    u=newUser;
-  } else {
-    u.name=newName;u.city=newCity;u.phone=newPhone||u.phone;u.userKey=oldKey;
-    await usersRef.child(oldKey).update({name:u.name,city:u.city,phone:u.phone,time:Date.now()});
-  }
-  localStorage.setItem('sm_userKey',u.userKey);
-  localStorage.setItem('sm_user',JSON.stringify(u));
-  updateUser();document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';alert('Profile Saved! - New Phone Se Login Hoga');openPage('profile')
+function renderMyAds(){let u=getUser();let el=document.getElementById('myAdsList');if(!u){el.innerHTML='<p>Please Login To See Your Ads</p>';return}let list=ads.filter(a=>a.userKey===getMyUserKey()||a.phone===u.phone);el.innerHTML=list.length?list.map(a=>`<div class="adminCard"><b>${esc(a.title)}</b><br><span style="color:#0A2A5E;font-weight:900">Rs ${fmt(a.price)}</span> - ${esc(a.city||'')} ${isTopActive(a)?'⭐ TOP':''}<br><div style="display:flex;gap:8px;margin-top:8px"><button onclick="editAd('${a._id}')" style="flex:1;padding:10px;background:#0A2A5E;color:#fff;border:none;border-radius:8px;font-weight:900">Edit</button><button onclick="deleteMyAd('${a._id}')" style="flex:1;padding:10px;background:#D32F2F;color:#fff;border:none;border-radius:8px;font-weight:900">Delete</button></div></div>`).join(''):'<p>No Ads Yet - Post Your First Ad!</p>'}
+function editAd(id){let a=ads.find(x=>x._id===id);if(!a)return;_editId=id;document.getElementById('adTitle').value=a.title||'';document.getElementById('adCat').value=a.cat||'';document.getElementById('adPrice').value=fmt(a.price);document.getElementById('adCity').value=a.city||'';document.getElementById('adArea').value=a.area||'';document.getElementById('adBrand').value=a.brand||'';document.getElementById('adCondition').value=a.condition||'';document.getElementById('adPta').value=a.pta||'';document.getElementById('adPhone').value=a.phone||'';document.getElementById('adDesc').value=a.desc||'';uploadedImages=a.imgs||[];document.getElementById('imgPreview').innerHTML=uploadedImages.map(u=>`<img src="${u}">`).join('');openPage('sell');window.scrollTo(0,0)}
+async function deleteMyAd(id){if(!confirm('Delete This Ad?'))return;await db.ref('ads/'+id).remove();alert('Ad Deleted')}
+function selectPlan(name,amt){selectedPlan=name;selectedAmount=amt;document.querySelectorAll('.plan').forEach(p=>p.classList.remove('sel'));if(name==='Free')document.getElementById('planFree').classList.add('sel');if(name==='14 Days Top')document.getElementById('plan14').classList.add('sel');if(name==='30 Days Top')document.getElementById('plan30').classList.add('sel');document.getElementById('payBox').classList.toggle('hidden',amt===0);document.getElementById('payAmt').innerText='Rs '+fmt(amt)}
+async function submitPayment(){
+if(selectedAmount===0){alert('Please Select Top Plan First!');return}
+let f=document.getElementById('payShot').files[0];if(!f){alert('Please Upload Payment Screenshot!');return}
+let u=getUser();let shot=await compressImage(f);
+await topRequestsRef.push({name:u.name||'User',phone:u.phone||'',userKey:getMyUserKey(),plan:selectedPlan,amount:selectedAmount,shot:shot,time:Date.now(),status:'pending'});
+alert('Payment Submitted! Admin Will Verify Soon.');document.getElementById('payShot').value='';document.getElementById('payShotName').innerText='';
 }
-function changePassword(){
-  let oldP=document.getElementById('oldPass').value;let newP=document.getElementById('newPass').value;let conf=document.getElementById('confirmPass').value;
-  let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  if(oldP!==u.password){alert('Old Password Is Wrong!');return}
-  if(!newP || newP.length>6){alert('New Password Must Be Max 6 Characters!');return}
-  if(newP!==conf){alert('New Password And Confirm Password Do Not Match!');return}
-  u.password=newP;localStorage.setItem('sm_user',JSON.stringify(u));
-  let key=u.userKey||getMyUserKey();
-  usersRef.child(key).update({password:newP});
-  alert('Password Changed Successfully!');openPage('profile');
+async function loadTopRequests(){let snap=await topRequestsRef.once('value');let v=snap.val()||{};let keys=Object.keys(v).reverse();document.getElementById('adminTopRequests').innerHTML=keys.length?keys.map(k=>{let r=v[k];return `<div class="adminCard"><b>${esc(r.name||'User')} - ${esc(r.plan||'')} - Rs ${fmt(r.amount)}</b><br><small>${esc(r.phone||'')}</small><br><img src="${r.shot||''}" style="width:100%;height:180px;object-fit:cover;border-radius:10px;margin-top:8px"><div class="adminBtnRow"><button class="adminBtn" style="background:#00A651;color:#fff" onclick="approveTop('${k}','${r.userKey||''}','${r.phone||''}',${r.amount||0})">✅ Approve</button><button class="adminBtn" style="background:#D32F2F;color:#fff" onclick="rejectTop('${k}')">❌ Reject</button></div></div>`}).join(''):'<p>No Pending Requests</p>';
+let pending=keys.filter(k=>v[k].status==='pending').length;let topLive=ads.filter(a=>isTopActive(a)).length;document.getElementById('adminPendingCount').innerText=pending;document.getElementById('adminTopCount').innerText=topLive;
 }
+async function approveTop(reqId,userKey,phone,amount){
+let list=ads.filter(a=>a.userKey===userKey||a.phone===phone);if(!list.length){alert('No Ad Found For This User!');return}
+let latest=list.sort((a,b)=>(b.created||0)-(a.created||0))[0];
+let days=amount>=1000?30:14;let until=Date.now()+days*24*60*60*1000;
+await db.ref('ads/'+latest._id).update({topUntil:until,topPending:false});
+await topRequestsRef.child(reqId).update({status:'approved'});
+alert('Top Ad Approved For '+days+' Days!');loadTopRequests();
+}
+async function rejectTop(reqId){if(!confirm('Reject This Request?'))return;await topRequestsRef.child(reqId).update({status:'rejected'});loadTopRequests()}
+function loadProfile(){let u=getUser();if(!u)return;document.getElementById('pAvatar').innerText=(u.name||'U').charAt(0).toUpperCase();document.getElementById('pName').innerText=u.name||'-';document.getElementById('pCity').innerText=u.city||'-';document.getElementById('pPhone').innerText=u.phone||'-';let myCount=ads.filter(a=>a.userKey===getMyUserKey()||a.phone===u.phone).length;document.getElementById('pAds').innerText=myCount+' Ads';document.getElementById('pCompactLine').innerText=(u.city||'-')+' • '+(u.phone||'-')+' • '+myCount+' Ads';document.getElementById('editName').value=u.name||'';document.getElementById('editCity').value=u.city||'';document.getElementById('editPhone').value=u.phone||''}
+async function saveProfile(){let u=getUser();if(!u)return;let n=document.getElementById('editName').value.trim(),c=document.getElementById('editCity').value.trim(),ph=document.getElementById('editPhone').value.trim();if(!n||!ph){alert('Name & Phone Required!');return}let nu={...u,name:n,city:c,phone:ph};await usersRef.child(getMyUserKey()).update({name:n,city:c,phone:ph});localStorage.setItem('sm_user',JSON.stringify(nu));alert('Profile Saved!');document.getElementById('editProfileBox').style.display='none';document.getElementById('editBtn').style.display='block';loadProfile()}
+async function changePassword(){let u=getUser();if(!u)return;let o=document.getElementById('oldPass').value.trim(),nw=document.getElementById('newPass').value.trim(),cf=document.getElementById('confirmPass').value.trim();if(o!==u.password){alert('Old Password Wrong!');return}if(nw.length>6||nw.length<4){alert('New Password Must Be 4-6 Characters!');return}if(nw!==cf){alert('Confirm Password Not Match!');return}await usersRef.child(getMyUserKey()).update({password:nw});let nu={...u,password:nw};localStorage.setItem('sm_user',JSON.stringify(nu));alert('Password Changed!');document.getElementById('oldPass').value='';document.getElementById('newPass').value='';document.getElementById('confirmPass').value='';openPage('profile')}
+async function deleteAccount(){if(!confirm('Delete Account Permanently? Your Ads Will Also Be Deleted.'))return;let u=getUser();let my=ads.filter(a=>a.userKey===getMyUserKey()||a.phone===u.phone);for(let a of my){await db.ref('ads/'+a._id).remove()}await usersRef.child(getMyUserKey()).remove();localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');location.reload()}
+function createNewAccount(){localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');document.getElementById('gate').classList.remove('hidden');switchGate('signup')}
 function setStars(n){currentStars=n;let stars=document.querySelectorAll('#starRow span');stars.forEach((s,i)=>{s.innerText=i<n?'★':'☆'});document.getElementById('starLabel').innerText=n+' Star'+(n>1?'s':'')+' - Thank You!'}
-// FIX #1 - Feedback now goes to Firebase - Admin will see ALL users feedback
 async function submitFeedback(){
-  if(!currentStars){alert('Please Select Stars First!');return}
-  let msg=document.getElementById('fbMsg').value;let u=JSON.parse(localStorage.getItem('sm_user')||'{}');
-  try{
-    await feedbacksRef.push({name:u.name||'User',phone:u.phone||'',userKey:getMyUserKey(),stars:currentStars,msg:msg,time:Date.now()});
-  }catch(e){alert('Feedback Error - '+e.message);return}
-  document.getElementById('fbMsg').value='';currentStars=0;document.querySelectorAll('#starRow span').forEach(s=>s.innerText='☆');document.getElementById('starLabel').innerText='Tap to Rate';
-  alert('Thank You For Your Feedback! Admin Will See It.');openPage('profile');
+if(!currentStars){alert('Please Select Stars First!');return}
+let msg=document.getElementById('fbMsg').value;let u=getUser()||{};
+try{await feedbacksRef.push({name:u.name||'User',phone:u.phone||'',userKey:getMyUserKey(),stars:currentStars,msg:msg,time:Date.now()})}catch(e){alert('Feedback Error - '+e.message);return}
+document.getElementById('fbMsg').value='';currentStars=0;document.querySelectorAll('#starRow span').forEach(s=>s.innerText='☆');document.getElementById('starLabel').innerText='Tap to Rate';
+alert('Thank You For Your Feedback! Admin Will See It.');openPage('profile');
 }
 function helpSupport(){window.open('https://wa.me/923430864009?text='+encodeURIComponent('Hello SM Faisalabad Market, I Need Help'),'_blank')}
 function logout(){localStorage.removeItem('sm_user');localStorage.removeItem('sm_userKey');location.reload()}
 let clicks=0,clickTimer;
-document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div class="adminUserRow"><div class="adminUserAvatar">${(uu.name||'U').charAt(0).toUpperCase()}</div><div style="flex:1;min-width:0"><b>${uu.name||'-'}</b><div style="font-size:12px;color:#666">${uu.city||'-'} • ${uu.phone||'-'}</div></div></div>`}).join(''):'<p>No Users Yet</p>';});feedbacksRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val).reverse();document.getElementById('adminFeedback').innerHTML=keys.length?keys.map(k=>{let f=val[k];return `<div class="adminCard">${f.name||'User'} - ${f.stars} ⭐<br><span style="font-size:13px;color:#555">${f.msg||''}</span><br><small style="color:#888">${f.phone||''}</small></div>`}).join(''):'<p>No Feedback Yet</p>';});document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div class="adminCard"><div style="display:flex;gap:10px"><img src="${(a.imgs&&a.imgs[0])||a.img||''}" style="width:70px;height:70px;object-fit:cover;border-radius:10px;flex-shrink:0"><div style="flex:1"><b>${a.title}</b><br><span style="color:#0A2A5E;font-weight:900">Rs ${fmt(a.price)}</span> <span style="font-size:12px;color:#666">${a.city||''} ${isTopActive(a)?'⭐ TOP':''}</span></div></div><button onclick="deleteAd('${a._id}')" style="width:100%;background:#D32F2F;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900;margin-top:8px">Delete Ad</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
-async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}};
+document.getElementById('logoClick').addEventListener('click',()=>{clicks++;clearTimeout(clickTimer);clickTimer=setTimeout(()=>clicks=0,3000);if(clicks>=13){clicks=0;let pw=prompt('Enter Admin Password:');if(pw==='atiq72660990@'){document.getElementById('adminCount').innerText=ads.filter(a=>a&&a.title).length;loadTopRequests();usersRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val);document.getElementById('adminUsers').innerText=keys.length;document.getElementById('adminUsersList').innerHTML=keys.length?keys.map(k=>{let uu=val[k];return `<div class="adminUserRow"><div class="adminUserAvatar">${(uu.name||'U').charAt(0).toUpperCase()}</div><div style="flex:1;min-width:0"><b>${esc(uu.name||'-')}</b><div style="font-size:12px;color:#666">${esc(uu.city||'-')} • ${esc(uu.phone||'-')}</div></div></div>`}).join(''):'<p>No Users Yet</p>';});feedbacksRef.once('value',snap=>{let val=snap.val()||{};let keys=Object.keys(val).reverse();document.getElementById('adminFeedback').innerHTML=keys.length?keys.map(k=>{let f=val[k];return `<div class="adminCard">${esc(f.name||'User')} - ${f.stars} ⭐<br><span style="font-size:13px;color:#555">${esc(f.msg||'')}</span><br><small style="color:#888">${esc(f.phone||'')}</small></div>`}).join(''):'<p>No Feedback Yet</p>';});document.getElementById('adminList').innerHTML=ads.filter(a=>a&&a.title).map((a,i)=>`<div class="adminCard"><div style="display:flex;gap:10px"><img src="${(a.imgs&&a.imgs[0])||a.img||''}" style="width:70px;height:70px;object-fit:cover;border-radius:10px;flex-shrink:0"><div style="flex:1"><b>${esc(a.title)}</b><br><span style="color:#0A2A5E;font-weight:900">Rs ${fmt(a.price)}</span> <span style="font-size:12px;color:#666">${esc(a.city||'')} ${isTopActive(a)?'⭐ TOP':''}</span></div></div><button onclick="deleteAd('${a._id}')" style="width:100%;background:#D32F2F;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:900;margin-top:8px">Delete Ad</button></div>`).join('');document.getElementById('adminPanel').classList.add('open')}else alert('Wrong Password!')}});
+async function deleteAd(id){if(confirm('Delete This Ad? It Will Be Deleted From All Mobiles!')){await db.ref('ads/'+id).remove();alert('Ad Deleted - Removed From All Mobiles')}}
+function setLocation(city,area){selCity=city;selArea=area;document.getElementById('headerLoc').innerText=city==='All Pakistan'?'All Pakistan':city+' - '+area;renderAds();openPage('home')}
+function useNearMe(){if(!navigator.geolocation){setLocation('Faisalabad','Gojra');return}navigator.geolocation.getCurrentPosition(()=>{setLocation('Faisalabad','Gojra')},()=>{setLocation('Faisalabad','Gojra')},{timeout:5000})}
+function filterLocList(){let q=(document.getElementById('locSearch').value||'').toLowerCase();let list=CITIES.filter(c=>c.toLowerCase().includes(q));document.getElementById('locList').innerHTML=list.map(c=>`<div class="profileRow" onclick="setLocation('${c}','${c}')"><b>📍 ${c}</b><span>›</span></div>`).join('')}
+function loadLocList(){document.getElementById('locList').innerHTML=CITIES.map(c=>`<div class="profileRow" onclick="setLocation('${c}','${c}')"><b>📍 ${c}</b><span>›</span></div>`).join('')}
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null})}else{document.getElementById('installStatus').innerText='Already Installed or Use Browser Menu > Add to Home Screen'}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
+initFilters();checkLogin();listenAds();
 </script>
 <script>
 let ptrStartY=0,ptrPull=0,ptrActive=false;
@@ -626,7 +449,6 @@ document.addEventListener('touchstart',function(e){if(window.scrollY===0 && !doc
 document.addEventListener('touchmove',function(e){if(!ptrActive)return;if(window.scrollY!==0)return;let dy=e.touches[0].clientY-ptrStartY;if(dy>0){ptrPull=dy;if(dy>10){ptrBar.style.height=Math.min(dy,70)+'px';ptrBar.innerText=dy>60?'Release To Refresh!':'Pull Down To Refresh';}}}, {passive:true});
 document.addEventListener('touchend',function(){if(!ptrActive)return;ptrActive=false;ptrBar.style.height='0px';if(ptrPull>60){ptrBar.style.height='45px';ptrBar.innerText='Refreshing...';setTimeout(()=>{location.reload()},250)}} , {passive:true});
 </script>
-<!-- SM MARKET - OLX STYLE NOTIFICATION - FINAL -->
 <style>
 .sm-notif-wrap{position:fixed;top:0;left:0;right:0;z-index:99999;background:rgba(0,0,0,0.85);padding:10px 10px 20px 10px;border-radius:0 0 20px 20px;display:none;font-family:Arial,sans-serif}
 .sm-notif-top{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:6px 6px 12px 6px}
@@ -637,7 +459,6 @@ document.addEventListener('touchend',function(){if(!ptrActive)return;ptrActive=f
 .sm-notif-card h3{margin:6px 0 6px 0;font-size:21px;color:#000}
 .sm-notif-card p{margin:0;font-size:15px;color:#222;line-height:1.4}
 </style>
-
 <div class="sm-notif-wrap" id="smNotif">
   <div class="sm-notif-top">
     <b>Notifications</b>
@@ -653,24 +474,10 @@ document.addEventListener('touchend',function(){if(!ptrActive)return;ptrActive=f
   </div>
   <div style="text-align:center;color:#aaa;font-size:12px;margin-top:10px;" onclick="closeSMNotif()">Tap to close</div>
 </div>
-
 <script>
-function showSMNotif(){
-  document.getElementById('smNotif').style.display='block';
-}
-function closeSMNotif(){
-  document.getElementById('smNotif').style.display='none';
-}
-// Page khulte hi 2 second baad dikhao
-setTimeout(showSMNotif, 2000);
-// 8 second baad khud band
-setTimeout(closeSMNotif, 10000);
-
-// Jab Ad Live ho to ye chalao
-function smAdLive(){
-  showSMNotif();
-}
+function showSMNotif(){document.getElementById('smNotif').style.display='block'}
+function closeSMNotif(){document.getElementById('smNotif').style.display='none'}
+function smAdLive(){showSMNotif();setTimeout(closeSMNotif,8000)}
 </script>
-<!-- SM MARKET - END -->  
 </body>
 </html>
